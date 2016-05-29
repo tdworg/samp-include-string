@@ -52,3 +52,54 @@ stock
 	// For compiler
 	return 0;
 }
+
+stock
+	strexpl(dest[][], const src[], const delimiter = ' ',
+		dest_major_size = sizeof dest, dest_minor_size = sizeof dest[])
+{
+	new index, pos1, pos2, _char;
+	for (;;++pos1)
+	{
+		if ((_char = src[pos1]) == '\0')
+		{
+			dest[index][pos2] = '\0';
+			break;
+		}
+		else if (_char == delimiter)
+		{
+			dest[index][pos2] = '\0';
+			pos2 = 0;
+			if (dest_major_size > index)
+				index++;
+			else break;
+			continue;
+		}
+		if (pos2 >= dest_minor_size)
+			break;
+		dest[index][pos2++] = _char;
+	}
+}
+
+stock
+	strcnt(const src[], const pattern[])
+{
+	new count, pos1, pos2, pattern_size = strlen(pattern);
+	for (;;++pos1)
+	{
+		if (src[pos1] == '\0')
+			break;
+		if (src[pos1] == pattern[pos2++])
+		{
+			if (pos2 == pattern_size)
+			{
+				if (pattern_size == 1)
+					pos2 = 0;
+				count++;
+			}
+		} else {
+			if (pos2 > 0)
+				pos2 = 0;
+		}
+	}
+	return count;
+}
