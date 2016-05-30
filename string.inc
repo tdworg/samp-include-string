@@ -25,7 +25,7 @@ freely, subject to the following restrictions:
 #define _TDW_STRING_INC_
 
 stock
-	strncat(dest[], const src[], n, /* don't use */ dest_size = sizeof dest)
+	strncat(dest[], const src[], n, /* don't use => */ dest_size = sizeof dest)
 {
 	new src_current_size = strlen(src),
 	    dest_current_size = strlen(dest);
@@ -102,4 +102,22 @@ stock
 		}
 	}
 	return count;
+}
+
+stock
+	strerase(dest[], const str[], pos = 0, len = sizeof str,
+		/* don't use => */ dest_len = sizeof dest)
+{
+	if (dest_len < len)
+		return;
+	new pos1, pos2;
+	for (;;++pos1)
+	{
+		if (str[pos1] == '\0')
+			break;
+		if (pos <= pos1 <= len + pos - 1)
+			continue;
+		dest[pos2++] = str[pos1];
+	}
+	// printf("dest %s", dest);
 }
