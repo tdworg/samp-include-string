@@ -105,7 +105,7 @@ stock
 }
 
 stock
-	strerase(dest[], const str[], pos = 0, len = sizeof str,
+	strerase(dest[], const src[], pos = 0, len = sizeof src,
 		/* don't use => */ dest_len = sizeof dest)
 {
 	if (dest_len < len)
@@ -113,11 +113,11 @@ stock
 	new pos1, pos2;
 	for (;;++pos1)
 	{
-		if (str[pos1] == '\0')
+		if (src[pos1] == '\0')
 			break;
 		if (pos <= pos1 <= len + pos - 1)
 			continue;
-		dest[pos2++] = str[pos1];
+		dest[pos2++] = src[pos1];
 	}
 	// printf("dest %s", dest);
 }
