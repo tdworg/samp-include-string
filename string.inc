@@ -83,12 +83,12 @@ stock
 stock
 	strcnt(const src[], const pattern[])
 {
-	new count, pos1, pos2, pattern_size = strlen(pattern);
+	new _char, count, pos1, pos2, pattern_size = strlen(pattern);
 	for (;;++pos1)
 	{
-		if (src[pos1] == '\0')
+		if ((_char = src[pos1]) == '\0')
 			break;
-		if (src[pos1] == pattern[pos2++])
+		if (_char == pattern[pos2++])
 		{
 			if (pos2 == pattern_size)
 			{
@@ -110,14 +110,14 @@ stock
 {
 	if (dest_len < len)
 		return;
-	new pos1, pos2;
+	new _char, pos1, pos2;
 	for (;;++pos1)
 	{
-		if (src[pos1] == '\0')
+		if ((_char = src[pos1]) == '\0')
 			break;
 		if (pos <= pos1 <= len + pos - 1)
 			continue;
-		dest[pos2++] = src[pos1];
+		dest[pos2++] = _char;
 	}
 	// printf("dest %s", dest);
 }
