@@ -121,3 +121,24 @@ stock
 	}
 	// printf("dest %s", dest);
 }
+
+stock
+	strltrm(dest[], const src[], const s = ' ',
+		/* don't use => */ dest_size = sizeof dest)
+{
+	if (strlen(src) > dest_size)
+		return;
+	new pos, pos2, _f_char = s, _char;
+	for (;;++pos)
+	{
+		if ((_char = src[pos]) == '\0')
+		{
+			dest[pos2++] == '\0';
+			break;
+		}
+		if (_char == _f_char)
+			continue;
+		else _f_char = '\0';
+		dest[pos2++] = _char;
+	}
+}
