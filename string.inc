@@ -142,3 +142,22 @@ stock
 		dest[pos2++] = _char;
 	}
 }
+
+stock
+	strrtrm(dest[], const src[], const s = ' ',
+		/* don't use => */ dest_size = sizeof dest)
+{
+	new pos = strlen(src) - 1;
+	if (pos > dest_size)
+		return;
+	for (;;--pos)
+	{
+		if (pos == -1)
+			break;
+		if (src[pos] == s)
+			continue;
+		dest[pos++] = '\0';
+		while (pos--) dest[pos] = src[pos];
+		break;
+	}
+}
