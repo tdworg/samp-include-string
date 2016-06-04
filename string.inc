@@ -161,3 +161,19 @@ stock
 		break;
 	}
 }
+
+enum e_TDW_STRING_TRIM_Alg
+{
+	LEFT  = 0b01,
+	RIGHT = 0b10,
+	BOTH  = 0b11
+};
+
+stock
+	strtrm(dest[], const src[], const s = ' ', e_TDW_STRING_TRIM_Alg:al = BOTH,
+		/* don't use => */ dest_size = sizeof dest)
+{
+	if (al & LEFT ) strltrm(dest, src, s, dest_size);
+	if (al & RIGHT) strrtrm(dest, src, s, dest_size);
+	return;
+}
