@@ -71,8 +71,8 @@ stock
 			pos2 = 0;
 			if (dest_major_size > index)
 				index++;
-			else break;
-			continue;
+			break;
+			// continue;
 		}
 		if (pos2 >= dest_minor_size)
 			break;
