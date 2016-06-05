@@ -40,13 +40,13 @@ stock
 {
 	// Convert dec to bytes
 	#emit load.s.pri n
-	#emit shl.c.pri 2
+	#emit shl.c.pri  2
 	#emit stor.s.pri n
 	// Load addresses of the strings
 	#emit load.s.pri s1
 	#emit load.s.alt s2
 	// Compare blocks in the memory
-	#emit cmps n
+	#emit cmps       n
 	// I didn't use the variables, so I use this asm command.
 	#emit retn
 	// For compiler
