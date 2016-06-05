@@ -78,6 +78,7 @@ stock
 			break;
 		dest[index][pos2++] = _char;
 	}
+	return;
 }
 
 stock
@@ -120,6 +121,7 @@ stock
 		dest[pos2++] = _char;
 	}
 	// printf("dest %s", dest);
+	return;
 }
 
 stock
@@ -141,6 +143,7 @@ stock
 		else _f_char = '\0';
 		dest[pos2++] = _char;
 	}
+	return;
 }
 
 stock
@@ -160,6 +163,7 @@ stock
 		while (pos--) dest[pos] = src[pos];
 		break;
 	}
+	return;
 }
 
 enum e_TDW_STRING_TRIM_Alg
