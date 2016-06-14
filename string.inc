@@ -181,3 +181,29 @@ stock
 	if (al & RIGHT) strrtrm(dest, src, s, dest_size);
 	return;
 }
+
+stock
+	find_first(const src[], const _char)
+{
+	new pos, _ctmp;
+	for(;;++pos)
+	{
+		if ((_ctmp = src[pos]) == '\0')
+			break;
+		if (_ctmp == _char)
+			return pos;
+	}
+	return -1;
+}
+
+stock
+	find_last(const src[], const _char)
+{
+	new pos = strlen(src);
+	for(;pos + 1;--pos)
+	{
+		if (src[pos] == _char)
+			return pos;
+	}
+	return -1;
+}
