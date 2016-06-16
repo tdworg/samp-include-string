@@ -54,7 +54,7 @@ stock
 }
 
 stock
-	strexpl(dest[][], const src[], const delimiter = ' ',
+	strexplode(dest[][], const src[], const delimiter = ' ',
 		dest_major_size = sizeof dest, dest_minor_size = sizeof dest[])
 {
 	new index, pos1, pos2, _char;
@@ -82,7 +82,7 @@ stock
 }
 
 stock
-	strcnt(const src[], const pattern[])
+	strcount(const src[], const pattern[])
 {
 	new _char, count, pos1, pos2, pattern_size = strlen(pattern);
 	for (;;++pos1)
@@ -125,7 +125,7 @@ stock
 }
 
 stock
-	strltrm(dest[], const src[], const s = ' ',
+	strltrim(dest[], const src[], const s = ' ',
 		/* don't use => */ dest_size = sizeof dest)
 {
 	if (strlen(src) > dest_size)
@@ -147,7 +147,7 @@ stock
 }
 
 stock
-	strrtrm(dest[], const src[], const s = ' ',
+	strrtrim(dest[], const src[], const s = ' ',
 		/* don't use => */ dest_size = sizeof dest)
 {
 	new pos = strlen(src) - 1;
@@ -174,7 +174,7 @@ enum e_TDW_STRING_TRIM_Alg
 };
 
 stock
-	strtrm(dest[], const src[], const s = ' ', e_TDW_STRING_TRIM_Alg:al = BOTH,
+	strtrim(dest[], const src[], const s = ' ', e_TDW_STRING_TRIM_Alg:al= BOTH,
 		/* don't use => */ dest_size = sizeof dest)
 {
 	if (al & LEFT ) strltrm(dest, src, s, dest_size);
