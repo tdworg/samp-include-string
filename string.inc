@@ -197,13 +197,13 @@ stock
 }
 
 stock
-	find_last(const src[], const _char)
+	find_last(const src[], const _char, const size=sizeof(src))
 {
-	new pos = strlen(src);
-	for(;pos + 1;--pos)
+	new i = size - 1;
+	while (src[--i])
 	{
-		if (src[pos] == _char)
-			return pos;
+		if (src[i] == _char)
+			return i;
 	}
 	return -1;
 }
