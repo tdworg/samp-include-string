@@ -207,3 +207,41 @@ stock
 	}
 	return -1;
 }
+
+stock
+	strreplace(dest[], const src[], const replace[], const replacment[],
+		/* don't use => */ dest_size = sizeof dest)
+{
+	new pos, pos2, pos3, replace_length = strlen(replace),
+		replacment_length = strlen(replacment), _char, pos4;
+	for (;;++pos2)
+	{
+		if ((_char = src[pos2]) == '\0')
+		{
+			dest[pos++] = '\0';
+			break;
+		}
+		else if (_char == replace[pos3])
+		{
+			pos3++;
+			if (replace_length == pos3)
+			{
+				if (dest_size - pos < replacment_length)
+				{
+					dest[pos++] = '\0';
+					break;
+				}
+				while ((_char = replacment[pos4++]))
+				{
+					dest[pos++] = _char;
+				}
+				pos4 = 0;
+			}
+			continue;
+		}
+
+		if (pos3 != 0)
+			pos3 = 0;
+		dest[pos++] = _char;
+	}
+}
