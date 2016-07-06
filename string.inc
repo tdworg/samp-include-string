@@ -19,6 +19,9 @@ freely, subject to the following restrictions:
 3.	This notice may not be removed or altered from any source distribution.
 \** ======================================================================== **/
 
+#if defined _inc_string
+	#undef _inc_string
+#endif
 #if defined _TDW_STRING_INC_
 	#endinput
 #endif
