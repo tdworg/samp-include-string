@@ -213,11 +213,11 @@ stock
 
 stock
 	strreplace(dest[], const src[], const replace[], const replacment[],
-		start = 0, len = 0xFFFFFFFF,
+		start = 0, len = 0xFFFFFFFF, replace_count = -1,
 		/* don't use => */ dest_size = sizeof dest, src_size = sizeof src)
 {
 	new pos, pos2, pos3, replace_length = strlen(replace),
-		replacment_length = strlen(replacment), _char, pos4;
+		replacment_length = strlen(replacment), _char, pos4, replaced;
 	if (start >= src_size)
 		return 0;
 	if (len + start >= src_size)
@@ -234,7 +234,9 @@ stock
 			pos3++;
 			if (replace_length == pos3)
 			{
-				if (dest_size - pos < replacment_length)
+				replaced++;
+				if (dest_size - pos < replacment_length
+					|| replace_count >= replaced)
 				{
 					dest[pos++] = '\0';
 					break;
