@@ -247,10 +247,24 @@ stock
 			}
 			continue;
 		}
-
 		if (pos3 != 0)
 			pos3 = 0;
 		dest[pos++] = _char;
 	}
 	return 1;
+}
+
+stock
+	strtok(dest[], const src[], &index, const delim = ' ')
+{
+	static _char, pos2;
+	for (pos2 = 0;;index++)
+	{
+		if ((_char = src[index]) == '\0' || _char == delim)
+		{
+			dest[pos2++] = '\0';
+			break;
+		}
+		dest[pos2++] = _char;
+	}
 }
