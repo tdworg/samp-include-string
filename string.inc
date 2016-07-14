@@ -294,37 +294,37 @@ stock
 stock
 	strtok_c(dest[], const src[], &index, const delim = ' ')
 {
-	static _char, pos2;
-	for (pos2 = 0;;index++)
+	static _char, pos;
+	for (pos = 0;;index++)
 	{
 		if ((_char = src[index]) == '\0' || _char == delim)
 		{
-			dest[pos2++] = '\0';
+			dest[pos++] = '\0';
 			break;
 		}
-		dest[pos2++] = _char;
+		dest[pos++] = _char;
 	}
 }
 
 stock
 	strtok_s(dest[], const src[], &index, const delim[] = " ")
 {
-	static _char, pos2, pos3, _char2;
-	for (pos2 = 0;;index++)
+	static _char, pos, pos2, _char2;
+	for (pos = 0;;index++)
 	{
 		if ((_char = src[index]) == '\0')
 		{
-			dest[pos2++] = '\0';
+			dest[pos++] = '\0';
 			break;
 		}
-		while ((_char2 = delim[pos3++]))
+		while ((_char2 = delim[pos2++]))
 			if (_char2 != _char)
 				continue;
 			else
 			{
-				dest[pos2++] = '\0';
+				dest[pos++] = '\0';
 				break;
 			}
-		dest[pos2++] = _char;
+		dest[pos++] = _char;
 	}
 }
