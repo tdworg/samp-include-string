@@ -28,7 +28,8 @@ freely, subject to the following restrictions:
 #define _TDW_STRING_INC_
 
 stock
-	strncat(dest[], const src[], n, /* don't use => */ dest_size = sizeof dest)
+	strncat(dest[], const src[], n,
+		/* not recommended to use => */ dest_size = sizeof dest)
 {
 	new src_current_size = strlen(src),
 	    dest_current_size = strlen(dest);
@@ -58,7 +59,8 @@ stock
 
 stock
 	strexplode(dest[][], const src[], const delimiter = ' ',
-		dest_major_size = sizeof dest, dest_minor_size = sizeof dest[])
+		/* not recommended to use => */ dest_major_size = sizeof dest,
+		dest_minor_size = sizeof dest[])
 {
 	new index, pos1, pos2, _char;
 	for (;;++pos1)
@@ -129,7 +131,7 @@ stock
 
 stock
 	strltrim(dest[], const src[], const s = ' ',
-		/* don't use => */ dest_size = sizeof dest)
+		/* not recommended to use => */ dest_size = sizeof dest)
 {
 	if (strlen(src) > dest_size)
 		return;
@@ -151,7 +153,7 @@ stock
 
 stock
 	strrtrim(dest[], const src[], const s = ' ',
-		/* don't use => */ dest_size = sizeof dest)
+		/* not recommended to use => */ dest_size = sizeof dest)
 {
 	new pos = strlen(src) - 1;
 	if (pos > dest_size)
@@ -178,7 +180,7 @@ enum e_TDW_STRING_TRIM_Alg
 
 stock
 	strtrim(dest[], const src[], const s = ' ', e_TDW_STRING_TRIM_Alg:al= BOTH,
-		/* don't use => */ dest_size = sizeof dest)
+		/* not recommended to use => */ dest_size = sizeof dest)
 {
 	if (al & LEFT ) strltrm(dest, src, s, dest_size);
 	if (al & RIGHT) strrtrm(dest, src, s, dest_size);
@@ -200,7 +202,8 @@ stock
 }
 
 stock
-	find_last(const src[], const _char, const size=sizeof(src))
+	find_last(const src[], const _char,
+		/* not recommended to use => */ const size = sizeof src)
 {
 	new i = size - 1;
 	while (src[--i])
@@ -214,7 +217,8 @@ stock
 stock
 	strreplace(dest[], const src[], const replace[], const replacment[],
 		start = 0, len = 0xFFFFFFFF,
-		/* don't use => */ dest_size = sizeof dest, src_size = sizeof src)
+		/* not recommended to use => */ dest_size = sizeof dest,
+		src_size = sizeof src)
 {
 	new pos, pos2, pos3, replace_length = strlen(replace),
 		replacment_length = strlen(replacment), _char, pos4;
@@ -255,7 +259,7 @@ stock
 }
 
 stock
-	strtok(dest[], const src[], &index, const delim = ' ')
+	strtok_c(dest[], const src[], &index, const delim = ' ')
 {
 	static _char, pos2;
 	for (pos2 = 0;;index++)
@@ -265,6 +269,29 @@ stock
 			dest[pos2++] = '\0';
 			break;
 		}
+		dest[pos2++] = _char;
+	}
+}
+
+stock
+	strtok_s(dest[], const src[], &index, const delim[] = " ")
+{
+	static _char, pos2, pos3, _char2;
+	for (pos2 = 0;;index++)
+	{
+		if ((_char = src[index]) == '\0')
+		{
+			dest[pos2++] = '\0';
+			break;
+		}
+		while ((_char2 = delim[pos3++]) != '\0')
+			if (_char2 != _char)
+				continue;
+			else
+			{
+				dest[pos2++] = '\0';
+				break;
+			}
 		dest[pos2++] = _char;
 	}
 }
