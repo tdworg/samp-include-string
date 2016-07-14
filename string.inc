@@ -188,7 +188,7 @@ stock
 }
 
 stock
-	find_first(const src[], const _char)
+	find_first_c(const src[], const _char)
 {
 	new pos, _ctmp;
 	for(;;++pos)
@@ -202,7 +202,24 @@ stock
 }
 
 stock
-	find_last(const src[], const _char,
+	find_first_s(const src[], const _chars[])
+{
+	new pos, _ctmp, pos2, _ctmp2;
+	for(;;++pos)
+	{
+		if ((_ctmp = src[pos]) == '\0')
+			break;
+		while (_chars[pos2++])
+			if (_ctmp != _ctmp2)
+				continue;
+			else
+				return pos;
+	}
+	return -1;
+}
+
+stock
+	find_last_c(const src[], const _char,
 		/* not recommended to use => */ const size = sizeof src)
 {
 	new i = size - 1;
@@ -210,6 +227,22 @@ stock
 	{
 		if (src[i] == _char)
 			return i;
+	}
+	return -1;
+}
+
+stock
+	find_last_s(const src[], const _chars[],
+		/* not recommended to use => */ const size = sizeof src)
+{
+	new i = size - 1, _char, _char2, pos;
+	while ((_char = src[--i]))
+	{
+		while ((_char2 = _chars[pos++]))
+			if (_char2 != _char)
+				continue;
+			else
+				return i;
 	}
 	return -1;
 }
@@ -284,7 +317,7 @@ stock
 			dest[pos2++] = '\0';
 			break;
 		}
-		while ((_char2 = delim[pos3++]) != '\0')
+		while ((_char2 = delim[pos3++]))
 			if (_char2 != _char)
 				continue;
 			else
