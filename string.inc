@@ -130,7 +130,7 @@ stock
 }
 
 stock
-	strltrim(dest[], const src[], const s = ' ',
+	strltrim_c(dest[], const src[], const s = ' ',
 		/* not recommended to use => */ dest_size = sizeof dest)
 {
 	if (strlen(src) > dest_size)
@@ -152,7 +152,30 @@ stock
 }
 
 stock
-	strrtrim(dest[], const src[], const s = ' ',
+	strltrim_s(dest[], const src[], const s[] = " ",
+		/* not recommended to use => */ dest_size = sizeof dest)
+{
+	if (strlen(src) > dest_size)
+		return;
+	new pos, pos2, _char, _f_char, pos3;
+	for (;;++pos)
+	{
+		if ((_char = src[pos]) == '\0')
+		{
+			dest[pos2++] == '\0';
+			break;
+		}
+		while ((_f_char = s[pos3++]))
+			if (_char == _f_char)
+				continue;
+			else _f_char = '\0';
+		dest[pos2++] = _char;
+	}
+	return;
+}
+
+stock
+	strrtrim_c(dest[], const src[], const s = ' ',
 		/* not recommended to use => */ dest_size = sizeof dest)
 {
 	new pos = strlen(src) - 1;
@@ -171,6 +194,27 @@ stock
 	return;
 }
 
+stock
+	strrtrim_s(dest[], const src[], const s[] = " ",
+		/* not recommended to use => */ dest_size = sizeof dest)
+{
+	new pos = strlen(src) - 1, pos2, _char;
+	if (pos > dest_size)
+		return;
+	for (;;--pos)
+	{
+		if (pos == -1)
+			break;
+		while ((_char = s[pos2++]))
+			if (src[pos] == _char)
+				continue;
+		dest[pos++] = '\0';
+		while (pos--) dest[pos] = src[pos];
+		break;
+	}
+	return;
+}
+
 enum e_TDW_STRING_TRIM_Alg
 {
 	LEFT  = 0b01,
@@ -179,11 +223,21 @@ enum e_TDW_STRING_TRIM_Alg
 };
 
 stock
-	strtrim(dest[], const src[], const s = ' ', e_TDW_STRING_TRIM_Alg:al= BOTH,
+	strtrim_c(dest[], const src[], const s = ' ', e_TDW_STRING_TRIM_Alg:al=BOTH,
 		/* not recommended to use => */ dest_size = sizeof dest)
 {
-	if (al & LEFT ) strltrm(dest, src, s, dest_size);
-	if (al & RIGHT) strrtrm(dest, src, s, dest_size);
+	if (al & LEFT ) strltrm_c(dest, src, s, dest_size);
+	if (al & RIGHT) strrtrm_c(dest, src, s, dest_size);
+	return;
+}
+
+stock
+	strtrim_s(dest[], const src[], const s[] = " ",
+		e_TDW_STRING_TRIM_Alg:al=BOTH,
+		/* not recommended to use => */ dest_size = sizeof dest)
+{
+	if (al & LEFT ) strltrm_s(dest, src, s, dest_size);
+	if (al & RIGHT) strrtrm_s(dest, src, s, dest_size);
 	return;
 }
 
