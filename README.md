@@ -11,9 +11,12 @@ Many useful functions for strings.
 | strexplode     | `dest[][], const src[], const delimiter = ' '`                                          | -                         |
 | strcount       | `const src[], const pattern[]`                                                          | number of found fragments |
 | strerase       | `dest[], const src[], pos = 0, len = sizeof src`                                        | -                         |
-| strltrim       | `dest[], const src[], const s = ' '`                                                    | -                         |
-| strrtrim       | `dest[], const src[], const s = ' '`                                                    | -                         |
-| strtrim        | `dest[], const src[], const s = ' ', e_TDW_STRING_TRIM_Alg:al = BOTH`                   | -                         |
+| strltrim\_c    | `dest[], const src[], const s = ' '`                                                    | -                         |
+| strltrim\_s    | `dest[], const src[], const s[] = " "`                                                  | -                         |
+| strrtrim\_c    | `dest[], const src[], const s = ' '`                                                    | -                         |
+| strrtrim\_s    | `dest[], const src[], const s[] = " "`                                                  | -                         |
+| strtrim\_c     | `dest[], const src[], const s = ' ', e_TDW_STRING_TRIM_Alg:al = BOTH`                   | -                         |
+| strtrim\_s     | `dest[], const src[], const s[] = " ", e_TDW_STRING_TRIM_Alg:al = BOTH`                 | -                         |
 | find_first\_c  | `const src[], const _char`                                                              | pos or -1                 |
 | find_first\_s  | `const src[], const _chars[]`                                                           | pos or -1                 |
 | find_last\_c   | `const src[], const _char, const size = sizeof src`                                     | pos or -1                 |
