@@ -1,4 +1,6 @@
 /** ======================================================================== **\
+	String lib
+
 | License:
 Copyright (c) 2016 Double V
 
@@ -19,6 +21,7 @@ freely, subject to the following restrictions:
 3.	This notice may not be removed or altered from any source distribution.
 \** ======================================================================== **/
 
+// file guard
 #if defined _inc_string
 	#undef _inc_string
 #endif
