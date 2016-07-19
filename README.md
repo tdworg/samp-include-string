@@ -24,3 +24,4 @@ Many useful functions for strings.
 | strreplace     | `dest[], const src[], const replace[], const replacment[], start = 0, len = 0xFFFFFFFF` |                           |
 | strtok\_c      | `dest[], const src[], &index, const delim = ' '`                                        |                           |
 | strtok\_s      | `dest[], const src[], &index, const delim[] = " "`                                      |                           |
+| stoi           | `const src[]`                                                                           | result                    |
