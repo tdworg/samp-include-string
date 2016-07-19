@@ -25,3 +25,4 @@ Many useful functions for strings.
 | strtok\_c      | `dest[], const src[], &index, const delim = ' '`                                        |                           |
 | strtok\_s      | `dest[], const src[], &index, const delim[] = " "`                                      |                           |
 | stoi           | `const src[]`                                                                           | result                    |
+| stof           | `const src[]`                                                                           | Float:result              |
