@@ -401,3 +401,31 @@ stock
 
 	return result;
 }
+
+stock
+	Float:stof(const src[])
+{
+	new Float:result, Float:fact = 1.000000, pos, _char, point;
+
+	if (src[0] == '-')
+	{
+		pos++;
+		fact = -1.000000;
+	}
+	for (; (_char = src[pos++]);)
+	{
+		if (_char == '.')
+		{
+			point = 1;
+			continue;
+		}
+		_char -= '0';
+		if (0 <= _char <= 9)
+		{
+			if (point)
+				fact = floatdiv(fact, 10.000000);
+			result = floatadd(floatmul(result, 10.000000), float(_char));
+		}
+	}
+	return floatmul(result, fact);
+}
