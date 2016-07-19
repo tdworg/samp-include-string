@@ -385,3 +385,18 @@ stock
 		dest[pos++] = _char;
 	}
 }
+
+stock
+	stoi(const src[])
+{
+	new sign, _char, pos, result;
+
+	if (src[0] == '-')
+		sign = -1;
+	for (pos = _:(sign == -1); (_char = src[pos++]);)
+		result = result * 10 + _char - '0';
+	if (sign == -1)
+		result = -result;
+
+	return result;
+}
