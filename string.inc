@@ -394,7 +394,8 @@ stock
 	if (src[0] == '-')
 		sign = -1;
 	for (pos = _:(sign == -1); (_char = src[pos++]);)
-		result = result * 10 + _char - '0';
+		if (0 <= _char <= 9)
+			result = result * 10 + _char - '0';
 	if (sign == -1)
 		result = -result;
 
