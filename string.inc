@@ -394,7 +394,7 @@ stock
 	if (src[0] == '-')
 		sign = -1;
 	for (pos = _:(sign == -1); (_char = src[pos++]);)
-		if (0 <= _char <= 9)
+		if ('0' <= _char <= '9')
 			result = result * 10 + _char - '0';
 	if (sign == -1)
 		result = -result;
@@ -428,4 +428,26 @@ stock
 		}
 	}
 	return floatmul(result, fact);
+}
+
+// Author: https://github.com/Untonyst
+// The function was optimized by me. :)
+stock
+	GetNumbersFromString(const src[], dest[], const size = sizeof dest)
+{
+	new dest_size = size - 1, result;
+	for (new i = -1, j = 0, _char = 0; (_char = src[++i]);)
+	{
+		if ('0' <= _char <= '9')
+		{
+			dest[j++] = _char;
+			result = result * 10 + _char - '0';
+			if (j == dest_size)
+			{
+				dest[j] = '\0';
+				break;
+			}
+		}
+	}
+	return result;
 }
