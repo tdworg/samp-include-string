@@ -2,7 +2,7 @@
 	String lib
 
 | Version:
-	2.0.4
+	2.0.5
 
 | License:
 Copyright (c) 2016 Double V
@@ -111,9 +111,10 @@ stock
 stock
 	strtrim(string[], const delimiter = ' ', e_TDW_STRING_TRIM:algo = BOTH)
 {
-	new pos, chr;
+	new pos;
 	if (algo & LEFT)
 	{
+		new chr;
 		while ((chr = string[pos++]) != '\0') if (chr != delimiter) break;
 		strdel(string, 0, pos - 1);
 	}
@@ -125,4 +126,18 @@ stock
 		strdel(string, pos + 1, len);
 	}
 	return 1;
+}
+
+
+stock
+	memcmp(const string1[], const string2[], n)
+{
+	#emit load.s.pri	n
+	#emit shl.c.pri		2
+	#emit str.s.pri		n
+	#emit load.s.pri	string1
+	#emit load.s.alt	string2
+	#emit cmps			n
+	#emit retn
+	return 0;
 }
