@@ -101,13 +101,16 @@ stock
 		strins(string, replacement, found_pos, string_size);
 		found_pos += replacement_len;
 		current_string_len += replacement_len;
-		if (!replace_all)
+		if (_:replace_all == 0)
 			break;
 	}
 	return 1;
 }
 
 
+//
+// Note: This function doesn't support packed strings.
+//
 stock
 	strtrim(string[], const delimiter = ' ', e_TDW_STRING_TRIM:algo = BOTH)
 {
