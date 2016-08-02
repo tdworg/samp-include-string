@@ -132,12 +132,12 @@ stock
 stock
 	memcmp(const string1[], const string2[], n)
 {
-	#emit load.s.pri	n
-	#emit shl.c.pri		2
-	#emit str.s.pri		n
-	#emit load.s.pri	string1
-	#emit load.s.alt	string2
-	#emit cmps			n
+	#emit load.s.pri		n
+	#emit shl.c.pri			2
+	#emit str.s.pri			n
+	#emit load.s.pri		string1
+	#emit load.s.alt		string2
+	#emit cmps				n
 	#emit retn
 	return 0;
 }
