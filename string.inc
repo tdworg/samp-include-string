@@ -2,7 +2,7 @@
 	String lib
 
 | Version:
-	2.0.0
+	2.0.3
 
 | License:
 Copyright (c) 2016 Double V
@@ -75,4 +75,26 @@ stock
 	)
 		return found_pos;
 	return -1;
+}
+
+
+stock
+	strreplace(string[], const find[], const replacement[],
+		bool:ignorecase = false, bool:replace_all = false, const pos = 0,
+		string_size = sizeof string)
+{
+	new found_pos = pos, current_string_len = strlen(string),
+		find_size = strlen(find), replacement_len = strlen(replacement);
+	while ((found_pos = strfind(string, find, ignorecase, found_pos)) != -1)
+	{
+		if ((current_string_len -= find_size) + replacement_len >= string_size)
+			return 0;
+		strdel(string, found_pos, found_pos + find_size);
+		strins(string, replacement, found_pos, string_size);
+		found_pos += replacement_len;
+		current_string_len += replacement_len;
+		if (!replace_all)
+			break;
+	}
+	return 1;
 }
