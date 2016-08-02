@@ -2,7 +2,7 @@
 	String lib
 
 | Version:
-	2.0.3
+	2.0.4
 
 | License:
 Copyright (c) 2016 Double V
@@ -34,6 +34,14 @@ freely, subject to the following restrictions:
 #endif
 
 #define _TDW_STRING_INC_
+
+
+enum e_TDW_STRING_TRIM
+{
+	LEFT  = 0b01,
+	RIGHT = 0b10,
+	BOTH  = 0b11
+};
 
 
 stock
@@ -95,6 +103,26 @@ stock
 		current_string_len += replacement_len;
 		if (!replace_all)
 			break;
+	}
+	return 1;
+}
+
+
+stock
+	strtrim(string[], const delimiter = ' ', e_TDW_STRING_TRIM:algo = BOTH)
+{
+	new pos, chr;
+	if (algo & LEFT)
+	{
+		while ((chr = string[pos++]) != '\0') if (chr != delimiter) break;
+		strdel(string, 0, pos - 1);
+	}
+	if (algo & RIGHT)
+	{
+		new len = strlen(string);
+		pos = len;
+		while (pos-- != 0) if (string[pos] != delimiter) break;
+		strdel(string, pos + 1, len);
 	}
 	return 1;
 }
