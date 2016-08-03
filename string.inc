@@ -144,3 +144,30 @@ stock
 	#emit retn
 	return 0;
 }
+
+
+stock
+	strexplode(dest[][], const string[], const delimiter[] = " ",
+		bool:ignorecase = false, const pos = 0,
+		const dest_size_major = sizeof dest
+		const dest_size_minor = sizeof dest[],
+		const string_size = sizeof string)
+{
+	new current_index_major, found_pos = pos, last_pos,
+		delimiter_len = strlen(delimiter);
+	while (current_index_major != dest_size_major)
+	{
+		if ((found_pos = strfind(string, delimiter, ignorecase, found_pos)
+			) == -1)
+		{
+			strmid(dest[current_index_major], string, last_pos, string_size,
+				dest_size_minor);
+			break;
+		}
+		strmid(dest[current_index_major], string, last_pos, found_pos,
+			dest_size_minor);
+		last_pos = (found_pos += delimiter_len);
+		current_index_major++;
+	}
+	return last_pos;
+}
