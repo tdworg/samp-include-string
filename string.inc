@@ -2,7 +2,7 @@
 	String lib
 
 | Version:
-	2.0.6
+	2.0.7
 
 | License:
 Copyright (c) 2016 Double V
@@ -153,6 +153,8 @@ stock
 		const dest_size_minor = sizeof dest[],
 		const string_size = sizeof string)
 {
+	if (pos >= string_size)
+		return -1;
 	new current_index_major, found_pos = pos, last_pos,
 		delimiter_len = strlen(delimiter);
 	while (current_index_major != dest_size_major)
