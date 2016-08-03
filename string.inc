@@ -108,9 +108,7 @@ stock
 }
 
 
-//
 // Note: This function doesn't support packed strings.
-//
 stock
 	strtrim(string[], const delimiter = ' ', e_TDW_STRING_TRIM:algo = BOTH)
 {
@@ -172,4 +170,22 @@ stock
 		current_index_major++;
 	}
 	return last_pos;
+}
+
+
+// Note: This function doesn't support packed strings.
+stock
+	strerase(string[], const start_pos, n, string_size = sizeof string)
+{
+	if (_:(0 <= start_pos && start_pos < string_size) == 0)
+		return 0;
+	if (_:(0 < n && n <= string_size - start_pos) == 0)
+		return 0;
+	new i = start_pos, iterations = string_size - n;
+	while (i < iterations)
+		string[i] = string[i++ + n];
+	while (i < string_size)
+		string[i++] = '\0';
+	string_size -= n;
+	return string_size;
 }
