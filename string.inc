@@ -2,7 +2,7 @@
 	String lib
 
 | Version:
-	2.0.7
+	2.0.8
 
 | License:
 Copyright (c) 2016 Double V
@@ -36,7 +36,7 @@ freely, subject to the following restrictions:
 #define _TDW_STRING_INC_
 
 
-enum e_TDW_STRING_TRIM
+enum e_TDW_STRING
 {
 	LEFT  = 0b01,
 	RIGHT = 0b10,
@@ -110,7 +110,7 @@ stock
 
 // Note: This function doesn't support packed strings.
 stock
-	strtrim(string[], const delimiter = ' ', e_TDW_STRING_TRIM:algo = BOTH)
+	strtrim(string[], const delimiter = ' ', e_TDW_STRING:algo = BOTH)
 {
 	new pos;
 	if (algo & LEFT)
@@ -135,7 +135,7 @@ stock
 {
 	#emit load.s.pri n
 	#emit shl.c.pri 2
-	#emit str.s.pri n
+	#emit stor.s.pri n
 	#emit load.s.pri string1
 	#emit load.s.alt string2
 	#emit cmps n
