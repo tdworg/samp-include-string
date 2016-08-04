@@ -25,6 +25,8 @@ freely, subject to the following restrictions:
 \** ======================================================================== **/
 
 
+// I remove this constant because the compiler automatically generates it.
+// github.com/Zeex/pawn/issues/107
 #if defined _inc_string
 	#undef _inc_string
 #endif
