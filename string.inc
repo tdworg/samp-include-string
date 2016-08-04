@@ -110,28 +110,6 @@ stock
 }
 
 
-// Note: This function doesn't support packed strings.
-stock
-	strtrim(string[], const delimiter = ' ', e_TDW_STRING:algo = BOTH)
-{
-	new pos;
-	if (algo & LEFT)
-	{
-		new chr;
-		while ((chr = string[pos++]) != '\0') if (chr != delimiter) break;
-		strdel(string, 0, pos - 1);
-	}
-	if (algo & RIGHT)
-	{
-		new len = strlen(string);
-		pos = len;
-		while (pos-- != 0) if (string[pos] != delimiter) break;
-		strdel(string, pos + 1, len);
-	}
-	return 1;
-}
-
-
 stock
 	memcmp(const string1[], const string2[], n)
 {
@@ -175,7 +153,29 @@ stock
 }
 
 
-// Note: This function doesn't support packed strings.
+// TODO: This function doesn't support packed strings.
+stock
+	strtrim(string[], const delimiter = ' ', e_TDW_STRING:algo = BOTH)
+{
+	new pos;
+	if (algo & LEFT)
+	{
+		new chr;
+		while ((chr = string[pos++]) != '\0') if (chr != delimiter) break;
+		strdel(string, 0, pos - 1);
+	}
+	if (algo & RIGHT)
+	{
+		new len = strlen(string);
+		pos = len;
+		while (pos-- != 0) if (string[pos] != delimiter) break;
+		strdel(string, pos + 1, len);
+	}
+	return 1;
+}
+
+
+// TODO: This function doesn't support packed strings.
 stock
 	strerase(string[], const start_pos, n, string_size = sizeof string)
 {
@@ -193,7 +193,8 @@ stock
 }
 
 
-// Note: This function doesn't support packed strings.
+// TODO: This function doesn't support packed strings. Incorrect algorithm
+// to count the number of characters for the left part.
 stock
 	strjust(string[], width, const delimiter = ' ', e_TDW_STRING:alo = BOTH)
 {
