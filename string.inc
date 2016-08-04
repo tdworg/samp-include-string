@@ -189,3 +189,29 @@ stock
 	string_size -= n;
 	return string_size;
 }
+
+
+stock
+	strjust(string[], width, const delimiter = ' ', e_TDW_STRING:alo = BOTH)
+{
+	new current_string_len = strlen(string),
+		left_part_size = (width - current_string_len) / 2,
+		i;
+	if (alo & LEFT)
+	{
+		while (i != left_part_size)
+		{
+			string[i + left_part_size] = string[i];
+			string[i++] = delimiter;
+		}
+	}
+	if (alo & RIGHT)
+	{
+		i += current_string_len;
+		while (i != width)
+		{
+			string[i++] = delimiter;
+		}
+	}
+	return 1;
+}
