@@ -191,6 +191,7 @@ stock
 }
 
 
+// Note: This function doesn't support packed strings.
 stock
 	strjust(string[], width, const delimiter = ' ', e_TDW_STRING:alo = BOTH)
 {
