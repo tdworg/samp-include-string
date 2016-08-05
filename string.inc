@@ -156,9 +156,7 @@ stock
 stock
 	strtrim(string[], const delimiter = ' ', e_TDW_STRING:algo = BOTH)
 {
-	new pos, bool:is_packed = false;
-	if (string[0] > 255)
-		is_packed = true;
+	new pos, bool:is_packed = (string[0] > 255);
 	if (algo & LEFT)
 	{
 		new chr;
@@ -201,12 +199,9 @@ stock
 stock
 	strerase(string[], const start_pos, n, string_size = sizeof string)
 {
-	new bool:is_packed = false;
-	if (string[0] > 255)
-	{
+	new bool:is_packed = (string[0] > 255);
+	if (is_packed)
 		string_size++;
-		is_packed = true;
-	}
 	if (_:(0 <= start_pos && start_pos < string_size) == 0)
 		return 0;
 	if (_:(0 < n && n <= string_size - start_pos) == 0)
