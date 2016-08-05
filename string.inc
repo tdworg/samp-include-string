@@ -38,7 +38,8 @@ freely, subject to the following restrictions:
 #define _TDW_STRING_INC_
 
 
-enum e_TDW_STRING
+enum
+	e_TDW_STRING
 {
 	LEFT  = 0b01,
 	RIGHT = 0b10,
