@@ -153,41 +153,79 @@ stock
 }
 
 
-// TODO: This function doesn't support packed strings.
 stock
 	strtrim(string[], const delimiter = ' ', e_TDW_STRING:algo = BOTH)
 {
-	new pos;
+	new pos, bool:is_packed = false;
+	if (string[0] > 255)
+		is_packed = true;
 	if (algo & LEFT)
 	{
 		new chr;
-		while ((chr = string[pos++]) != '\0') if (chr != delimiter) break;
+		if (is_packed)
+		{
+			while ((chr = string{pos++}) != '\0')
+				if (chr != delimiter)
+					break;
+		}
+		else
+		{
+			while ((chr = string[pos++]) != '\0')
+				if (chr != delimiter)
+					break;
+		}
 		strdel(string, 0, pos - 1);
 	}
 	if (algo & RIGHT)
 	{
 		new len = strlen(string);
 		pos = len;
-		while (pos-- != 0) if (string[pos] != delimiter) break;
+		if (is_packed)
+		{
+			while (pos-- != 0)
+				if (string{pos} != delimiter)
+					break;
+		}
+		else
+		{
+			while (pos-- != 0)
+				if (string[pos] != delimiter)
+					break;
+		}
 		strdel(string, pos + 1, len);
 	}
 	return 1;
 }
 
 
-// TODO: This function doesn't support packed strings.
 stock
 	strerase(string[], const start_pos, n, string_size = sizeof string)
 {
+	new bool:is_packed = false;
+	if (string[0] > 255)
+	{
+		string_size++;
+		is_packed = true;
+	}
 	if (_:(0 <= start_pos && start_pos < string_size) == 0)
 		return 0;
 	if (_:(0 < n && n <= string_size - start_pos) == 0)
 		return 0;
 	new i = start_pos, iterations = string_size - n;
-	while (i < iterations)
-		string[i] = string[i++ + n];
-	while (i < string_size)
-		string[i++] = '\0';
+	if (is_packed)
+	{
+		while (i < iterations)
+			string{i} = string{i++ + n};
+		while (i < string_size)
+			string{i++} = '\0';
+	}
+	else
+	{
+		while (i < iterations)
+			string[i] = string[i++ + n];
+		while (i < string_size)
+			string[i++] = '\0';
+	}
 	string_size -= n;
 	return string_size;
 }
