@@ -45,11 +45,13 @@ freely, subject to the following restrictions:
 #define A@sM:A@sN:%2[%3], %2,%3
 #define A@sN:%2, %2
 
-#define O@tF:O@tD:O@tC:O@tM:%1??%2$ strfind(_:F@pM:F@pN:%1,_:F@iT:F@iF:%2,)
+#define O@tF:O@tD:O@tC:O@tM:%1??%2$ strfind(_:F@pM:F@pN:%1,_:F@I:%2,)
 #define F@pM:F@pN:%1[%3],%2, %1,%2,%3
 #define F@pN:%1,%2, %1,%2,0
-#define F@iT:F@iF:%2!, %2,true
-#define F@iF:%2, %2,false
+#define F@I: F@iV:F@iT:F@iF:
+#define F@iV:F@iT:F@iF:%2!!%4, %2,%4,
+#define F@iT:F@iF:%2!, %2,true,
+#define F@iF:%2, %2,false,
 
 #define O@tD:O@tC:O@tM:--%1$ strdel(_:D@pT0:D@pT1:D@pT2:D@pT3:D@pT4:%1,)
 #define D@pT0:D@pT1:D@pT2:D@pT3:D@pT4:%1[%2,%3], %1,%2,%3
