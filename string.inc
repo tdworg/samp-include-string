@@ -74,9 +74,9 @@ freely, subject to the following restrictions:
 enum
 	e_TDW_STRING
 {
-	LEFT  = 0b01,
-	RIGHT = 0b10,
-	BOTH  = 0b11
+	LEFT,
+	RIGHT,
+	BOTH
 };
 
 
