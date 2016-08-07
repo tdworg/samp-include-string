@@ -2,7 +2,7 @@
 	String lib
 
 | Version:
-	2.0.21
+	2.0.22
 
 | License:
 Copyright (c) 2016 Double V
