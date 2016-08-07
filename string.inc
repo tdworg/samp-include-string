@@ -258,3 +258,12 @@ stock
 	string_size -= n;
 	return string_size;
 }
+
+
+stock
+	strcpy(dest[], const string[], const dest_size = sizeof dest)
+{
+	return
+		((dest[0] > 255) ? dest{0} = '\0' : dest[0] = '\0'),
+		strcat(dest, string, dest_size);
+}
