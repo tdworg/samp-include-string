@@ -2,7 +2,7 @@
 	String lib
 
 | Version:
-	2.0.22
+	2.0.23
 
 | License:
 Copyright (c) 2016 Double V
@@ -39,13 +39,13 @@ freely, subject to the following restrictions:
 
 
 #define O@tC: O@tCt:O@tCf:
-#define O@T: O@tA:O@tF:O@tD:O@tC:O@tM:
+#define O@T: O@tA:O@tF:O@tD:O@tC:O@tM:O@E:
 
-#define O@tA:O@tF:O@tD:O@tC:O@tM:%1+%2$ strcat(%1,_:A@sM:A@sN:%2,)
+#define O@tA:O@tF:O@tD:O@tC:O@tM:O@E:%1+%2$ strcat(%1,_:A@sM:A@sN:%2,)
 #define A@sM:A@sN:%2[%3], %2,%3
 #define A@sN:%2, %2
 
-#define O@tF:O@tD:O@tC:O@tM:%1??%2$ strfind(_:F@pM:F@pN:%1,_:F@I:%2,)
+#define O@tF:O@tD:O@tC:O@tM:O@E:%1??%2$ strfind(_:F@pM:F@pN:%1,_:F@I:%2,)
 #define F@pM:F@pN:%1[%3],%2, %1,%2,%3
 #define F@pN:%1,%2, %1,%2,0
 #define F@I: F@iV:F@iT:F@iF:
@@ -53,20 +53,22 @@ freely, subject to the following restrictions:
 #define F@iT:F@iF:%2!, %2,true,
 #define F@iF:%2, %2,false,
 
-#define O@tD:O@tC:O@tM:--%1$ strdel(_:D@pT0:D@pT1:D@pT2:D@pT3:D@pT4:%1,)
+#define O@tD:O@tC:O@tM:O@E:--%1$ strdel(_:D@pT0:D@pT1:D@pT2:D@pT3:D@pT4:%1,)
 #define D@pT0:D@pT1:D@pT2:D@pT3:D@pT4:%1[%2,%3], %1,%2,%3
 #define D@pT1:D@pT2:D@pT3:D@pT4:%1[,%3], %1,0,%3
 #define D@pT2:D@pT3:D@pT4:%1[,], %1,0,sizeof %1
 #define D@pT3:D@pT4:%1[%2,], %1,%2,sizeof %1
 #define D@pT4:%1, %1,0,sizeof %1
 
-#define O@tCt:O@tCf:O@tM:%1==%2$ (P@C:%1,%2$==0)
-#define O@tCf:O@tM:%1!=%2$ (P@C:%1,%2$!=0)
+#define O@tCt:O@tCf:O@tM:O@E:%1==%2$ (P@C:%1,%2$==0)
+#define O@tCf:O@tM:O@E:%1!=%2$ (P@C:%1,%2$!=0)
 #define P@C:%1,%2$ strcmp(%1,_:C@IP0:C@IP1:%2,)
 #define C@IP0:C@IP1:%2!, C@I0:C@I1:%2,true,
 #define C@IP1:%2, C@I0:C@I1:%2,false,
 #define C@I0:C@I1:%2[%4],%3, %2,%3,%4
 #define C@I1:%2,%3, %2,%3,_
+
+#define O@E:%1=%2$ strcpy(%1,%2)
 
 #define s<%1> (_:O@T:%1$)
 
