@@ -68,7 +68,9 @@ freely, subject to the following restrictions:
 #define C@I0:C@I1:%2[%4],%3, %2,%3,%4
 #define C@I1:%2,%3, %2,%3,_
 
-#define O@E:%1=%2$ strcpy(%1,%2)
+#define O@E:%1=%2$ strcpy(%1,E@S0:E@S1:%2,)
+#define E@S0:E@S1:%2[%3], %2,%3
+#define E@S1:%2, %2,_
 
 #define s<%1> (_:O@T:%1$)
 
