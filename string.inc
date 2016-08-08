@@ -79,6 +79,8 @@ freely, subject to the following restrictions:
 #define s<%1> (_:O@T:%1$)
 
 
+#define IsPackedString(%0) ((%0) > 255)
+
 enum
 	e_TDW_STRING
 {
@@ -198,7 +200,7 @@ stock
 stock
 	strtrim(string[], const delimiter = ' ', e_TDW_STRING:algo = BOTH)
 {
-	new pos, bool:is_packed = (string[0] > 255);
+	new pos, bool:is_packed = IsPackedString(string);
 	if (algo & LEFT)
 	{
 		new chr;
@@ -241,7 +243,7 @@ stock
 stock
 	strerase(string[], const start_pos, n, string_size = sizeof string)
 {
-	new bool:is_packed = (string[0] > 255);
+	new bool:is_packed = IsPackedString(string);
 	if (is_packed)
 		string_size++;
 	if (_:(0 <= start_pos && start_pos < string_size) == 0)
@@ -272,7 +274,7 @@ stock
 	strcpy(dest[], const string[], const dest_size = sizeof dest)
 {
 	return
-		((dest[0] > 255) ? dest{0} = '\0' : dest[0] = '\0'),
+		(IsPackedString(dest) ? dest{0} = '\0' : dest[0] = '\0'),
 		strcat(dest, string, dest_size);
 }
 
@@ -280,9 +282,8 @@ stock
 stock
 	find_first_of(const string[], const chars[])
 {
-	new chr, i_string, j_chars, chars_len = strlen(chars),
-		bool:is_packed = (string[0] > 255);
-	if (is_packed)
+	new chr, i_string, j_chars, chars_len = strlen(chars);
+	if (IsPackedString(string))
 	{
 		while ((chr = string{i_string++}) != '\0')
 		{
@@ -317,9 +318,8 @@ stock
 stock
 	find_first_not_of(const string[], const chars[])
 {
-	new chr, i_string, j_chars, chars_len = strlen(chars),
-		bool:is_packed = (string[0] > 255);
-	if (is_packed)
+	new chr, i_string, j_chars, chars_len = strlen(chars);
+	if (IsPackedString(string))
 	{
 		while ((chr = string{i_string++}) != '\0')
 		{
