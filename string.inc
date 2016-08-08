@@ -275,3 +275,40 @@ stock
 		((dest[0] > 255) ? dest{0} = '\0' : dest[0] = '\0'),
 		strcat(dest, string, dest_size);
 }
+
+
+stock
+	find_first_of(const string[], const chars[])
+{
+	new chr, i_string, j_chars, chars_len = strlen(chars),
+		bool:is_packed = (string[0] > 255);
+	if (is_packed)
+	{
+		while ((chr = string{i_string++}) != '\0')
+		{
+			do
+			{
+				if (chr != chars{j_chars})
+					continue;
+				return i_string;
+			}
+			while (++j_chars <= chars_len);
+			j_chars = 0;
+		}
+	}
+	else
+	{
+		while ((chr = string[i_string++]) != '\0')
+		{
+			do
+			{
+				if (chr != chars[j_chars])
+					continue;
+				return i_string;
+			}
+			while (++j_chars <= chars_len);
+			j_chars = 0;
+		}
+	}
+	return 0;
+}
