@@ -1,5 +1,9 @@
 /** ======================================================================== **\
-	String lib
+	String library
+
+| Description:
+This library exports several useful string functions that are not included in
+the PAWN string library. Besides, it adds a new syntax.
 
 | Version:
 2.0.24
