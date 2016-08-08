@@ -312,3 +312,50 @@ stock
 	}
 	return 0;
 }
+
+
+stock
+	find_first_not_of(const string[], const chars[])
+{
+	new chr, i_string, j_chars, chars_len = strlen(chars),
+		bool:is_packed = (string[0] > 255);
+	if (is_packed)
+	{
+		while ((chr = string{i_string++}) != '\0')
+		{
+			while (j_chars <= chars_len)
+			{
+				if (chars{j_chars} == chr)
+					// See below.
+					goto l_new_packed_major_iteration;
+				j_chars++;
+				continue;
+			}
+			return i_string;
+		l_new_packed_major_iteration:
+			j_chars = 0;
+		}
+	}
+	else
+	{
+		while ((chr = string[i_string++]) != '\0')
+		{
+			while (j_chars <= chars_len)
+			{
+				if (chars[j_chars] == chr)
+					// I used the goto statement to exit the loop,
+					// because alternative ways don't exist.
+					// And yes, i renamed the label for workaround the error.
+					// see: https://github.com/compuphase/pawn/issues/21
+					goto new_major_iteration;
+				j_chars++;
+				continue;
+			}
+			return i_string;
+			// See above.
+		new_major_iteration:
+			j_chars = 0;
+		}
+	}
+	return 0;
+}
