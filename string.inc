@@ -360,6 +360,7 @@ stock
 	return 0;
 }
 
+
 stock
 	IsEmptyString(const string[])
 {
