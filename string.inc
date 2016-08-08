@@ -359,3 +359,9 @@ stock
 	}
 	return 0;
 }
+
+stock
+	IsEmptyString(const string[])
+{
+	return (IsPackedString(string) ? (string{0}) : (string[0])) == '\0';
+}
