@@ -470,6 +470,7 @@ stock
 	return i;
 }
 
+
 stock
 	find_last_of(const string[], const chars[])
 {
@@ -533,6 +534,88 @@ stock
 				}
 				while (++j_chars <= chars_len);
 				j_chars = 0;
+			}
+		}
+	}
+	return 0;
+}
+
+
+stock
+	find_last_not_of(const string[], const chars[])
+{
+	new chr, i_string = strlen(string), j_chars, chars_len = strlen(chars);
+	if (IsPackedString(string))
+	{
+		if (IsPackedString(chars))
+		{
+			while (i_string-- != 0)
+			{
+				chr = string{i_string};
+				while (j_chars <= chars_len)
+				{
+					if (chars{j_chars++} == chr)
+					{
+						j_chars = 0;
+						break;
+					}
+				}
+				if (j_chars != 0)
+					return i_string;
+			}
+		}
+		else
+		{
+			while (i_string-- != 0)
+			{
+				chr = string{i_string};
+				while (j_chars <= chars_len)
+				{
+					if (chars[j_chars++] == chr)
+					{
+						j_chars = 0;
+						break;
+					}
+				}
+				if (j_chars != 0)
+					return i_string;
+			}
+		}
+	}
+	else
+	{
+		if (IsPackedString(chars))
+		{
+			while (i_string-- != 0)
+			{
+				chr = string[i_string];
+				while (j_chars <= chars_len)
+				{
+					if (chars{j_chars++} == chr)
+					{
+						j_chars = 0;
+						break;
+					}
+				}
+				if (j_chars != 0)
+					return i_string;
+			}
+		}
+		else
+		{
+			while (i_string-- != 0)
+			{
+				chr = string[i_string];
+				while (j_chars <= chars_len)
+				{
+					if (chars[j_chars++] == chr)
+					{
+						j_chars = 0;
+						break;
+					}
+				}
+				if (j_chars != 0)
+					return i_string;
 			}
 		}
 	}
