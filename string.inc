@@ -81,7 +81,7 @@ freely, subject to the following restrictions:
 #if defined IsPackedString
 	// Checks if a string is packed.
 	// Other information: //www.compuphase.com/pawn/String_Manipulation.pdf
-	#define IsPackedString(%0) ((%0) > 255)
+	#define IsPackedString(%0) ((%0)[0] > 255)
 #endif
 
 enum
@@ -402,4 +402,40 @@ stock
 	}
 	// returns number of swapped elements.
 	return i;
+}
+
+
+stock
+	find_last_of(const string[], const chars[])
+{
+	new chr, i_string, j_chars, chars_len = strlen(chars);
+	if (IsPackedString(string))
+	{
+		while (i_string-- != 0)
+		{
+			do
+			{
+				if (chr != chars{j_chars})
+					continue;
+				return i_string;
+			}
+			while (++j_chars <= chars_len);
+			j_chars = 0;
+		}
+	}
+	else
+	{
+		while (i_string-- != 0)
+		{
+			do
+			{
+				if (chr != chars[j_chars])
+					continue;
+				return i_string;
+			}
+			while (++j_chars <= chars_len);
+			j_chars = 0;
+		}
+	}
+	return 0;
 }
