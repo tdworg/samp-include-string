@@ -295,30 +295,64 @@ stock
 	new chr, i_string, j_chars, chars_len = strlen(chars);
 	if (IsPackedString(string))
 	{
-		while ((chr = string{i_string++}) != '\0')
+		if (IsPackedString(chars))
 		{
-			do
+			while ((chr = string{i_string++}) != '\0')
 			{
-				if (chr != chars{j_chars})
-					continue;
-				return i_string;
+				do
+				{
+					if (chr != chars{j_chars})
+						continue;
+					return i_string;
+				}
+				while (++j_chars <= chars_len);
+				j_chars = 0;
 			}
-			while (++j_chars <= chars_len);
-			j_chars = 0;
+		}
+		else
+		{
+			while ((chr = string{i_string++}) != '\0')
+			{
+				do
+				{
+					if (chr != chars[j_chars])
+						continue;
+					return i_string;
+				}
+				while (++j_chars <= chars_len);
+				j_chars = 0;
+			}
 		}
 	}
 	else
 	{
-		while ((chr = string[i_string++]) != '\0')
+		if (IsPackedString(chars))
 		{
-			do
+			while ((chr = string[i_string++]) != '\0')
 			{
-				if (chr != chars[j_chars])
-					continue;
-				return i_string;
+				do
+				{
+					if (chr != chars{j_chars})
+						continue;
+					return i_string;
+				}
+				while (++j_chars <= chars_len);
+				j_chars = 0;
 			}
-			while (++j_chars <= chars_len);
-			j_chars = 0;
+		}
+		else
+		{
+			while ((chr = string[i_string++]) != '\0')
+			{
+				do
+				{
+					if (chr != chars[j_chars])
+						continue;
+					return i_string;
+				}
+				while (++j_chars <= chars_len);
+				j_chars = 0;
+			}
 		}
 	}
 	return 0;
@@ -331,40 +365,82 @@ stock
 	new chr, i_string, j_chars, chars_len = strlen(chars);
 	if (IsPackedString(string))
 	{
-		while ((chr = string{i_string++}) != '\0')
+		if (IsPackedString(chars))
 		{
-			while (j_chars <= chars_len)
+			while ((chr = string{i_string++}) != '\0')
 			{
-				if (chars{j_chars} == chr)
-					// See below.
-					goto l_new_packed_major_iteration;
-				j_chars++;
-				continue;
+				while (j_chars <= chars_len)
+				{
+					if (chars{j_chars} == chr)
+						// See below.
+						goto l_packed_major_chars_packed;
+					j_chars++;
+					continue;
+				}
+				return i_string;
+			l_packed_major_chars_packed:
+				j_chars = 0;
 			}
-			return i_string;
-		l_new_packed_major_iteration:
-			j_chars = 0;
+		}
+		else
+		{
+			while ((chr = string{i_string++}) != '\0')
+			{
+				while (j_chars <= chars_len)
+				{
+					if (chars[j_chars] == chr)
+						// See below.
+						goto l_packed_major_chars_unpacked;
+					j_chars++;
+					continue;
+				}
+				return i_string;
+			l_packed_major_chars_unpacked:
+				j_chars = 0;
+			}
 		}
 	}
 	else
 	{
-		while ((chr = string[i_string++]) != '\0')
+		if (IsPackedString(chars))
 		{
-			while (j_chars <= chars_len)
+			while ((chr = string[i_string++]) != '\0')
 			{
-				if (chars[j_chars] == chr)
-					// I used the goto statement to exit the loop,
-					// because alternative ways don't exist.
-					// And yes, i renamed the label for workaround the error.
-					// see: https://github.com/compuphase/pawn/issues/21
-					goto new_major_iteration;
-				j_chars++;
-				continue;
+				while (j_chars <= chars_len)
+				{
+					if (chars{j_chars} == chr)
+						// I used the goto statement to exit the loop,
+						// because alternative ways don't exist.
+						// And yes, i renamed the label for workaround
+						// the error.
+						// see: https://github.com/compuphase/pawn/issues/21
+						goto l_unpacked_major_chars_packed;
+					j_chars++;
+					continue;
+				}
+				return i_string;
+				// See above.
+			l_unpacked_major_chars_packed:
+				j_chars = 0;
 			}
-			return i_string;
-			// See above.
-		new_major_iteration:
-			j_chars = 0;
+		}
+		else
+		{
+			while ((chr = string[i_string++]) != '\0')
+			{
+				while (j_chars <= chars_len)
+				{
+					if (chars[j_chars] == chr)
+						// See above.
+						goto l_unpacked_major_chars_unpacked;
+					j_chars++;
+					continue;
+				}
+				return i_string;
+				// See above.
+			l_unpacked_major_chars_unpacked:
+				j_chars = 0;
+			}
 		}
 	}
 	return 0;
@@ -404,37 +480,70 @@ stock
 	return i;
 }
 
-
 stock
 	find_last_of(const string[], const chars[])
 {
-	new chr, i_string, j_chars, chars_len = strlen(chars);
+	new chr, i_string = strlen(string), j_chars, chars_len = strlen(chars);
 	if (IsPackedString(string))
 	{
-		while (i_string-- != 0)
+		if (IsPackedString(chars))
 		{
-			do
+			while (i_string-- != 0)
 			{
-				if (chr != chars{j_chars})
-					continue;
-				return i_string;
+				do
+				{
+					if (string{i_string} != chars{j_chars})
+						continue;
+					return i_string;
+				}
+				while (++j_chars <= chars_len);
+				j_chars = 0;
 			}
-			while (++j_chars <= chars_len);
-			j_chars = 0;
+		}
+		else
+		{
+			while (i_string-- != 0)
+			{
+				do
+				{
+					if (string{i_string} != chars[j_chars])
+						continue;
+					return i_string;
+				}
+				while (++j_chars <= chars_len);
+				j_chars = 0;
+			}
 		}
 	}
 	else
 	{
-		while (i_string-- != 0)
+		if (IsPackedString(chars))
 		{
-			do
+			while (i_string-- != 0)
 			{
-				if (chr != chars[j_chars])
-					continue;
-				return i_string;
+				do
+				{
+					if (string[i_string] != chars{j_chars})
+						continue;
+					return i_string;
+				}
+				while (++j_chars <= chars_len);
+				j_chars = 0;
 			}
-			while (++j_chars <= chars_len);
-			j_chars = 0;
+		}
+		else
+		{
+			while (i_string-- != 0)
+			{
+				do
+				{
+					if (string[i_string] != chars[j_chars])
+						continue;
+					return i_string;
+				}
+				while (++j_chars <= chars_len);
+				j_chars = 0;
+			}
 		}
 	}
 	return 0;
