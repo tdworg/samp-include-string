@@ -371,15 +371,14 @@ stock
 			{
 				while (j_chars <= chars_len)
 				{
-					if (chars{j_chars} == chr)
-						// See below.
-						goto l_packed_major_chars_packed;
-					j_chars++;
-					continue;
+					if (chars{j_chars++} == chr)
+					{
+						j_chars = 0;
+						break;
+					}
 				}
-				return i_string;
-			l_packed_major_chars_packed:
-				j_chars = 0;
+				if (j_chars != 0)
+					return i_string;
 			}
 		}
 		else
@@ -388,15 +387,14 @@ stock
 			{
 				while (j_chars <= chars_len)
 				{
-					if (chars[j_chars] == chr)
-						// See below.
-						goto l_packed_major_chars_unpacked;
-					j_chars++;
-					continue;
+					if (chars[j_chars++] == chr)
+					{
+						j_chars = 0;
+						break;
+					}
 				}
-				return i_string;
-			l_packed_major_chars_unpacked:
-				j_chars = 0;
+				if (j_chars != 0)
+					return i_string;
 			}
 		}
 	}
@@ -408,20 +406,14 @@ stock
 			{
 				while (j_chars <= chars_len)
 				{
-					if (chars{j_chars} == chr)
-						// I used the goto statement to exit the loop,
-						// because alternative ways don't exist.
-						// And yes, i renamed the label for workaround
-						// the error.
-						// see: https://github.com/compuphase/pawn/issues/21
-						goto l_unpacked_major_chars_packed;
-					j_chars++;
-					continue;
+					if (chars{j_chars++} == chr)
+					{
+						j_chars = 0;
+						break;
+					}
 				}
-				return i_string;
-				// See above.
-			l_unpacked_major_chars_packed:
-				j_chars = 0;
+				if (j_chars != 0)
+					return i_string;
 			}
 		}
 		else
@@ -430,16 +422,14 @@ stock
 			{
 				while (j_chars <= chars_len)
 				{
-					if (chars[j_chars] == chr)
-						// See above.
-						goto l_unpacked_major_chars_unpacked;
-					j_chars++;
-					continue;
+					if (chars[j_chars++] == chr)
+					{
+						j_chars = 0;
+						break;
+					}
 				}
-				return i_string;
-				// See above.
-			l_unpacked_major_chars_unpacked:
-				j_chars = 0;
+				if (j_chars != 0)
+					return i_string;
 			}
 		}
 	}
