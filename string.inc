@@ -78,11 +78,13 @@ freely, subject to the following restrictions:
 
 #define s<%1> (_:O@T:%1$)
 
+
 #if defined IsPackedString
 	// Checks if a string is packed.
 	// Other information: //www.compuphase.com/pawn/String_Manipulation.pdf
 	#define IsPackedString(%0) ((%0)[0] > 255)
 #endif
+
 
 enum
 	e_TDW_STRING
@@ -280,12 +282,47 @@ stock
 }
 
 
+// Returns the length of the new destination string.
 stock
 	strcpy(dest[], const string[], dest_size = sizeof dest)
 {
 	return
 		(IsPackedString(dest) ? dest{0} = '\0' : dest[0] = '\0'),
 		strcat(dest, string, dest_size);
+}
+
+
+stock
+	IsEmptyString(const string[])
+{
+	return (IsPackedString(string) ? (string{0}) : (string[0])) == '\0';
+}
+
+
+static stock
+	swap(&value1, &value2)
+{
+	// loads the values from the reference.
+	#emit lref.s.pri value1 // pri = [value1]
+	#emit lref.s.alt value2 // alt = [value2]
+	#emit sref.s.alt value1 // [value1] = alt
+	#emit sref.s.pri value2 // [value2] = pri
+	return 0;
+}
+
+
+// Returns number of swapped elements.
+stock
+	strswap(string1[], string2[])
+{
+	new i,string1_size = strlen(string1), string2_size = strlen(string2),
+		max_iters = (string1_size > string2_size) ? string2_size : string1_size;
+	while(i != max_iters)
+	{
+		swap(string1[i], string2[i]);
+		i++;
+	}
+	return i;
 }
 
 
@@ -434,40 +471,6 @@ stock
 		}
 	}
 	return 0;
-}
-
-
-stock
-	IsEmptyString(const string[])
-{
-	return (IsPackedString(string) ? (string{0}) : (string[0])) == '\0';
-}
-
-
-static stock
-	swap(&value1, &value2)
-{
-	// loads the values from the reference.
-	#emit lref.s.pri value1 // pri = [value1]
-	#emit lref.s.alt value2 // alt = [value2]
-	#emit sref.s.alt value1 // [value1] = alt
-	#emit sref.s.pri value2 // [value2] = pri
-	return;
-}
-
-
-stock
-	strswap(string1[], string2[])
-{
-	new i,string1_size = strlen(string1), string2_size = strlen(string2),
-		max_iters = (string1_size > string2_size) ? string2_size : string1_size;
-	while(i != max_iters)
-	{
-		swap(string1[i], string2[i]);
-		i++;
-	}
-	// returns number of swapped elements.
-	return i;
 }
 
 
