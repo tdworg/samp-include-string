@@ -78,8 +78,11 @@ freely, subject to the following restrictions:
 
 #define s<%1> (_:O@T:%1$)
 
-
-#define IsPackedString(%0) ((%0) > 255)
+#if defined IsPackedString
+	// Checks if a string is packed.
+	// Other information: //www.compuphase.com/pawn/String_Manipulation.pdf
+	#define IsPackedString(%0) ((%0) > 255)
+#endif
 
 enum
 	e_TDW_STRING
