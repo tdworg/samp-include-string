@@ -175,10 +175,8 @@ stock
 
 stock
 	strexplode(dest[][], const string[], const delimiter[] = " ",
-		bool:ignorecase = false, const pos = 0,
-		const dest_size_major = sizeof dest
-		const dest_size_minor = sizeof dest[],
-		const string_size = sizeof string)
+		bool:ignorecase = false, pos = 0, dest_size_major = sizeof dest,
+		dest_size_minor = sizeof dest[], string_size = sizeof string)
 {
 	if (pos >= string_size)
 		return -1;
@@ -250,6 +248,10 @@ stock
 {
 	new bool:is_packed = IsPackedString(string);
 	if (is_packed)
+		// As default, i.e. if the string isn't packed, value of
+		// string_size is capacity of the string + cell(for zero). But,
+		// if it packed string, the value is only the string capacity,
+		// so i do this:
 		string_size++;
 	if (_:(0 <= start_pos && start_pos < string_size) == 0)
 		return 0;
@@ -276,7 +278,7 @@ stock
 
 
 stock
-	strcpy(dest[], const string[], const dest_size = sizeof dest)
+	strcpy(dest[], const string[], dest_size = sizeof dest)
 {
 	return
 		(IsPackedString(dest) ? dest{0} = '\0' : dest[0] = '\0'),
