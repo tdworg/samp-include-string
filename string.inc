@@ -79,7 +79,7 @@ freely, subject to the following restrictions:
 #define s<%1> (_:O@T:%1$)
 
 
-#if defined IsPackedString
+#if !defined IsPackedString
 	// Checks if a string is packed.
 	// Other information: //www.compuphase.com/pawn/String_Manipulation.pdf
 	#define IsPackedString(%0) ((%0)[0] > 255)
@@ -297,6 +297,7 @@ stock
 {
 	return (IsPackedString(string) ? (string{0}) : (string[0])) == '\0';
 }
+
 
 
 static stock
