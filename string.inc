@@ -625,3 +625,18 @@ stock
 	}
 	return 0;
 }
+
+
+stock
+	strreverse(string[])
+{
+	new i, len = strlen(string), j = len - 1, chr;
+	do
+	{
+		chr = string[i];
+		string[i++] = string[j];
+		string[j--] = chr;
+	}
+	while (i < j);
+	return 0;
+}
