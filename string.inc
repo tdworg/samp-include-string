@@ -631,12 +631,25 @@ stock
 	strreverse(string[])
 {
 	new i, len = strlen(string), j = len - 1, chr;
-	do
+	if (IsPackedString(string))
 	{
-		chr = string[i];
-		string[i++] = string[j];
-		string[j--] = chr;
+		do
+		{
+			chr = string{i};
+			string{i++} = string{j};
+			string{j--} = chr;
+		}
+		while (i < j);
 	}
-	while (i < j);
+	else
+	{
+		do
+		{
+			chr = string[i];
+			string[i++] = string[j];
+			string[j--] = chr;
+		}
+		while (i < j);
+	}
 	return 0;
 }
