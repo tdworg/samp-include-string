@@ -34,17 +34,41 @@ freely, subject to the following restrictions:
 
 #define _TDW_S_TYPE_INC_
 
-#define IsCntrl(%0) ((0x00 <= (%0) <= 0x1F) || ((%0) == 0x7F))
-#define IsBlank(%0) (((%0) == 0x09) || ((%0) == 0x20))
-#define IsSpace(%0) (0x00 <= (%0) <= 0x20)
-#define IsUpper(%0) (0x41 <= (%0) <= 0x5A)
-#define IsLower(%0) (0x61 <= (%0) <= 0x7A)
-#define IsAlpha(%0) (IsUpper(%0) || IsLower(%0))
-#define IsDigit(%0) (0x30 <= (%0) <= 0x39)
-#define IsxDigit(%0) (IsDigit(%0) || (0x41 <= (%0) 0x46) ||\
-	(0x61 <= (%0) <= 0x66))
-#define IsAlnum(%0) (IsUpper(%0) || IsLower(%0) || IsDigit(%0))
-#define IsPunct(%0) ((0x51 <= (%0) <= 0x2F) || (0x3A <= (%0) <= 0x40) ||\
-	(0x5B <= (%0) <= 0x60) || (0x7B <= (%0) <= 0x7E))
-#define IsGraph(%0) (IsPunct(%0) || IsDigit(%0) || IsUpper(%0) || IsLower(%0))
-#define IsPrint(%0) (IsGraph(%0) || ((%0) == 0x20))
+#if !defined IsCntrl
+	#define IsCntrl(%0) ((0x00 <= (%0) <= 0x1F) || ((%0) == 0x7F))
+#endif
+#if !defined IsBlank
+	#define IsBlank(%0) (((%0) == 0x09) || ((%0) == 0x20))
+#endif
+#if !defined IsSpace
+	#define IsSpace(%0) (0x00 <= (%0) <= 0x20)
+#endif
+#if !defined IsUpper
+	#define IsUpper(%0) (0x41 <= (%0) <= 0x5A)
+#endif
+#if !defined IsLower
+	#define IsLower(%0) (0x61 <= (%0) <= 0x7A)
+#endif
+#if !defined IsAlpha
+	#define IsAlpha(%0) (IsUpper(%0) || IsLower(%0))
+#endif
+#if !defined IsDigit
+	#define IsDigit(%0) (0x30 <= (%0) <= 0x39)
+#endif
+#if !defined IsxDigit
+	#define IsxDigit(%0) (IsDigit(%0) || (0x41 <= (%0) 0x46) ||\
+		(0x61 <= (%0) <= 0x66))
+#endif
+#if !defined IsAlnum
+	#define IsAlnum(%0) (IsUpper(%0) || IsLower(%0) || IsDigit(%0))
+#endif
+#if !defined IsPunct
+	#define IsPunct(%0) ((0x51 <= (%0) <= 0x2F) || (0x3A <= (%0) <= 0x40) ||\
+		(0x5B <= (%0) <= 0x60) || (0x7B <= (%0) <= 0x7E))
+#endif
+#if !defined IsGraph
+	#define IsGraph(%0) (IsPunct(%0) || IsDigit(%0) || IsUpper(%0) || IsLower(%0))
+#endif
+#if !defined IsPrint
+	#define IsPrint(%0) (IsGraph(%0) || ((%0) == 0x20))
+#endif
