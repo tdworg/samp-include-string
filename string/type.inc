@@ -1,12 +1,5 @@
 /** ======================================================================== **\
-	String library
-
-| Description:
-This library exports several useful string functions that are not included in
-the PAWN string library. Besides, it adds a new syntax.
-
-| Version:
-3.0
+	Type
 
 | License:
 Copyright (c) 2016 Double V
@@ -31,20 +24,27 @@ freely, subject to the following restrictions:
 
 // I remove this constant because the compiler automatically generates it.
 // github.com/Zeex/pawn/issues/107
-#if defined _inc_string
-	#undef _inc_string
+#if defined _inc_type
+	#undef _inc_type
 #endif
 
-#if defined _TDW_STRING_INC_
+#if defined _TDW_S_TYPE_INC_
 	#endinput
 #endif
 
-#define _TDW_STRING_INC_
+#define _TDW_S_TYPE_INC_
 
-#include "tdw_string/string/string"
-#include "tdw_string/string/find"
-#include "tdw_string/string/replace"
-#include "tdw_string/string/type"
-#include "tdw_string/string/erase"
-#include "tdw_string/string/trim"
-#include "tdw_string/string/syntax"
+#define IsCntrl(%0) ((0x00 <= (%0) <= 0x1F) || ((%0) == 0x7F))
+#define IsBlank(%0) (((%0) == 0x09) || ((%0) == 0x20))
+#define IsSpace(%0) (0x00 <= (%0) <= 0x20)
+#define IsUpper(%0) (0x41 <= (%0) <= 0x5A)
+#define IsLower(%0) (0x61 <= (%0) <= 0x7A)
+#define IsAlpha(%0) (IsUpper(%0) || IsLower(%0))
+#define IsDigit(%0) (0x30 <= (%0) <= 0x39)
+#define IsxDigit(%0) (IsDigit(%0) || (0x41 <= (%0) 0x46) ||\
+	(0x61 <= (%0) <= 0x66))
+#define IsAlnum(%0) (IsUpper(%0) || IsLower(%0) || IsDigit(%0))
+#define IsPunct(%0) ((0x51 <= (%0) <= 0x2F) || (0x3A <= (%0) <= 0x40) ||\
+	(0x5B <= (%0) <= 0x60) || (0x7B <= (%0) <= 0x7E))
+#define IsGraph(%0) (IsPunct(%0) || IsDigit(%0) || IsUpper(%0) || IsLower(%0))
+#define IsPrint(%0) (IsGraph(%0) || ((%0) == 0x20))

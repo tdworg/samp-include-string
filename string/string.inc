@@ -1,12 +1,5 @@
 /** ======================================================================== **\
-	String library
-
-| Description:
-This library exports several useful string functions that are not included in
-the PAWN string library. Besides, it adds a new syntax.
-
-| Version:
-3.0
+	New Syntax
 
 | License:
 Copyright (c) 2016 Double V
@@ -35,16 +28,15 @@ freely, subject to the following restrictions:
 	#undef _inc_string
 #endif
 
-#if defined _TDW_STRING_INC_
+#if defined _TDW_S_STRING_INC_
 	#endinput
 #endif
 
-#define _TDW_STRING_INC_
+#define _TDW_S_STRING_INC_
 
-#include "tdw_string/string/string"
-#include "tdw_string/string/find"
-#include "tdw_string/string/replace"
-#include "tdw_string/string/type"
-#include "tdw_string/string/erase"
-#include "tdw_string/string/trim"
-#include "tdw_string/string/syntax"
+
+#if !defined IsPackedString
+	// Checks if a string is packed.
+	// Other information: //www.compuphase.com/pawn/String_Manipulation.pdf
+	#define IsPackedString(%0) ((%0)[0] > 255)
+#endif

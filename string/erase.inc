@@ -1,12 +1,5 @@
 /** ======================================================================== **\
-	String library
-
-| Description:
-This library exports several useful string functions that are not included in
-the PAWN string library. Besides, it adds a new syntax.
-
-| Version:
-3.0
+	Erase
 
 | License:
 Copyright (c) 2016 Double V
@@ -31,20 +24,56 @@ freely, subject to the following restrictions:
 
 // I remove this constant because the compiler automatically generates it.
 // github.com/Zeex/pawn/issues/107
-#if defined _inc_string
-	#undef _inc_string
+#if defined _inc_erase
+	#undef _inc_erase
 #endif
 
-#if defined _TDW_STRING_INC_
+#if defined _TDW_S_ERASE_INC_
 	#endinput
 #endif
 
-#define _TDW_STRING_INC_
+#define _TDW_S_ERASE_INC_
 
-#include "tdw_string/string/string"
-#include "tdw_string/string/find"
-#include "tdw_string/string/replace"
-#include "tdw_string/string/type"
-#include "tdw_string/string/erase"
-#include "tdw_string/string/trim"
-#include "tdw_string/string/syntax"
+
+stock
+	erase_first(string[], const find[], bool:ignorecase = false, pos = 0)
+{
+	new find_len = strlen(find);
+	if ((pos = strfind(string, find, ignorecase, pos)) == -1)
+		return 0;
+	strdel(string, pos, pos + find_len);
+	return pos;
+}
+
+
+stock
+	erase_last(string[], const find[], bool:ignorecase = false)
+{
+	new find_len = strlen(find), pos;
+	if ((pos = find_last(string, find, ignorecase)) == -1)
+		return 0;
+	strdel(string, pos, pos + find_len);
+	return pos;
+}
+
+
+stock
+	erase_nth(string[], const find[], n, bool:ignorecase = false, pos = 0)
+{
+	new find_len = strlen(find);
+	while ((pos = strfind(string, find, ignorecase, pos)) != -1)
+	{
+		strdel(string, pos, pos + find_len);
+		if (--n == 0)
+			break;
+	}
+	return 0;
+}
+
+
+stock
+	erase(string[], start_pos, length = cellmax)
+{
+	strdel(string, start_pos, length);
+	return 0;
+}
