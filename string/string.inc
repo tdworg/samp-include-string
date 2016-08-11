@@ -40,3 +40,81 @@ freely, subject to the following restrictions:
 #if !defined IsPackedString
 	#define IsPackedString(%0) ((%0)[0] > 255)
 #endif
+
+
+stock
+	strcpy(dest[], const string[], dest_size = sizeof dest)
+{
+	return
+		(IsPackedString(dest) ? dest{0} = '\0' : dest[0] = '\0'),
+		strcat(dest, string, dest_size);
+}
+
+
+stock
+	IsEmptyString(const string[])
+{
+	return (IsPackedString(string) ? (string{0}) : (string[0])) == '\0';
+}
+
+
+stock
+	memcmp(const string1[], const string2[], n)
+{
+	// Converts the value to bytes.
+	#emit load.s.pri n // pri = n
+	#emit shl.c.pri 2 // pri <<= 2
+	#emit stor.s.pri n // n = pri
+	// Addresses..
+	#emit load.s.pri string1 // pri = string1
+	#emit load.s.alt string2 // alt = string2
+	// Compare the memory blocks
+	#emit cmps n
+	// Returns zero if the blocks are equal.
+	#emit retn
+	// For workaround the warning.
+	return 0;
+}
+
+
+stock
+	strcount(const string[], const find[], bool:ignorecase = false, pos = 0,
+		const string_size = sizeof string)
+{
+	if (pos >= string_size)
+		return 0;
+	new found_pos = pos, count, find_size = strlen(find);
+	while ((found_pos = strfind(string, find, ignorecase,
+		found_pos + find_size)) != -1
+	)
+		count++;
+	return count;
+}
+
+
+stock
+	strreverse(string[])
+{
+	new i, len = strlen(string), j = len - 1, chr;
+	if (IsPackedString(string))
+	{
+		do
+		{
+			chr = string{i};
+			string{i++} = string{j};
+			string{j--} = chr;
+		}
+		while (i < j);
+	}
+	else
+	{
+		do
+		{
+			chr = string[i];
+			string[i++] = string[j];
+			string[j--] = chr;
+		}
+		while (i < j);
+	}
+	return 0;
+}
