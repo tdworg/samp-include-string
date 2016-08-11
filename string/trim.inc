@@ -1,12 +1,5 @@
 /** ======================================================================== **\
-	String library
-
-| Description:
-This library exports several useful string functions that are not included in
-the PAWN string library. Besides, it adds a new syntax.
-
-| Version:
-3.0.1
+	Trim
 
 | License:
 Copyright (c) 2016 Double V
@@ -31,20 +24,62 @@ freely, subject to the following restrictions:
 
 // I remove this constant because the compiler automatically generates it.
 // github.com/Zeex/pawn/issues/107
-#if defined _inc_string
-	#undef _inc_string
+#if defined _inc_trim
+	#undef _inc_trim
 #endif
 
-#if defined _TDW_STRING_INC_
+#if defined _TDW_S_TRIM_INC_
 	#endinput
 #endif
 
-#define _TDW_STRING_INC_
+#define _TDW_S_TRIM_INC_
 
-#include "tdw_string/string/string"
-#include "tdw_string/string/find"
-#include "tdw_string/string/replace"
-#include "tdw_string/string/type"
-#include "tdw_string/string/erase"
-#include "tdw_string/string/trim"
-#include "tdw_string/string/syntax"
+
+stock
+	trim_left(string[], const delimiter = ' ')
+{
+	new chr, pos;
+	if (IsPackedString(string))
+	{
+		while ((chr = string{pos++}) != '\0')
+			if (chr != delimiter)
+				break;
+	}
+	else
+	{
+		while ((chr = string[pos++]) != '\0')
+			if (chr != delimiter)
+				break;
+	}
+	strdel(string, 0, pos - 1);
+	return 0;
+}
+
+
+stock
+	trim_right(string[], const delimiter = ' ')
+{
+	new pos = strlen(string);
+	if (IsPackedString(string))
+	{
+		while (pos-- != 0)
+			if (string{pos} != delimiter)
+				break;
+	}
+	else
+	{
+		while (pos-- != 0)
+			if (string[pos] != delimiter)
+				break;
+	}
+	strdel(string, pos + 1, len);
+	return 0;
+}
+
+
+stock
+	trim(string[], const delimiter = ' ')
+{
+	trim_left(string, delimiter);
+	trim_right(string, delimiter);
+}
