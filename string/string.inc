@@ -35,8 +35,8 @@ freely, subject to the following restrictions:
 #define _TDW_S_STRING_INC_
 
 
+// Checks if a string is packed.
+// Other information: //www.compuphase.com/pawn/String_Manipulation.pdf
 #if !defined IsPackedString
-	// Checks if a string is packed.
-	// Other information: //www.compuphase.com/pawn/String_Manipulation.pdf
 	#define IsPackedString(%0) ((%0)[0] > 255)
 #endif
