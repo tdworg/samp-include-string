@@ -41,6 +41,10 @@ stock
 {
 	if ((pos = erase_first(string, find, ignorecase, pos)) == 0)
 		return 0;
+	new string_len = strlen(string), find_len = strlen(find),
+		replace_len = strlen(replace);
+	if (((string_len - find_len) + replace_len) >= string_size)
+		return 0;
 	strins(string, replace, pos, string_size);
 	return 1;
 }
