@@ -52,7 +52,7 @@ stock
 {
 	new string_len = strlen(string), find_len = strlen(find),
 		replace_len = strlen(replace);
-	if (((string_len - find_len) + replace_len)>= string_size)
+	if (((string_len - find_len) + replace_len) >= string_size)
 		return 0;
 	if ((pos = erase_last(string, find, ignorecase)) == 0)
 		return 0;
