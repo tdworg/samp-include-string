@@ -6,7 +6,7 @@ This library exports several useful string functions that are not included in
 the PAWN string library. Besides, it adds a new syntax.
 
 | Version:
-3.0.3
+3.2.3
 
 | License:
 Copyright (c) 2016 Double V
