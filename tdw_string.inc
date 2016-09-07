@@ -47,4 +47,4 @@ freely, subject to the following restrictions:
 #include "string/type"
 #include "string/erase"
 #include "string/trim"
-#include "string/syntax"
+// #include "string/syntax"
