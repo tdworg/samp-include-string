@@ -41,10 +41,10 @@ freely, subject to the following restrictions:
 
 #define _TDW_STRING_INC_
 
-#include "string/string"
-#include "string/find"
-#include "string/replace"
-#include "string/type"
-#include "string/erase"
-#include "string/trim"
+#include "tdw_string\string"
+#include "tdw_string\find"
+#include "tdw_string\replace"
+#include "tdw_string\type"
+#include "tdw_string\erase"
+#include "tdw_string\trim"
 // #include "string/syntax"
