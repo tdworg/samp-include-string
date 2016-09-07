@@ -61,6 +61,8 @@ stock
 	erase_nth(string[], const find[], n, bool:ignorecase = false, pos = 0)
 {
 	new find_len = strlen(find);
+	if (n == 0)
+		return 0;
 	while ((pos = strfind(string, find, ignorecase, pos)) != -1)
 	{
 		strdel(string, pos, pos + find_len);
