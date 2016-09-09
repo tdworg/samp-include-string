@@ -40,4 +40,4 @@ freely, subject to the following restrictions:
 #define ITER_1:%1$ %1
 
 #define foreach_string(%1)<%2>\
-	for(%1=%2[0],%2@Iter=0;++%2@Iter<sizeof %2;ITER_NEW:%1$=%2[%2@Iter])
+	for(new %1=%2[0],%2@Iter=0;++%2@Iter<sizeof %2;ITER_NEW:%1$=%2[%2@Iter])
