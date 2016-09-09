@@ -46,7 +46,7 @@ stock
 	strcpy(dest[], const string[], dest_size = sizeof dest)
 {
 	return
-		(IsPackedString(dest) ? dest{0} = '\0' : dest[0] = '\0'),
+		(IsPackedString(dest) ? (dest{0} = '\0') : (dest[0] = '\0')),
 		strcat(dest, string, dest_size);
 }
 
@@ -79,15 +79,18 @@ stock
 
 stock
 	strcount(const string[], const find[], bool:ignorecase = false, pos = 0,
-		const string_size = sizeof string)
+		string_size = sizeof string)
 {
 	if (pos >= string_size)
 		return 0;
 	new found_pos = pos, count, find_size = strlen(find);
 	while ((found_pos = strfind(string, find, ignorecase,
-		found_pos + find_size)) != -1
+		found_pos)) != -1
 	)
+	{
 		count++;
+		found_pos += find_size;
+	}
 	return count;
 }
 

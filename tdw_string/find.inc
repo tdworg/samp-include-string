@@ -65,30 +65,32 @@ stock
 	{
 		if (IsPackedString(charlist))
 		{
-			while ((chr = string{pos_string++}) != '\0')
+			while ((chr = string{pos_string}) != '\0')
 			{
 				do
 				{
 					if (chr != charlist{pos_charlist})
 						continue;
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				pos_charlist = 0;
+				pos_string++;
 			}
 		}
 		else
 		{
-			while ((chr = string{pos_string++}) != '\0')
+			while ((chr = string{pos_string}) != '\0')
 			{
 				do
 				{
 					if (chr != charlist[pos_charlist])
 						continue;
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				pos_charlist = 0;
+				pos_string++;
 			}
 		}
 	}
@@ -96,30 +98,32 @@ stock
 	{
 		if (IsPackedString(charlist))
 		{
-			while ((chr = string[pos_string++]) != '\0')
+			while ((chr = string[pos_string]) != '\0')
 			{
 				do
 				{
 					if (chr != charlist{pos_charlist})
 						continue;
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				pos_charlist = 0;
+				pos_string++;
 			}
 		}
 		else
 		{
-			while ((chr = string[pos_string++]) != '\0')
+			while ((chr = string[pos_string]) != '\0')
 			{
 				do
 				{
 					if (chr != charlist[pos_charlist])
 						continue;
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				pos_charlist = 0;
+				pos_string++;
 			}
 		}
 	}
@@ -142,7 +146,7 @@ stock
 				{
 					if (string{pos_string} != charlist{pos_charlist})
 						continue;
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				pos_charlist = 0;
@@ -156,7 +160,7 @@ stock
 				{
 					if (string{pos_string} != charlist[pos_charlist])
 						continue;
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				pos_charlist = 0;
@@ -173,7 +177,7 @@ stock
 				{
 					if (string[pos_string] != charlist{pos_charlist})
 						continue;
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				pos_charlist = 0;
@@ -187,7 +191,7 @@ stock
 				{
 					if (string[pos_string] != charlist[pos_charlist])
 						continue;
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				pos_charlist = 0;
@@ -215,11 +219,11 @@ stock
 						pos_charlist = 0;
 						break;
 					}
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				if (pos_charlist != 0)
-					return pos_string;
+					return pos_string - 1;
 			}
 		}
 		else
@@ -233,11 +237,11 @@ stock
 						pos_charlist = 0;
 						break;
 					}
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				if (pos_charlist != 0)
-					return pos_string;
+					return pos_string - 1;
 			}
 		}
 	}
@@ -254,11 +258,11 @@ stock
 						pos_charlist = 0;
 						break;
 					}
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				if (pos_charlist != 0)
-					return pos_string;
+					return pos_string - 1;
 			}
 		}
 		else
@@ -272,11 +276,11 @@ stock
 						pos_charlist = 0;
 						break;
 					}
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				if (pos_charlist != 0)
-					return pos_string;
+					return pos_string - 1;
 			}
 		}
 	}
