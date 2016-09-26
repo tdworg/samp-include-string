@@ -53,7 +53,7 @@ stock
 			continue;
 		return pos;
 	}
-	return 0;
+	return -1;
 }
 
 

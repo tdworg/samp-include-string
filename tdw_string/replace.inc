@@ -93,5 +93,5 @@ stock
 		pos += replace_len;
 		string_len += replace_len;
 	}
-	return 0;
+	return 1;
 }
