@@ -47,4 +47,3 @@ freely, subject to the following restrictions:
 #include "tdw_string\type"
 #include "tdw_string\erase"
 #include "tdw_string\trim"
-// #include "string/syntax"
