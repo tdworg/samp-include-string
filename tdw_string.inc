@@ -35,11 +35,11 @@ freely, subject to the following restrictions:
 	#undef _inc_string
 #endif
 
-#if defined _TDW_STRING_INC_
+#if defined _TDW_STCOL__H
 	#endinput
 #endif
 
-#define _TDW_STRING_INC_
+#define _TDW_STCOL__H
 
 #include "tdw_string\string"
 #include "tdw_string\find"
