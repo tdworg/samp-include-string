@@ -69,7 +69,7 @@ stock
 		if (--n == 0)
 			break;
 	}
-	return -1;
+	return pos;
 }
 
 
@@ -77,5 +77,5 @@ stock
 	erase(string[], start_pos, length = cellmax)
 {
 	strdel(string, start_pos, length);
-	return -1;
+	return;
 }
