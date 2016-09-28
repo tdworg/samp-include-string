@@ -46,7 +46,7 @@ stock
 	strcpy(dest[], const string[], dest_size = sizeof dest)
 {
 	return
-		(IsPackedString(dest) ? dest{0} = '\0' : dest[0] = '\0'),
+		(IsPackedString(dest) ? (dest{0} = '\0') : (dest[0] = '\0')),
 		strcat(dest, string, dest_size);
 }
 
@@ -68,26 +68,32 @@ stock
 	// Addresses..
 	#emit load.s.pri string1 // pri = string1
 	#emit load.s.alt string2 // alt = string2
+	goto l_str_checks_if_strings_is_comp;
+l_str_is_comp:
 	// Compare the memory blocks
 	#emit cmps n
 	// Returns zero if the blocks are equal.
 	#emit retn
-	// For workaround the warning.
+l_str_checks_if_strings_is_comp:
+	#emit jeq l_str_is_comp
 	return 0;
 }
 
 
 stock
 	strcount(const string[], const find[], bool:ignorecase = false, pos = 0,
-		const string_size = sizeof string)
+		string_size = sizeof string)
 {
 	if (pos >= string_size)
 		return 0;
 	new found_pos = pos, count, find_size = strlen(find);
 	while ((found_pos = strfind(string, find, ignorecase,
-		found_pos + find_size)) != -1
+		found_pos)) != -1
 	)
+	{
 		count++;
+		found_pos += find_size;
+	}
 	return count;
 }
 

@@ -1,14 +1,3 @@
-/** ======================================================================== **\
-	String library
-
-| Description:
-This library exports several useful string functions that are not included in
-the PAWN string library. Besides, it adds a new syntax.
-
-| Version:
-3.3.0
-
-| License:
 Copyright (c) 2016 Double V
 
 This software is provided 'as-is', without any express or implied
@@ -26,25 +15,3 @@ freely, subject to the following restrictions:
 2.	Altered source versions must be plainly marked as such, and must not be
 	misrepresented as being the original software.
 3.	This notice may not be removed or altered from any source distribution.
-\** ======================================================================== **/
-
-
-// I remove this constant because the compiler automatically generates it.
-// github.com/Zeex/pawn/issues/107
-#if defined _inc_string
-	#undef _inc_string
-#endif
-
-#if defined _TDW_STRING_INC_
-	#endinput
-#endif
-
-#define _TDW_STRING_INC_
-
-#include "tdw_string\string"
-#include "tdw_string\find"
-#include "tdw_string\replace"
-#include "tdw_string\type"
-#include "tdw_string\erase"
-#include "tdw_string\trim"
-// #include "string/syntax"

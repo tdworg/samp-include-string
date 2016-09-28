@@ -39,13 +39,9 @@ stock
 	replace_first(string[], const find[], const replace[],
 		bool:ignorecase = false, pos = 0, string_size = sizeof string)
 {
-	if ((pos = erase_first(string, find, ignorecase, pos)) == 0)
+	if ((pos = erase_first(string, find, ignorecase, pos)) == -1)
 		return 0;
-	new string_len = strlen(string), find_len = strlen(find),
-		replace_len = strlen(replace);
-	if (((string_len - find_len) + replace_len) >= string_size)
-		return 0;
-	strins(string, replace, pos, string_size);
+	format(string, string_size, "%.*s%s%s", pos, string, replace, string[pos]);
 	return 1;
 }
 
@@ -54,13 +50,9 @@ stock
 	replace_last(string[], const find[], const replace[],
 		bool:ignorecase = false, pos = 0, string_size = sizeof string)
 {
-	new string_len = strlen(string), find_len = strlen(find),
-		replace_len = strlen(replace);
-	if (((string_len - find_len) + replace_len) >= string_size)
+	if ((pos = erase_last(string, find, ignorecase)) == -1)
 		return 0;
-	if ((pos = erase_last(string, find, ignorecase)) == 0)
-		return 0;
-	strins(string, replace, pos, string_size);
+	format(string, string_size, "%.*s%s%s", pos, string, replace, string[pos]);
 	return 1;
 }
 
@@ -97,9 +89,9 @@ stock
 		if ((string_len -= find_len) + replace_len >= string_size)
 			return 0;
 		strdel(string, pos, pos + find_len);
-		strins(string, replacement, pos, string_size);
+		strins(string, replace, pos, string_size);
 		pos += replace_len;
 		string_len += replace_len;
 	}
-	return 0;
+	return 1;
 }

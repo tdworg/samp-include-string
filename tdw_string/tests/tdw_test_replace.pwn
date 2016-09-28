@@ -1,6 +1,4 @@
 /** ======================================================================== **\
-	Trim
-
 | License:
 Copyright (c) 2016 Double V
 
@@ -21,65 +19,29 @@ freely, subject to the following restrictions:
 3.	This notice may not be removed or altered from any source distribution.
 \** ======================================================================== **/
 
+#include <a_samp>
+#include <tdw_string>
 
-// I remove this constant because the compiler automatically generates it.
-// github.com/Zeex/pawn/issues/107
-#if defined _inc_trim
-	#undef _inc_trim
-#endif
-
-#if defined _TDW_S_TRIM_INC_
-	#endinput
-#endif
-
-#define _TDW_S_TRIM_INC_
-
-
-stock
-	trim_left(string[], const delimiter = ' ')
+public OnFilterScriptInit()
 {
-	new chr, pos;
-	if (IsPackedString(string))
-	{
-		while ((chr = string{pos++}) != '\0')
-			if (chr != delimiter)
-				break;
-	}
-	else
-	{
-		while ((chr = string[pos++]) != '\0')
-			if (chr != delimiter)
-				break;
-	}
-	strdel(string, 0, pos - 1);
-	return 0;
-}
+	static const test_text[] = "Text, text, and text";
+	new string[sizeof test_text];
 
+	string = test_text;
+	replace_first(string, "text", "gs", true);
+	printf("Output (replace_first): %s", string);
 
-stock
-	trim_right(string[], const delimiter = ' ')
-{
-	new pos = strlen(string), len = strlen(string);
-	if (IsPackedString(string))
-	{
-		while (pos-- != 0)
-			if (string{pos} != delimiter)
-				break;
-	}
-	else
-	{
-		while (pos-- != 0)
-			if (string[pos] != delimiter)
-				break;
-	}
-	strdel(string, pos + 1, len);
-	return 0;
-}
+	string = test_text;
+	replace_last(string, "text", "g", true);
+	printf("Output (replace_last): %s", string);
 
+	string = test_text;
+	replace_nth(string, "text", "here", 2, true);
+	printf("Output (replace_nth): %s", string);
 
-stock
-	trim(string[], const delimiter = ' ')
-{
-	trim_left(string, delimiter);
-	trim_right(string, delimiter);
+	string = test_text;
+	replace_all(string, "text", "new", true);
+	printf("Output (replace_all): %s", string);
+
+	return 1;
 }

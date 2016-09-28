@@ -40,7 +40,7 @@ stock
 {
 	new find_len = strlen(find);
 	if ((pos = strfind(string, find, ignorecase, pos)) == -1)
-		return 0;
+		return -1;
 	strdel(string, pos, pos + find_len);
 	return pos;
 }
@@ -51,7 +51,7 @@ stock
 {
 	new find_len = strlen(find), pos;
 	if ((pos = find_last(string, find, ignorecase)) == -1)
-		return 0;
+		return -1;
 	strdel(string, pos, pos + find_len);
 	return pos;
 }
@@ -62,14 +62,14 @@ stock
 {
 	new find_len = strlen(find);
 	if (n == 0)
-		return 0;
+		return -1;
 	while ((pos = strfind(string, find, ignorecase, pos)) != -1)
 	{
 		strdel(string, pos, pos + find_len);
 		if (--n == 0)
 			break;
 	}
-	return 0;
+	return -1;
 }
 
 
@@ -77,5 +77,5 @@ stock
 	erase(string[], start_pos, length = cellmax)
 {
 	strdel(string, start_pos, length);
-	return 0;
+	return -1;
 }
