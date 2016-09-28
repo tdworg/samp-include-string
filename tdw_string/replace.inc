@@ -34,6 +34,8 @@ freely, subject to the following restrictions:
 
 #define _TDW_S_REPLACE_INC_
 
+static const
+	TDW_g_sFormat[] = "%.*s%s%s";
 
 stock
 	replace_first(string[], const find[], const replace[],
@@ -41,7 +43,9 @@ stock
 {
 	if ((pos = erase_first(string, find, ignorecase, pos)) == -1)
 		return 0;
-	format(string, string_size, "%.*s%s%s", pos, string, replace, string[pos]);
+	format(string, string_size, TDW_g_sFormat, pos, string, replace,
+		string[pos]
+	);
 	return 1;
 }
 
@@ -52,7 +56,9 @@ stock
 {
 	if ((pos = erase_last(string, find, ignorecase)) == -1)
 		return 0;
-	format(string, string_size, "%.*s%s%s", pos, string, replace, string[pos]);
+	format(string, string_size, TDW_g_sFormat, pos, string, replace,
+		string[pos]
+	);
 	return 1;
 }
 
