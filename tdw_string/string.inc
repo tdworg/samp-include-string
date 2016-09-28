@@ -28,11 +28,11 @@ freely, subject to the following restrictions:
 	#undef _inc_string
 #endif
 
-#if defined _TDW_S_STRING_INC_
+#if defined _TDW_STLIB__STRING
 	#endinput
 #endif
 
-#define _TDW_S_STRING_INC_
+#define _TDW_STLIB__STRING
 
 
 // Checks if a string is packed.

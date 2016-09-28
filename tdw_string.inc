@@ -6,7 +6,7 @@ This library exports several useful string functions that are not included in
 the PAWN string library. Besides, it adds a new syntax.
 
 | Version:
-3.3.0
+1.1.3
 
 | License:
 Copyright (c) 2016 Double V
@@ -35,11 +35,11 @@ freely, subject to the following restrictions:
 	#undef _inc_string
 #endif
 
-#if defined _TDW_STRING_INC_
+#if defined _TDW_STCOL__H
 	#endinput
 #endif
 
-#define _TDW_STRING_INC_
+#define _TDW_STCOL__H
 
 #include "tdw_string\string"
 #include "tdw_string\find"
@@ -47,4 +47,3 @@ freely, subject to the following restrictions:
 #include "tdw_string\type"
 #include "tdw_string\erase"
 #include "tdw_string\trim"
-// #include "string/syntax"

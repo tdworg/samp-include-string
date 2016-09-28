@@ -28,11 +28,11 @@ freely, subject to the following restrictions:
 	#undef _inc_erase
 #endif
 
-#if defined _TDW_S_ERASE_INC_
+#if defined _TDW_STLIB__ERASE
 	#endinput
 #endif
 
-#define _TDW_S_ERASE_INC_
+#define _TDW_STLIB__ERASE
 
 
 stock
@@ -69,7 +69,7 @@ stock
 		if (--n == 0)
 			break;
 	}
-	return -1;
+	return pos;
 }
 
 
@@ -77,5 +77,5 @@ stock
 	erase(string[], start_pos, length = cellmax)
 {
 	strdel(string, start_pos, length);
-	return -1;
+	return;
 }

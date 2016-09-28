@@ -28,11 +28,11 @@ freely, subject to the following restrictions:
 	#undef _inc_find
 #endif
 
-#if defined _TDW_S_FIND_INC_
+#if defined _TDW_STLIB__FIND
 	#endinput
 #endif
 
-#define _TDW_S_FIND_INC_
+#define _TDW_STLIB__FIND
 
 
 stock
