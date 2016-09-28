@@ -28,11 +28,11 @@ freely, subject to the following restrictions:
 	#undef _inc_replace
 #endif
 
-#if defined _TDW_S_REPLACE_INC_
+#if defined _TDW_STLIB__REPLACE
 	#endinput
 #endif
 
-#define _TDW_S_REPLACE_INC_
+#define _TDW_STLIB__REPLACE
 
 static const
 	TDW_g_sFormat[] = "%.*s%s%s";
