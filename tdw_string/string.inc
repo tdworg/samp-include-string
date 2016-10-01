@@ -68,14 +68,10 @@ stock
 	// Addresses..
 	#emit load.s.pri string1 // pri = string1
 	#emit load.s.alt string2 // alt = string2
-	goto l_str_checks_if_strings_is_comp;
-l_str_is_comp:
 	// Compare the memory blocks
 	#emit cmps n
 	// Returns zero if the blocks are equal.
 	#emit retn
-l_str_checks_if_strings_is_comp:
-	#emit jeq l_str_is_comp
 	return 0;
 }
 
