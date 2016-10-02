@@ -180,3 +180,56 @@ stock
 	}
 	return 1;
 }
+
+
+stock
+	countofuppercase(const string[])
+{
+	new string_len = strlen(string);
+	return floatround(
+		floatmul(
+			floatdiv(
+				float(countof@loop(string, 'A', 'Z', string_len)),
+				float(string_len)
+			), 100.0)
+	);
+}
+
+
+stock
+	countoflowpercase(const string[])
+{
+	new string_len = strlen(string);
+	return floatround(
+		floatmul(
+			floatdiv(
+				float(countof@loop(string, 'a', 'z', string_len)),
+				float(string_len)
+			), 100.0)
+	);
+}
+
+
+static stock
+	countof@loop(const string[], start_sym, end_sym, string_len)
+{
+	assert(end_sym > start_sym);
+	new index, count;
+	if (IsPackedString(string))
+	{
+		while(index < string_len)
+		{
+			if (start_sym <= string{index++} <= end_sym)
+				++count;
+		}
+	}
+	else
+	{
+		while(index < string_len)
+		{
+			if (start_sym <= string[index++] <= end_sym)
+				++count;
+		}
+	}
+	return count;
+}
