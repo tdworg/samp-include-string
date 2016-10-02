@@ -236,7 +236,8 @@ static stock
 
 
 static stock const
-	string@rus[] = "ÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÚÛÜİŞßàáâãäå¸æçèéêëìíîïğñòóôõö÷øùüûúışÿ",
+	string@rus[] = "ÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÚÛÜİŞßàáâãäå¸æçèéêëìíîïğñòóôõö÷"\
+	"øùüûúışÿ",
 	string@arr_lat[][] = {
 		"A",  "B",    "V", "G", "D", "E", "JO", "ZH", "Z", "I", "Y", "K",
 		"L",  "M",    "N", "O", "P", "R", "S",  "T", "U", "F", "KH", "C",
@@ -246,8 +247,9 @@ static stock const
 		"jhh", "ih", "jh", "eh", "ju", "ja"
 	};
 
+
 stock
-	strtrtrans(string[])
+	strtrtrans(string[], string_size = sizeof string)
 {
 	new chr, i, pos;
 	while ((chr = string[i]) != '\0')
@@ -255,7 +257,7 @@ stock
 		if ((pos = find_char(string@rus, chr)) != -1)
 		{
 			strdel(string, i, i + 1);
-			strins(string, string@arr_lat[pos], i);
+			strins(string, string@arr_lat[pos], i, string_size);
 		}
 		i++;
 	}
