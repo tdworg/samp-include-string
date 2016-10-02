@@ -373,3 +373,20 @@ stock
 	}
 	return -1;
 }
+
+
+stock
+	find_char(const string[], chr)
+{
+	new pos = -1, string_len = strlen(string);
+	while (string_len-- != 0)
+	{
+		if (chr == string[string_len])
+		{
+			pos = string_len;
+			break;
+		}
+		else pos = -1;
+	}
+	return pos;
+}
