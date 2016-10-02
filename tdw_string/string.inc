@@ -120,3 +120,63 @@ stock
 	}
 	return 0;
 }
+
+
+stock
+	strparttoupper(string[], part_start, part_end, string_size = sizeof string)
+{
+	if (part_start == 0)
+		return 0;
+	if (part_end > string_size)
+		return 0;
+	const dist = 'A' - 'a';
+	if (IsPackedString(string))
+	{
+		do
+		{
+			if ('a' <= string{part_start} <= 'z')
+				string{part_start} += dist;
+		}
+		while (++part_start != part_end);
+	}
+	else
+	{
+		do
+		{
+			if ('a' <= string[part_start] <= 'z')
+				string[part_start] += dist;
+		}
+		while (++part_start != part_end);
+	}
+	return 1;
+}
+
+
+stock
+	strparttolower(string[], part_start, part_end, string_size = sizeof string)
+{
+	if (part_start == 0)
+		return 0;
+	if (part_end > string_size)
+		return 0;
+	const dist = 'A' - 'a';
+	if (IsPackedString(string))
+	{
+		do
+		{
+			if ('A' <= string{part_start} <= 'Z')
+				string{part_start} -= dist;
+		}
+		while (++part_start != part_end);
+	}
+	else
+	{
+		do
+		{
+			if ('A' <= string[part_start] <= 'Z')
+				string[part_start] -= dist;
+		}
+		while (++part_start != part_end);
+	}
+	return 1;
+}
