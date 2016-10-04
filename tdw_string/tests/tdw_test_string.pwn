@@ -87,5 +87,21 @@ public OnFilterScriptInit()
 	strreverse(buffer@0);
 	printf("Output (strreverse): %s", buffer@0);
 
+	//
+	// Function: strparttoupper
+	//
+	new buffer_t[] = "this is text";
+
+	strparttoupper(buffer_t, 5, 7);
+	printf("Output (strparttoupper): %s", buffer_t);
+	printf("Output (countofuppercase): %d", countofuppercase(buffer_t));
+
+
+	// Function: strparttolower
+	strparttolower(buffer_t, 5, 7);
+	printf("Output (strparttolower): %s", buffer_t);
+	printf("Output (countoflowpercase): %d", countoflowpercase(buffer_t));
+
+
 	return 1;
 }
