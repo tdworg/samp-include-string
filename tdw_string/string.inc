@@ -38,7 +38,10 @@ freely, subject to the following restrictions:
 // Checks if a string is packed.
 // Other information: //www.compuphase.com/pawn/String_Manipulation.pdf
 // Author: Untonyst.
-#define IsPackedString(%0) ((%0){0} != 0)
+#if !defined IsPackedString
+	#define IsPackedString(%0) ((%0){0} != 0)
+#endif
+
 
 //
 // Old version
