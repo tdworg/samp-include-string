@@ -58,9 +58,12 @@ stock
 
 
 stock
-	find_first_of(const string[], const charlist[])
+	find_first_of(const string[], const charlist[], pos_string = 0,
+		size = sizeof string)
 {
-	new pos_string, pos_charlist, chr, charlist_len = strlen(charlist);
+	if (pos_string > size)
+		return -1;
+	new charlist_len = strlen(charlist), pos_charlist, chr;
 	if (IsPackedString(string))
 	{
 		if (IsPackedString(charlist))
@@ -203,9 +206,12 @@ stock
 
 
 stock
-	find_first_not_of(const string[], const charlist[])
+	find_first_not_of(const string[], const charlist[], pos_string = 0,
+		size = sizeof string)
 {
-	new pos_string, pos_charlist, chr, charlist_len = strlen(charlist);
+	if (pos_string > size)
+		return -1;
+	new pos_charlist, chr, charlist_len = strlen(charlist);
 	if (IsPackedString(string))
 	{
 		if (IsPackedString(charlist))

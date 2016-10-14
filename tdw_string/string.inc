@@ -37,9 +37,18 @@ freely, subject to the following restrictions:
 
 // Checks if a string is packed.
 // Other information: //www.compuphase.com/pawn/String_Manipulation.pdf
+// Author: Untonyst.
 #if !defined IsPackedString
-	#define IsPackedString(%0) ((%0)[0] > 255)
+	#define IsPackedString(%0) ((%0){0} != 0)
 #endif
+
+
+//
+// Old version
+//
+// #if !defined IsPackedString
+// 	#define IsPackedString(%0) ((%0)[0] > 255)
+// #endif
 
 
 stock
@@ -59,8 +68,11 @@ stock
 
 
 stock
-	memcmp(const string1[], const string2[], n)
+	memcmp(const string1[], const string2[], n = cellmax,
+		size_1 = sizeof string1, size_2 = sizeof string2)
 {
+	if (n == cellmax)
+		n = size_1 > size_2 ? size_1 : size_2;
 	// Converts the value to bytes.
 	#emit load.s.pri n // pri = n
 	#emit shl.c.pri 2 // pri <<= 2
@@ -121,21 +133,24 @@ stock
 	return 0;
 }
 
-
 stock
 	strparttoupper(string[], part_start, part_end, string_size = sizeof string)
 {
-	if (part_start == 0)
+	if (part_start < 0)
 		return 0;
 	if (part_end > string_size)
 		return 0;
 	const dist = 'A' - 'a';
+	new c;
 	if (IsPackedString(string))
 	{
 		do
 		{
-			if ('a' <= string{part_start} <= 'z')
-				string{part_start} += dist;
+			if (0xE0 <= (c = string{part_start}) <= 0xFF)
+				c += dist;
+			else if ('a' <= c <= 'z')
+				c += dist;
+			string{part_start} = c;
 		}
 		while (++part_start != part_end);
 	}
@@ -143,8 +158,11 @@ stock
 	{
 		do
 		{
-			if ('a' <= string[part_start] <= 'z')
-				string[part_start] += dist;
+			if (0xE0 <= (c = string[part_start]) <= 0xFF)
+				c += dist;
+			else if ('a' <= c <= 'z')
+				c += dist;
+			string[part_start] = c;
 		}
 		while (++part_start != part_end);
 	}
@@ -155,17 +173,21 @@ stock
 stock
 	strparttolower(string[], part_start, part_end, string_size = sizeof string)
 {
-	if (part_start == 0)
+	if (part_start < 0)
 		return 0;
 	if (part_end > string_size)
 		return 0;
 	const dist = 'A' - 'a';
+	new c;
 	if (IsPackedString(string))
 	{
 		do
 		{
-			if ('A' <= string{part_start} <= 'Z')
-				string{part_start} -= dist;
+			if (0xC0 <= (c = string{part_start}) <= 0xDF)
+				c -= dist;
+			else if ('A' <= c <= 'Z')
+				c -= dist;
+			string{part_start} = c;
 		}
 		while (++part_start != part_end);
 	}
@@ -173,8 +195,11 @@ stock
 	{
 		do
 		{
-			if ('A' <= string[part_start] <= 'Z')
-				string[part_start] -= dist;
+			if (0xC0 <= (c = string[part_start]) <= 0xDF)
+				c -= dist;
+			else if ('A' <= c <= 'Z')
+				c -= dist;
+			string[part_start] = c;
 		}
 		while (++part_start != part_end);
 	}

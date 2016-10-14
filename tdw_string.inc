@@ -6,7 +6,7 @@ This library exports several useful string functions that are not included in
 the PAWN string library. Besides, it adds a new syntax.
 
 | Version:
-1.1.8
+1.1.13
 
 | License:
 Copyright (c) 2016 Double V
@@ -31,8 +31,8 @@ freely, subject to the following restrictions:
 
 // I remove this constant because the compiler automatically generates it.
 // github.com/Zeex/pawn/issues/107
-#if defined _inc_string
-	#undef _inc_string
+#if defined _inc_tdw_string
+	#undef _inc_tdw_string
 #endif
 
 #if defined _TDW_STCOL__H
