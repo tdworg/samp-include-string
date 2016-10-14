@@ -133,21 +133,24 @@ stock
 	return 0;
 }
 
-
 stock
 	strparttoupper(string[], part_start, part_end, string_size = sizeof string)
 {
-	if (part_start == 0)
+	if (part_start < 0)
 		return 0;
 	if (part_end > string_size)
 		return 0;
 	const dist = 'A' - 'a';
+	new c;
 	if (IsPackedString(string))
 	{
 		do
 		{
-			if ('a' <= string{part_start} <= 'z')
-				string{part_start} += dist;
+			if (0xE0 <= (c = string{part_start}) <= 0xFF)
+				c += dist;
+			else if ('a' <= c <= 'z')
+				c += dist;
+			string{part_start} = c;
 		}
 		while (++part_start != part_end);
 	}
@@ -155,8 +158,11 @@ stock
 	{
 		do
 		{
-			if ('a' <= string[part_start] <= 'z')
-				string[part_start] += dist;
+			if (0xE0 <= (c = string[part_start]) <= 0xFF)
+				c += dist;
+			else if ('a' <= c <= 'z')
+				c += dist;
+			string[part_start] = c;
 		}
 		while (++part_start != part_end);
 	}
@@ -167,17 +173,21 @@ stock
 stock
 	strparttolower(string[], part_start, part_end, string_size = sizeof string)
 {
-	if (part_start == 0)
+	if (part_start < 0)
 		return 0;
 	if (part_end > string_size)
 		return 0;
 	const dist = 'A' - 'a';
+	new c;
 	if (IsPackedString(string))
 	{
 		do
 		{
-			if ('A' <= string{part_start} <= 'Z')
-				string{part_start} -= dist;
+			if (0xC0 <= (c = string{part_start}) <= 0xDF)
+				c -= dist;
+			else if ('A' <= c <= 'Z')
+				c -= dist;
+			string{part_start} = c;
 		}
 		while (++part_start != part_end);
 	}
@@ -185,8 +195,11 @@ stock
 	{
 		do
 		{
-			if ('A' <= string[part_start] <= 'Z')
-				string[part_start] -= dist;
+			if (0xC0 <= (c = string[part_start]) <= 0xDF)
+				c -= dist;
+			else if ('A' <= c <= 'Z')
+				c -= dist;
+			string[part_start] = c;
 		}
 		while (++part_start != part_end);
 	}
