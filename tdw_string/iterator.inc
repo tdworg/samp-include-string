@@ -1,12 +1,5 @@
 /** ======================================================================== **\
-	String library
-
-| Description:
-This library exports several useful string functions that are not included in
-the PAWN string library. Besides, it adds a new syntax.
-
-| Version:
-1.1.15
+	Iterator
 
 | License:
 Copyright (c) 2016 Double V
@@ -31,19 +24,21 @@ freely, subject to the following restrictions:
 
 // I remove this constant because the compiler automatically generates it.
 // github.com/Zeex/pawn/issues/107
-#if defined _inc_tdw_string
-	#undef _inc_tdw_string
+#if defined _inc_iterator
+	#undef _inc_iterator
 #endif
 
-#if defined _TDW_STCOL__H
+#if defined _TDW_S_ITERATOR_INC_
 	#endinput
 #endif
 
-#define _TDW_STCOL__H
+#define _TDW_S_ITERATOR_INC_
 
-#include "tdw_string\string"
-#include "tdw_string\find"
-#include "tdw_string\replace"
-#include "tdw_string\type"
-#include "tdw_string\erase"
-#include "tdw_string\trim"
+
+#define ITER_NEW: ITER_0:ITER_1:
+#define ITER_0:ITER_1:new%1$ %1
+#define ITER_1:%1$ %1
+
+#define foreach_string%0(%1:%2)\
+	for(new %1=%2[0],%2@Iter=0;_:ITER_NEW:%1$!='\0';\
+		_:ITER_NEW:%1$=%2[++%2@Iter])
