@@ -1,13 +1,4 @@
 /** ======================================================================== **\
-	String library
-
-| Description:
-This library exports several useful string functions that are not included in
-the PAWN string library. Besides, it adds a new syntax.
-
-| Version:
-1.1.14
-
 | License:
 Copyright (c) 2016 Double V
 
@@ -28,22 +19,25 @@ freely, subject to the following restrictions:
 3.	This notice may not be removed or altered from any source distribution.
 \** ======================================================================== **/
 
+#include <a_samp>
+#include <tdw_string>
 
-// I remove this constant because the compiler automatically generates it.
-// github.com/Zeex/pawn/issues/107
-#if defined _inc_tdw_string
-	#undef _inc_tdw_string
-#endif
+public OnFilterScriptInit()
+{
+	static const test_text[] = "aaaaaabacaaaaaaa";
+	new string[sizeof test_text];
 
-#if defined _TDW_STCOL__H
-	#endinput
-#endif
+	string = test_text;
+	trim_left(string, 'a');
+	printf("Output (trim_left): %s", string);
 
-#define _TDW_STCOL__H
+	string = test_text;
+	trim_right(string, 'a');
+	printf("Output (trim_right): %s", string);
 
-#include "tdw_string\string"
-#include "tdw_string\find"
-#include "tdw_string\replace"
-#include "tdw_string\type"
-#include "tdw_string\erase"
-#include "tdw_string\trim"
+	string = test_text;
+	trim(string, 'a');
+	printf("Output (trim): %s", string);
+
+	return 1;
+}

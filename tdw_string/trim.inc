@@ -28,11 +28,11 @@ freely, subject to the following restrictions:
 	#undef _inc_trim
 #endif
 
-#if defined _TDW_S_TRIM_INC_
+#if defined _TDW_STLIB__TRIM
 	#endinput
 #endif
 
-#define _TDW_S_TRIM_INC_
+#define _TDW_STLIB__TRIM
 
 
 stock
@@ -59,7 +59,7 @@ stock
 stock
 	trim_right(string[], const delimiter = ' ')
 {
-	new pos = strlen(string);
+	new pos = strlen(string), len = strlen(string);
 	if (IsPackedString(string))
 	{
 		while (pos-- != 0)

@@ -28,25 +28,34 @@ freely, subject to the following restrictions:
 	#undef _inc_string
 #endif
 
-#if defined _TDW_S_STRING_INC_
+#if defined _TDW_STLIB__STRING
 	#endinput
 #endif
 
-#define _TDW_S_STRING_INC_
+#define _TDW_STLIB__STRING
 
 
 // Checks if a string is packed.
 // Other information: //www.compuphase.com/pawn/String_Manipulation.pdf
+// Author: Untonyst.
 #if !defined IsPackedString
-	#define IsPackedString(%0) ((%0)[0] > 255)
+	#define IsPackedString(%0) ((%0){0} != 0)
 #endif
+
+
+//
+// Old version
+//
+// #if !defined IsPackedString
+// 	#define IsPackedString(%0) ((%0)[0] > 255)
+// #endif
 
 
 stock
 	strcpy(dest[], const string[], dest_size = sizeof dest)
 {
 	return
-		(IsPackedString(dest) ? dest{0} = '\0' : dest[0] = '\0'),
+		(IsPackedString(dest) ? (dest{0} = '\0') : (dest[0] = '\0')),
 		strcat(dest, string, dest_size);
 }
 
@@ -59,8 +68,11 @@ stock
 
 
 stock
-	memcmp(const string1[], const string2[], n)
+	memcmp(const string1[], const string2[], n = cellmax,
+		size_1 = sizeof string1, size_2 = sizeof string2)
 {
+	if (n == cellmax)
+		n = size_1 > size_2 ? size_1 : size_2;
 	// Converts the value to bytes.
 	#emit load.s.pri n // pri = n
 	#emit shl.c.pri 2 // pri <<= 2
@@ -72,22 +84,24 @@ stock
 	#emit cmps n
 	// Returns zero if the blocks are equal.
 	#emit retn
-	// For workaround the warning.
 	return 0;
 }
 
 
 stock
 	strcount(const string[], const find[], bool:ignorecase = false, pos = 0,
-		const string_size = sizeof string)
+		string_size = sizeof string)
 {
 	if (pos >= string_size)
 		return 0;
 	new found_pos = pos, count, find_size = strlen(find);
 	while ((found_pos = strfind(string, find, ignorecase,
-		found_pos + find_size)) != -1
+		found_pos)) != -1
 	)
+	{
 		count++;
+		found_pos += find_size;
+	}
 	return count;
 }
 
@@ -117,4 +131,238 @@ stock
 		while (i < j);
 	}
 	return 0;
+}
+
+stock
+	strparttoupper(string[], part_start, part_end, string_size = sizeof string)
+{
+	if (part_start < 0)
+		return 0;
+	if (part_end > string_size)
+		return 0;
+	const dist = 'A' - 'a';
+	new c;
+	if (IsPackedString(string))
+	{
+		do
+		{
+			if (0xE0 <= (c = string{part_start}) <= 0xFF)
+				c += dist;
+			else if ('a' <= c <= 'z')
+				c += dist;
+			string{part_start} = c;
+		}
+		while (++part_start != part_end);
+	}
+	else
+	{
+		do
+		{
+			if (0xE0 <= (c = string[part_start]) <= 0xFF)
+				c += dist;
+			else if ('a' <= c <= 'z')
+				c += dist;
+			string[part_start] = c;
+		}
+		while (++part_start != part_end);
+	}
+	return 1;
+}
+
+
+stock
+	strparttolower(string[], part_start, part_end, string_size = sizeof string)
+{
+	if (part_start < 0)
+		return 0;
+	if (part_end > string_size)
+		return 0;
+	const dist = 'A' - 'a';
+	new c;
+	if (IsPackedString(string))
+	{
+		do
+		{
+			if (0xC0 <= (c = string{part_start}) <= 0xDF)
+				c -= dist;
+			else if ('A' <= c <= 'Z')
+				c -= dist;
+			string{part_start} = c;
+		}
+		while (++part_start != part_end);
+	}
+	else
+	{
+		do
+		{
+			if (0xC0 <= (c = string[part_start]) <= 0xDF)
+				c -= dist;
+			else if ('A' <= c <= 'Z')
+				c -= dist;
+			string[part_start] = c;
+		}
+		while (++part_start != part_end);
+	}
+	return 1;
+}
+
+
+stock
+	countofuppercase(const string[])
+{
+	new string_len = strlen(string);
+	return floatround(
+		floatmul(
+			floatdiv(
+				float(countof@loop(string, 'A', 'Z', string_len)),
+				float(string_len)
+			), 100.0)
+	);
+}
+
+
+stock
+	countoflowpercase(const string[])
+{
+	new string_len = strlen(string);
+	return floatround(
+		floatmul(
+			floatdiv(
+				float(countof@loop(string, 'a', 'z', string_len)),
+				float(string_len)
+			), 100.0)
+	);
+}
+
+
+static stock
+	countof@loop(const string[], start_sym, end_sym, string_len)
+{
+	assert(end_sym > start_sym);
+	new index, count;
+	if (IsPackedString(string))
+	{
+		while(index < string_len)
+		{
+			if (start_sym <= string{index++} <= end_sym)
+				++count;
+		}
+	}
+	else
+	{
+		while(index < string_len)
+		{
+			if (start_sym <= string[index++] <= end_sym)
+				++count;
+		}
+	}
+	return count;
+}
+
+
+static stock const
+	string@rus[] = "ÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäå¸æçèéêëìíîïðñòóôõö÷"\
+	"øùüûúýþÿ",
+	string@arr_lat[][] = {
+		"A",  "B",    "V", "G", "D", "E", "JO", "ZH", "Z", "I", "Y", "K",
+		"L",  "M",    "N", "O", "P", "R", "S",  "T", "U", "F", "KH", "C",
+		"CH", "SH", "SHH", "JHH", "IH", "JH", "EH", "JU", "JA",
+		"a", "b", "v", "g", "d", "e", "e", "zh", "z", "i", "y", "k", "l", "m",
+		"n", "o", "p", "r", "s", "t", "u", "f", "kh", "c", "ch", "sh", "shh",
+		"jhh", "ih", "jh", "eh", "ju", "ja"
+	};
+
+
+stock
+	strtrtrans(string[], string_size = sizeof string)
+{
+	new chr, i, pos;
+	while ((chr = string[i]) != '\0')
+	{
+		if ((pos = find_char(string@rus, chr)) != -1)
+		{
+			strdel(string, i, i + 1);
+			strins(string, string@arr_lat[pos], i, string_size);
+		}
+		i++;
+	}
+	return;
+}
+
+
+stock
+	islowerpart(const string[], start_part_pos, end_part_pos)
+{
+	new size = strlen(string);
+	if (_:(start_part_pos < end_part_pos < size) == 0)
+		return 0;
+	new c;
+	if (IsPackedString(string))
+	{
+		do
+		{
+			if ('a' <= (c = string{start_part_pos}) <= 'z')
+				continue;
+			else if (0xE0 <= c <= 0xFF)
+				continue;
+			else if (c == ' ')
+				continue;
+			return 0;
+		}
+		while(++start_part_pos < end_part_pos);
+	}
+	else
+	{
+		do
+		{
+			if ('a' <= (c = string[start_part_pos]) <= 'z')
+				continue;
+			else if (0xE0 <= c <= 0xFF)
+				continue;
+			else if (c == ' ')
+				continue;
+			return 0;
+		}
+		while(++start_part_pos < end_part_pos);
+	}
+	return 1;
+}
+
+
+stock
+	isupperpart(const string[], start_part_pos, end_part_pos)
+{
+	new size = strlen(string);
+	if (_:(start_part_pos < end_part_pos < size) == 0)
+		return 0;
+	new c;
+	if (IsPackedString(string))
+	{
+		do
+		{
+			if ('A' <= (c = string{start_part_pos}) <= 'Z')
+				continue;
+			else if (0xC0 <= c <= 0xDF)
+				continue;
+			else if (c == ' ')
+				continue;
+			return 0;
+		}
+		while(++start_part_pos < end_part_pos);
+	}
+	else
+	{
+		do
+		{
+			if ('A' <= (c = string[start_part_pos]) <= 'Z')
+				continue;
+			else if (0xC0 <= c <= 0xDF)
+				continue;
+			else if (c == ' ')
+				continue;
+			return 0;
+		}
+		while(++start_part_pos < end_part_pos);
+	}
+	return 1;
 }

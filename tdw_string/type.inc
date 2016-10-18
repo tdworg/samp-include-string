@@ -28,11 +28,11 @@ freely, subject to the following restrictions:
 	#undef _inc_type
 #endif
 
-#if defined _TDW_S_TYPE_INC_
+#if defined _TDW_STLIB__TYPE
 	#endinput
 #endif
 
-#define _TDW_S_TYPE_INC_
+#define _TDW_STLIB__TYPE
 
 #if !defined IsCntrl
 	#define IsCntrl(%0) ((0x00 <= (%0) <= 0x1F) || ((%0) == 0x7F))

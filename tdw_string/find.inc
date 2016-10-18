@@ -28,11 +28,11 @@ freely, subject to the following restrictions:
 	#undef _inc_find
 #endif
 
-#if defined _TDW_S_FIND_INC_
+#if defined _TDW_STLIB__FIND
 	#endinput
 #endif
 
-#define _TDW_S_FIND_INC_
+#define _TDW_STLIB__FIND
 
 
 stock
@@ -53,42 +53,47 @@ stock
 			continue;
 		return pos;
 	}
-	return 0;
+	return -1;
 }
 
 
 stock
-	find_first_of(const string[], const charlist[])
+	find_first_of(const string[], const charlist[], pos_string = 0,
+		size = sizeof string)
 {
-	new pos_string, pos_charlist, chr, charlist_len = strlen(charlist);
+	if (pos_string > size)
+		return -1;
+	new charlist_len = strlen(charlist), pos_charlist, chr;
 	if (IsPackedString(string))
 	{
 		if (IsPackedString(charlist))
 		{
-			while ((chr = string{pos_string++}) != '\0')
+			while ((chr = string{pos_string}) != '\0')
 			{
 				do
 				{
 					if (chr != charlist{pos_charlist})
 						continue;
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				pos_charlist = 0;
+				pos_string++;
 			}
 		}
 		else
 		{
-			while ((chr = string{pos_string++}) != '\0')
+			while ((chr = string{pos_string}) != '\0')
 			{
 				do
 				{
 					if (chr != charlist[pos_charlist])
 						continue;
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				pos_charlist = 0;
+				pos_string++;
 			}
 		}
 	}
@@ -96,30 +101,32 @@ stock
 	{
 		if (IsPackedString(charlist))
 		{
-			while ((chr = string[pos_string++]) != '\0')
+			while ((chr = string[pos_string]) != '\0')
 			{
 				do
 				{
 					if (chr != charlist{pos_charlist})
 						continue;
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				pos_charlist = 0;
+				pos_string++;
 			}
 		}
 		else
 		{
-			while ((chr = string[pos_string++]) != '\0')
+			while ((chr = string[pos_string]) != '\0')
 			{
 				do
 				{
 					if (chr != charlist[pos_charlist])
 						continue;
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				pos_charlist = 0;
+				pos_string++;
 			}
 		}
 	}
@@ -142,7 +149,7 @@ stock
 				{
 					if (string{pos_string} != charlist{pos_charlist})
 						continue;
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				pos_charlist = 0;
@@ -156,7 +163,7 @@ stock
 				{
 					if (string{pos_string} != charlist[pos_charlist])
 						continue;
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				pos_charlist = 0;
@@ -173,7 +180,7 @@ stock
 				{
 					if (string[pos_string] != charlist{pos_charlist})
 						continue;
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				pos_charlist = 0;
@@ -187,7 +194,7 @@ stock
 				{
 					if (string[pos_string] != charlist[pos_charlist])
 						continue;
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				pos_charlist = 0;
@@ -199,9 +206,12 @@ stock
 
 
 stock
-	find_first_not_of(const string[], const charlist[])
+	find_first_not_of(const string[], const charlist[], pos_string = 0,
+		size = sizeof string)
 {
-	new pos_string, pos_charlist, chr, charlist_len = strlen(charlist);
+	if (pos_string > size)
+		return -1;
+	new pos_charlist, chr, charlist_len = strlen(charlist);
 	if (IsPackedString(string))
 	{
 		if (IsPackedString(charlist))
@@ -215,11 +225,11 @@ stock
 						pos_charlist = 0;
 						break;
 					}
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				if (pos_charlist != 0)
-					return pos_string;
+					return pos_string - 1;
 			}
 		}
 		else
@@ -233,11 +243,11 @@ stock
 						pos_charlist = 0;
 						break;
 					}
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				if (pos_charlist != 0)
-					return pos_string;
+					return pos_string - 1;
 			}
 		}
 	}
@@ -254,11 +264,11 @@ stock
 						pos_charlist = 0;
 						break;
 					}
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				if (pos_charlist != 0)
-					return pos_string;
+					return pos_string - 1;
 			}
 		}
 		else
@@ -272,11 +282,11 @@ stock
 						pos_charlist = 0;
 						break;
 					}
-					return pos_string;
+					return pos_string - 1;
 				}
 				while (++pos_charlist <= charlist_len);
 				if (pos_charlist != 0)
-					return pos_string;
+					return pos_string - 1;
 			}
 		}
 	}
@@ -368,4 +378,21 @@ stock
 		}
 	}
 	return -1;
+}
+
+
+stock
+	find_char(const string[], chr)
+{
+	new pos = -1, string_len = strlen(string);
+	while (string_len-- != 0)
+	{
+		if (chr == string[string_len])
+		{
+			pos = string_len;
+			break;
+		}
+		else pos = -1;
+	}
+	return pos;
 }
