@@ -288,3 +288,81 @@ stock
 	}
 	return;
 }
+
+
+stock
+	islowerpart(const string[], start_part_pos, end_part_pos)
+{
+	new size = strlen(string);
+	if (_:(start_part_pos < end_part_pos < size) == 0)
+		return 0;
+	new c;
+	if (IsPackedString(string))
+	{
+		do
+		{
+			if ('a' <= (c = string{start_part_pos}) <= 'z')
+				continue;
+			else if (0xE0 <= c <= 0xFF)
+				continue;
+			else if (c == ' ')
+				continue;
+			return 0;
+		}
+		while(++start_part_pos < end_part_pos);
+	}
+	else
+	{
+		do
+		{
+			if ('a' <= (c = string[start_part_pos]) <= 'z')
+				continue;
+			else if (0xE0 <= c <= 0xFF)
+				continue;
+			else if (c == ' ')
+				continue;
+			return 0;
+		}
+		while(++start_part_pos < end_part_pos);
+	}
+	return 1;
+}
+
+
+stock
+	isupperpart(const string[], start_part_pos, end_part_pos)
+{
+	new size = strlen(string);
+	if (_:(start_part_pos < end_part_pos < size) == 0)
+		return 0;
+	new c;
+	if (IsPackedString(string))
+	{
+		do
+		{
+			if ('A' <= (c = string{start_part_pos}) <= 'Z')
+				continue;
+			else if (0xC0 <= c <= 0xDF)
+				continue;
+			else if (c == ' ')
+				continue;
+			return 0;
+		}
+		while(++start_part_pos < end_part_pos);
+	}
+	else
+	{
+		do
+		{
+			if ('A' <= (c = string[start_part_pos]) <= 'Z')
+				continue;
+			else if (0xC0 <= c <= 0xDF)
+				continue;
+			else if (c == ' ')
+				continue;
+			return 0;
+		}
+		while(++start_part_pos < end_part_pos);
+	}
+	return 1;
+}
