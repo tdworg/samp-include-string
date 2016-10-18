@@ -39,5 +39,6 @@ freely, subject to the following restrictions:
 #define ITER_0:ITER_1:new%1$ %1
 #define ITER_1:%1$ %1
 
-#define foreach_string(%1)<%2>\
-	for(new %1=%2[0],%2@Iter=0;++%2@Iter<sizeof %2;ITER_NEW:%1$=%2[%2@Iter])
+#define foreach_string%0(%1:%2)\
+	for(new %1=%2[0],%2@Iter=0;_:ITER_NEW:%1$!='\0';\
+		_:ITER_NEW:%1$=%2[++%2@Iter])
