@@ -71,6 +71,10 @@ stock
 	memcmp(const string1[], const string2[], n = cellmax,
 		size_1 = sizeof string1, size_2 = sizeof string2)
 {
+	if (IsEmptyString(string1))
+		return -1;
+	if (IsEmptyString(string2))
+		return -1;
 	if (n == cellmax)
 		n = size_1 > size_2 ? size_1 : size_2;
 	// Converts the value to bytes.
