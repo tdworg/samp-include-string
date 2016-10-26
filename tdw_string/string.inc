@@ -264,35 +264,6 @@ static stock
 }
 
 
-static stock const
-	string@rus[] = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцч"\
-		"шщьыъэюя",
-	string@arr_lat[][] = {
-		"A",  "B",    "V", "G", "D", "E", "JO", "ZH", "Z", "I", "Y", "K",
-		"L",  "M",    "N", "O", "P", "R", "S",  "T", "U", "F", "KH", "C",
-		"CH", "SH", "SHH", "JHH", "IH", "JH", "EH", "JU", "JA",
-		"a", "b", "v", "g", "d", "e", "e", "zh", "z", "i", "y", "k", "l", "m",
-		"n", "o", "p", "r", "s", "t", "u", "f", "kh", "c", "ch", "sh", "shh",
-		"jhh", "ih", "jh", "eh", "ju", "ja"
-	};
-
-stock
-	strtrtrans(string[], string_size = sizeof string)
-{
-	new chr, i, pos;
-	while ((chr = string[i]) != '\0')
-	{
-		if ((pos = find_char(string@rus, chr)) != -1)
-		{
-			strdel(string, i, i + 1);
-			strins(string, string@arr_lat[pos], i, string_size);
-		}
-		i++;
-	}
-	return 0;
-}
-
-
 stock
 	islowerpart(const string[], start_part_pos, end_part_pos)
 {

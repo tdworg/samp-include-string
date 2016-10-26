@@ -1,12 +1,8 @@
 /** ======================================================================== **\
-	String library
+	Depend Encoding
 
-| Description:
-This library exports several useful string functions that are not included in
-the PAWN string library. Besides, it adds a new syntax.
-
-| Version:
-1.1.15
+| Charset
+	Cyrillic (Windows 1251)
 
 | License:
 Copyright (c) 2016 Double V
@@ -31,21 +27,41 @@ freely, subject to the following restrictions:
 
 // I remove this constant because the compiler automatically generates it.
 // github.com/Zeex/pawn/issues/107
-#if defined _inc_tdw_string
-	#undef _inc_tdw_string
+#if defined _inc_depend_encoding
+	#undef _inc_depend_encoding
 #endif
 
-#if defined _TDW_STCOL__H
+#if defined _TDW_STLIB__DEPEND_ENCODING
 	#endinput
 #endif
 
-#define _TDW_STCOL__H
+#define _TDW_STLIB__DEPEND_ENCODING
 
-#include "tdw_string\depend_encoding"
-#include "tdw_string\string"
-#include "tdw_string\find"
-#include "tdw_string\replace"
-#include "tdw_string\type"
-#include "tdw_string\erase"
-#include "tdw_string\trim"
-#include "tdw_string\iterator"
+
+static stock const
+	string@rus[] = "ÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÚÛÜİŞßàáâãäå¸æçèéêëìíîïğñòóôõö÷"\
+		"øùüûúışÿ",
+	string@arr_lat[][] = {
+		"A",  "B",    "V", "G", "D", "E", "JO", "ZH", "Z", "I", "Y", "K",
+		"L",  "M",    "N", "O", "P", "R", "S",  "T", "U", "F", "KH", "C",
+		"CH", "SH", "SHH", "JHH", "IH", "JH", "EH", "JU", "JA",
+		"a", "b", "v", "g", "d", "e", "e", "zh", "z", "i", "y", "k", "l", "m",
+		"n", "o", "p", "r", "s", "t", "u", "f", "kh", "c", "ch", "sh", "shh",
+		"jhh", "ih", "jh", "eh", "ju", "ja"
+	};
+
+stock
+	strtrtrans(string[], string_size = sizeof string)
+{
+	new chr, i, pos;
+	while ((chr = string[i]) != '\0')
+	{
+		if ((pos = find_char(string@rus, chr)) != -1)
+		{
+			strdel(string, i, i + 1);
+			strins(string, string@arr_lat[pos], i, string_size);
+		}
+		i++;
+	}
+	return 0;
+}
