@@ -265,8 +265,8 @@ static stock
 
 
 static stock const
-	string@rus[] = "ÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäå¸æçèéêëìíîïðñòóôõö÷"\
-		"øùüûúýþÿ",
+	string@rus[] = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцч"\
+		"шщьыъэюя",
 	string@arr_lat[][] = {
 		"A",  "B",    "V", "G", "D", "E", "JO", "ZH", "Z", "I", "Y", "K",
 		"L",  "M",    "N", "O", "P", "R", "S",  "T", "U", "F", "KH", "C",
@@ -275,7 +275,6 @@ static stock const
 		"n", "o", "p", "r", "s", "t", "u", "f", "kh", "c", "ch", "sh", "shh",
 		"jhh", "ih", "jh", "eh", "ju", "ja"
 	};
-
 
 stock
 	strtrtrans(string[], string_size = sizeof string)
