@@ -265,8 +265,8 @@ static stock
 
 
 static stock const
-	string@rus[] = "ΐΑΒΓΔΕ¨ΖΗΘΙΚΛΜΝΞΟΠΡÒΣΤΥΦΧΨΩΪΫάέήίΰαβγδεΈζηθικλμνξοπρςστυφχ"\
-	"ψωόϋϊύώÿ",
+	string@rus[] = "Γ€ΓΓ‚ΓƒΓ„Γ…Β¨Γ†Γ‡ΓΓ‰ΓΓ‹ΓΓΓΓΓΓ‘Γ’Γ“Γ”Γ•Γ–Γ—ΓΓ™ΓΓ›ΓΓΓΓΓ Γ΅ΓΆΓ£Γ¤Γ¥ΒΈΓ¦Γ§Γ¨Γ©ΓªΓ«Γ¬Γ­Γ®Γ―Γ°Γ±Γ²Γ³Γ΄ΓµΓ¶Γ·"\
+	"ΓΈΓΉΓΌΓ»ΓΊΓ½ΓΎΓΏ",
 	string@arr_lat[][] = {
 		"A",  "B",    "V", "G", "D", "E", "JO", "ZH", "Z", "I", "Y", "K",
 		"L",  "M",    "N", "O", "P", "R", "S",  "T", "U", "F", "KH", "C",
@@ -369,4 +369,26 @@ stock
 		while(++start_part_pos < end_part_pos);
 	}
 	return 1;
+}
+
+stock
+	strcatex(string[], const ...)
+{
+	new
+		args = numargs(),
+		arg = 1,
+		i,
+		j;
+
+	while (arg < args)
+	{
+		i = 0;
+		while ((string[j] = getarg(arg, i)) != '\0')
+		{
+			j++;
+			i++;
+		}
+		string[j++] = ' ';
+		arg++;
+	}
 }
