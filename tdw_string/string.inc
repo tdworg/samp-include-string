@@ -276,7 +276,6 @@ static stock const
 		"jhh", "ih", "jh", "eh", "ju", "ja"
 	};
 
-
 stock
 	strtrtrans(string[], string_size = sizeof string)
 {
@@ -378,7 +377,7 @@ stock
 		args = numargs(),
 		arg = 1,
 		i,
-		j;
+		j = strlen(string);
 
 	while (arg < args)
 	{
@@ -388,7 +387,7 @@ stock
 			j++;
 			i++;
 		}
-		string[j++] = ' ';
 		arg++;
 	}
+	string[++j] = '\0';
 }
