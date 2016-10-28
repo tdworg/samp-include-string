@@ -199,3 +199,45 @@ stock
 	while (darg_start < darg_end);
 	return ret;
 }
+
+
+
+stock
+	strfill(string[], const pattern[] = " ", fill_length, size = sizeof string)
+{
+	if (fill_length >= size)
+		return 0;
+
+	new pattern_len = strlen(pattern),
+		string_len = strlen(string),
+		left_part_len = fill_length / 2,
+		right_part_len = fill_length - left_part_len,
+		string_pos;
+
+	// get a specific length of the parts.
+	left_part_len *= pattern_len;
+	right_part_len *= pattern_len;
+
+	// strins doesn't support the maxlength.
+	if (left_part_len >= size)
+		return 0;
+
+	do
+	{
+		strins(string, pattern, string_pos, size);
+		string_pos += pattern_len;
+	}
+	while (string_pos < left_part_len);
+
+	// Go to the index after the string.
+	right_part_len += (string_pos += string_len);
+
+	do
+	{
+		strcat(string, pattern, size);
+		string_pos += pattern_len;
+	}
+	while (string_pos < right_part_len);
+
+	return 1;
+}
