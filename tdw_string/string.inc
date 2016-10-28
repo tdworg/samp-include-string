@@ -136,24 +136,66 @@ stock
 }
 
 
-stock
-	strcatex(string[], const ...)
-{
-	new
-		args = numargs(),
-		arg = 1,
-		i,
-		j = strlen(string);
 
-	while (arg < args)
+/// EMIT FIX
+@___();
+@___()
+{
+	new a[1];
+	strcat(a, !"");
+	return;
+}
+
+stock
+	strcatex(dest[], size, const ...)
+{
+	new num_args;
+
+	// Get the number of arguments
+	#emit load.s.pri 0x8
+	// Subtract one argument.
+	#emit const.alt 4 // 1 * 4 = 4
+	#emit sub
+	#emit stor.s.pri num_args
+
+	if (num_args == 0)
+		return 0;
+
+	new darg_start, darg_end, ret;
+
+	// Get the address of start of the dynamic arguments
+	#emit const.alt size
+	#emit lctrl 5
+	#emit add
+	#emit stor.s.pri darg_start
+
+	// Get the address of end of the dynamic arguments
+	#emit load.s.alt num_args
+	#emit add
+	#emit stor.s.pri darg_end
+
+	darg_start += 4;
+
+	do
 	{
-		i = 0;
-		while ((string[j] = getarg(arg, i)) != '\0')
-		{
-			j++;
-			i++;
-		}
-		arg++;
+		#emit push.s size
+
+		#emit load.s.pri darg_start
+		#emit load.i
+		#emit push.pri
+
+		#emit push.s dest
+		#emit push.c 12
+		#emit sysreq.c strcat
+
+		#emit load.s.alt ret
+		#emit add
+		#emit stor.s.pri ret
+
+		#emit stack 16
+
+		darg_start += 4;
 	}
-	string[++j] = '\0';
+	while (darg_start < darg_end);
+	return ret;
 }
