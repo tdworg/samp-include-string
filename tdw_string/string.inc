@@ -201,43 +201,69 @@ stock
 }
 
 
+enum
+	E_TDW_FILL_TYPE (<<= 1)
+{
+	FILL_TYPE_LEFT = 1,
+	FILL_TYPE_RIGHT,
+	FILL_TYPE_BOTH = FILL_TYPE_LEFT | FILL_TYPE_RIGHT
+};
 
 stock
-	strfill(string[], const pattern[] = " ", fill_length, size = sizeof string)
+	strfill(string[], const pattern[] = " ", fill_length,
+		E_TDW_FILL_TYPE:type = FILL_TYPE_BOTH, size = sizeof string)
 {
 	if (fill_length >= size)
 		return 0;
 
 	new pattern_len = strlen(pattern),
 		string_len = strlen(string),
-		left_part_len = fill_length / 2,
-		right_part_len = fill_length - left_part_len,
+		left_part_len,
+		right_part_len,
 		string_pos;
 
-	// get a specific length of the parts.
-	left_part_len *= pattern_len;
-	right_part_len *= pattern_len;
-
-	// strins doesn't support the maxlength.
-	if (left_part_len >= size)
-		return 0;
-
-	do
+	if (type & FILL_TYPE_BOTH)
 	{
-		strins(string, pattern, string_pos, size);
-		string_pos += pattern_len;
+		left_part_len = right_part_len = fill_length;
 	}
-	while (string_pos < left_part_len);
-
-	// Go to the index after the string.
-	right_part_len += (string_pos += string_len);
-
-	do
+	else
 	{
-		strcat(string, pattern, size);
-		string_pos += pattern_len;
+		left_part_len = fill_length / 2;
+		right_part_len = fill_length - left_part_len;
 	}
-	while (string_pos < right_part_len);
+
+	if (type & FILL_TYPE_LEFT)
+	{
+		// get a specific length of the parts.
+		left_part_len *= pattern_len;
+
+		// strins doesn't support the maxlength.
+		if (left_part_len > size)
+			return 0;
+
+		do
+		{
+			strins(string, pattern, string_pos, size);
+			string_pos += pattern_len;
+		}
+		while (string_pos < left_part_len);
+	}
+
+	if (type & FILL_TYPE_RIGHT)
+	{
+		// get a specific length of the parts.
+		right_part_len *= pattern_len;
+
+		// Go to the index after the string.
+		right_part_len += (string_pos += string_len);
+
+		do
+		{
+			strcat(string, pattern, size);
+			string_pos += pattern_len;
+		}
+		while (string_pos < right_part_len);
+	}
 
 	return 1;
 }
