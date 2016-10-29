@@ -142,10 +142,12 @@ stock
 {
 	new num_args;
 
+	const BYTES_PER_CELL = cellbits / charbits;
+
 	// Get the number of arguments
 	#emit load.s.pri 0x8
 	// Subtract one argument.
-	#emit const.alt 4 // 1 * 4 = 4
+	#emit const.alt BYTES_PER_CELL // 1 * 4 = 4
 	#emit sub
 	#emit stor.s.pri num_args
 
@@ -165,7 +167,7 @@ stock
 	#emit add
 	#emit stor.s.pri darg_end
 
-	darg_start += 4;
+	darg_start += BYTES_PER_CELL;
 
 	do
 	{
@@ -183,7 +185,7 @@ stock
 		#emit add
 		#emit stor.s.pri ret
 
-		darg_start += 4;
+		darg_start += BYTES_PER_CELL;
 		push_items_bytes += 16;
 	}
 	while (darg_start < darg_end);
