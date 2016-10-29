@@ -49,13 +49,18 @@ freely, subject to the following restrictions:
 #include <tdw_string/utils/topartcase>
 
 
+stock
+	strclear(string[])
+{
+	return (IsPackedString(string) ? (string{0} = '\0') : (string[0] = '\0'));
+}
+
 
 stock
 	strcpy(dest[], const string[], dest_size = sizeof dest)
 {
 	return
-		(IsPackedString(dest) ? (dest{0} = '\0') : (dest[0] = '\0')),
-		strcat(dest, string, dest_size);
+		strclear(dest), strcat(dest, string, dest_size);
 }
 
 
@@ -265,4 +270,56 @@ stock
 	}
 
 	return 1;
+}
+
+
+stock
+	strimplode(dest[], const arrays[][], const delimiter[] = !" ",
+		array_items = sizeof arrays, dest_size = sizeof dest)
+{
+	new current_index_item;
+
+	strclear(dest);
+
+	while (current_index_item < array_items)
+	{
+		// chars are not inserted.
+		if (strcat(dest, arrays[current_index_item], dest_size) == 0)
+			break;
+
+		// Don't insert a delimiter.
+		if (current_index_item == array_items)
+			break;
+
+		strcat(dest, delimiter, dest_size);
+		current_index_item++;
+	}
+	return current_index_item;
+}
+
+
+stock
+	strexplode(arrays[][], const string[], const delimiter[] = !" ",
+		array_items = sizeof arrays, array_item_size = sizeof arrays[])
+{
+	new start_pos, end_pos, current_index_item;
+
+	while (current_index_item < array_items)
+	{
+		end_pos = strfind(string, delimiter, false, start_pos);
+
+		if (end_pos == -1)
+			end_pos = array_item_size;
+
+		strmid(arrays[current_index_item], string, start_pos, end_pos,
+			array_item_size
+		);
+
+		if (end_pos == -1)
+			break;
+
+		start_pos = end_pos + 1;
+		current_index_item++;
+	}
+	return current_index_item;
 }
