@@ -279,7 +279,7 @@ stock
 {
 	new current_index_item;
 
-	strclear(dest);
+	dset[0] = '\0';
 
 	while (current_index_item < array_items)
 	{
@@ -322,4 +322,81 @@ stock
 		current_index_item++;
 	}
 	return current_index_item;
+}
+
+
+stock
+	strimplodeex(dest[], const delimiter[] = !" ",
+		dest_size = sizeof dest, const ...)
+{
+	new num_args;
+
+	const BYTES_PER_CELL = cellbits / charbits;
+
+	#emit load.s.pri 0x8
+	#emit const.alt 12 // 3 * 4 = 12
+	#emit sub
+	#emit stor.s.pri num_args
+
+	if (num_args == 0)
+		return 0;
+
+	dest[0] = '\0';
+
+	new darg_start, darg_end, push_items_bytes, ret;
+
+	// Get the address of start of the dynamic arguments
+	#emit const.alt dest_size
+	#emit lctrl 5
+	#emit add
+	#emit stor.s.pri darg_start
+
+	// Get the address of end of the dynamic arguments
+	#emit load.s.alt num_args
+	#emit add
+	#emit stor.s.pri darg_end
+
+	darg_start += BYTES_PER_CELL;
+
+	do
+	{
+		#emit push.s dest_size
+
+		#emit load.s.pri darg_start
+		#emit load.i
+		#emit push.pri
+
+		#emit push.s dest
+		#emit push.c 12
+		#emit sysreq.c strcat
+
+		#emit load.s.alt ret
+		#emit add
+		#emit stor.s.pri ret
+
+		// Don't insert a delimiter.
+		if (darg_start == darg_end)
+			break;
+
+		strcat(dest, delimiter, dest_size);
+
+		darg_start += BYTES_PER_CELL;
+		push_items_bytes += 16;
+	}
+	while (darg_start < darg_end);
+
+	// Restore the stack
+	#emit lctrl 4
+	#emit load.s.alt push_items_bytes
+	#emit add
+	#emit sctrl 4
+
+	return ret;
+}
+
+
+stock
+	IsEqual(const string1[], const string2[], bool:ignorecase = false)
+{
+	return strcmp(string1, string2, ignorecase) == 0;
 }
