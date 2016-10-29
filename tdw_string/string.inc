@@ -192,8 +192,6 @@ stock
 		#emit add
 		#emit stor.s.pri ret
 
-		#emit stack 16
-
 		darg_start += 4;
 		push_items_bytes += 16;
 	}
