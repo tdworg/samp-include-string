@@ -43,6 +43,7 @@ freely, subject to the following restrictions:
 #endif
 
 
+#include <tdw_string/utils/pawn_emit_fix>
 #include <tdw_string/utils/iscasepart>
 #include <tdw_string/utils/percent_case>
 #include <tdw_string/utils/topartcase>
@@ -135,16 +136,6 @@ stock
 	return 0;
 }
 
-
-
-/// EMIT FIX
-@___();
-@___()
-{
-	new a[1];
-	strcat(a, !"");
-	return;
-}
 
 stock
 	strcatex(dest[], size, const ...)
