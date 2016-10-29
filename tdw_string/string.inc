@@ -161,7 +161,7 @@ stock
 	if (num_args == 0)
 		return 0;
 
-	new darg_start, darg_end, ret;
+	new darg_start, darg_end, ret, push_items_bytes;
 
 	// Get the address of start of the dynamic arguments
 	#emit const.alt size
@@ -195,8 +195,16 @@ stock
 		#emit stack 16
 
 		darg_start += 4;
+		push_items_bytes += 16;
 	}
 	while (darg_start < darg_end);
+
+	// Restore the stack
+	#emit lctrl 4
+	#emit load.s.alt push_items_bytes
+	#emit add
+	#emit sctrl 4
+
 	return ret;
 }
 
