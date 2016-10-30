@@ -49,6 +49,8 @@ freely, subject to the following restrictions:
 #include <tdw_string/utils/topartcase>
 
 
+// Note: This function does not delete all characters. If you want to remove
+// all characters you need to use the memset function.
 stock
 	strclear(string[])
 {
