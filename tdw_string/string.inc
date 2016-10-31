@@ -444,6 +444,6 @@ stock // This function doesn't support the packed strings.
 		}
 	}
 	return
-		index,
-		dest[i] = '\0';
+		dest[i] = '\0',
+		-1;
 }
