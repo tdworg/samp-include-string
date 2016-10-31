@@ -421,15 +421,15 @@ stock
 }
 
 
-stock
+stock // This function doesn't support the packed strings.
 	strsplit(dest[], const string[], &index, const seperator = ' ')
 {
+	new chr, i;
 	if (index)
 	{
 		if (string[index] != '\0')
 			index++;
 	}
-	new chr, i;
 	while ((chr = string[index]) != '\0' && chr != seperator)
 	{
 		switch (chr)
