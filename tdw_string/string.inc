@@ -419,3 +419,31 @@ stock
 	do { dest[i] = charlist[random(charlist_size)]; } while (++i < dest_size);
 	return;
 }
+
+
+stock
+	strsplit(dest[], const string[], &index, const seperator = ' ')
+{
+	if (index)
+	{
+		if (string[index] != '\0')
+			index++;
+	}
+	new chr, i;
+	while ((chr = string[index]) != '\0' && chr != seperator)
+	{
+		switch (chr)
+		{
+			case '\0', '\n', '\r':
+				break;
+			default:
+			{
+				dest[i++] = chr;
+				index++;
+			}
+		}
+	}
+	return
+		index,
+		dest[i] = '\0';
+}
