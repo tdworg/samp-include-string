@@ -404,3 +404,18 @@ stock
 		string1[0] == '\0' || string2[0] == '\0' ?
 		false : (strcmp(string1, string2, ignorecase) == 0);
 }
+
+
+
+#define TDW_STRING_DEFAULT_CHARLIST\
+	"AaBb0CcDd1EeFf2GgHh3IiJj4KkLl5MmNn6OoPp7QqRr8SsTt9UuVvWwXxYyZz"
+
+
+stock
+	GenerateString(dest[], const charlist[] = !TDW_STRING_DEFAULT_CHARLIST,
+		charlist_size = sizeof charlist, dest_size = sizeof dest)
+{
+	new i;
+	do { dest[i] = charlist[random(charlist_size)]; } while (++i < dest_size);
+	return;
+}
