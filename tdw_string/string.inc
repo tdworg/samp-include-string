@@ -400,5 +400,7 @@ stock
 stock
 	IsEqual(const string1[], const string2[], bool:ignorecase = false)
 {
-	return strcmp(string1, string2, ignorecase) == 0;
+	return
+		string1[0] == '\0' || string2[0] == '\0' ?
+		false : (strcmp(string1, string2, ignorecase) == 0);
 }
