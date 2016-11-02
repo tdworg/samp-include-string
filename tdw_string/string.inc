@@ -39,7 +39,7 @@ freely, subject to the following restrictions:
 // Other information: //www.compuphase.com/pawn/String_Manipulation.pdf
 // Author: Untonyst.
 #if !defined IsPackedString
-	#define IsPackedString(%0) ((%0){0} != 0)
+	#define IsPackedString%0(%1) ((%1){0} != 0)
 #endif
 
 
