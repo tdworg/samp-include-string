@@ -101,3 +101,18 @@ stock
 	}
 	return 1;
 }
+
+stock 
+	replace_sumbol(string[], find[2], replace, pos = 0)
+{
+	if(string{0} != 0)
+	{
+		while ((pos = strfind(string, find, false, pos)) != -1)
+			string{pos} = replace;
+	}		
+	else
+	{
+		while ((pos = strfind(string, find, false, pos)) != -1)
+			string[pos] = replace;
+	}		
+}
