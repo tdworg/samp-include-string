@@ -382,17 +382,32 @@ stock
 
 
 stock
-	find_char(const string[], chr)
+	find_char(const string[], chr, pos = 0)
 {
-	new pos = -1, string_len = strlen(string);
-	while (string_len-- != 0)
+	new chr_string;
+	if (IsPackedString(string))
 	{
-		if (chr == string[string_len])
+		while ((chr_string = string{pos}) != '\0')
 		{
-			pos = string_len;
-			break;
+			if (chr_string != chr)
+			{
+				pos++;
+				continue;
+			}
+			return pos;
 		}
-		else pos = -1;
 	}
-	return pos;
+	else
+	{
+		while ((chr_string = string[pos]) != '\0')
+		{
+			if (chr_string != chr)
+			{
+				pos++;
+				continue;
+			}
+			return pos;
+		}
+	}
+	return -1;
 }
