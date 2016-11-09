@@ -103,7 +103,7 @@ stock
 }
 
 stock
-	replace_sumbol(string[], find[2], replace, pos = 0)
+	replace_symbol(string[], find[2], replace, pos = 0)
 {
 	if(string{0} != 0)
 	{
