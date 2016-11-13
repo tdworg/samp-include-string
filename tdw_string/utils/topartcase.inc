@@ -50,6 +50,8 @@ stock
 				c += dist;
 			else if ('a' <= c <= 'z')
 				c += dist;
+			else if (c == 0xB8)
+				c = 0xA8;
 			string{part_start} = c;
 		}
 		while (++part_start != part_end);
@@ -62,6 +64,8 @@ stock
 				c += dist;
 			else if ('a' <= c <= 'z')
 				c += dist;
+			else if (c == 0xB8)
+				c = 0xA8;
 			string[part_start] = c;
 		}
 		while (++part_start != part_end);
@@ -87,6 +91,8 @@ stock
 				c -= dist;
 			else if ('A' <= c <= 'Z')
 				c -= dist;
+			else if (c == 0xA8)
+				c = 0xB8;
 			string{part_start} = c;
 		}
 		while (++part_start != part_end);
@@ -99,6 +105,8 @@ stock
 				c -= dist;
 			else if ('A' <= c <= 'Z')
 				c -= dist;
+			else if (c == 0xA8)
+				c = 0xB8;
 			string[part_start] = c;
 		}
 		while (++part_start != part_end);

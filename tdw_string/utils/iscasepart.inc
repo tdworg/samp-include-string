@@ -48,6 +48,8 @@ stock
 				continue;
 			else if (0xE0 <= c <= 0xFF)
 				continue;
+			else if (c == 0xB8)
+				continue;
 			else if (c == ' ')
 				continue;
 			return 0;
@@ -61,6 +63,8 @@ stock
 			if ('a' <= (c = string[start_part_pos]) <= 'z')
 				continue;
 			else if (0xE0 <= c <= 0xFF)
+				continue;
+			else if (c == 0xB8)
 				continue;
 			else if (c == ' ')
 				continue;
@@ -87,6 +91,8 @@ stock
 				continue;
 			else if (0xC0 <= c <= 0xDF)
 				continue;
+			else if (c == 0xA8)
+				continue;
 			else if (c == ' ')
 				continue;
 			return 0;
@@ -100,6 +106,8 @@ stock
 			if ('A' <= (c = string[start_part_pos]) <= 'Z')
 				continue;
 			else if (0xC0 <= c <= 0xDF)
+				continue;
+			else if (c == 0xA8)
 				continue;
 			else if (c == ' ')
 				continue;
