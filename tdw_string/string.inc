@@ -449,33 +449,48 @@ stock // This function doesn't support the packed strings.
 }
 
 
+// Author of the first implementation is VVWVV.
+// Author: ziggi.
 stock
 	ucfirst(string[])
 {
+	const
+		FIRST_UPPER_SYMBOL = 224,
+		LAST_UPPER_SYMBOL = 225,
+		EXTRA_UPPER_SYMBOL = 184,
+
+		FIRST_LOWER_SYMBOL = 192,
+		LAST_LOWER_SYMBOL = 223,
+		EXTRA_LOWER_SYMBOL = 168,
+
+		DIFF_SYMBOL = FIRST_UPPER_SYMBOL - FIRST_LOWER_SYMBOL,
+		DIFF_EXTRA = EXTRA_UPPER_SYMBOL - EXTRA_LOWER_SYMBOL;
+
 	new i = strlen(string);
 	if (string{0} != 0)
 	{
 		switch (string{0})
 		{
-			case 'a'..'z', 192..223:
+			case 'a'..'z', FIRST_LOWER_SYMBOL..LAST_LOWER_SYMBOL:
 			{
-				string{0} -= 32;
+				string{0} -= DIFF_SYMBOL;
 			}
-			case 168:
+			case EXTRA_LOWER_SYMBOL:
 			{
-				string{0} -= 16;
+				string{0} -= DIFF_EXTRA;
 			}
 		}
-		do {
+		do
+		{
 			switch (string{i})
 			{
-				case 'A'..'Z', 224..255:
+				case 'A'..'Z', FIRST_UPPER_SYMBOL..LAST_UPPER_SYMBOL:
 				{
-					string{i} += 32;
+					string{i} += DIFF_SYMBOL;
 				}
-				case 184:
+				case EXTRA_UPPER_SYMBOL:
 				{
-					string{i} += 16;
+					string{i} += DIFF_EXTRA;
 				}
 			}
 		}
@@ -485,26 +500,26 @@ stock
 	{
 		switch (string[0])
 		{
-			case 'a'..'z', 192..223:
+			case 'a'..'z', FIRST_LOWER_SYMBOL..LAST_LOWER_SYMBOL:
 			{
-				string[0] -= 32;
+				string[0] -= DIFF_SYMBOL;
 			}
 			case 168:
 			{
-				string[0] -= 16;
+				string[0] -= DIFF_EXTRA;
 			}
 		}
 		do
 		{
 			switch (string[i])
 			{
-				case 'A'..'Z', 224..255:
+				case 'A'..'Z', FIRST_UPPER_SYMBOL..LAST_UPPER_SYMBOL:
 				{
-					string[i] += 32;
+					string[i] += DIFF_SYMBOL;
 				}
-				case 184:
+				case EXTRA_UPPER_SYMBOL:
 				{
-					string[i] += 16;
+					string[i] += DIFF_EXTRA;
 				}
 			}
 		}
