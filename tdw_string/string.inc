@@ -526,3 +526,41 @@ stock
 		while (--i != 0);
 	}
 }
+
+
+stock
+	isNumeric(const string[])
+{
+	new i, c;
+	if (IsPackedString(string))
+	{
+		while ((c = string{i++}) != '\0')
+		{
+			switch (c)
+			{
+				case '0'..'9':
+					continue;
+				case '.', '+', '-':
+					continue;
+				default:
+					return 0;
+			}
+		}
+	}
+	else
+	{
+		while ((c = string[i++]) != '\0')
+		{
+			switch (c)
+			{
+				case '0'..'9':
+					continue;
+				case '.', '+', '-':
+					continue;
+				default:
+					return 0;
+			}
+		}
+	}
+	return 1;
+}
