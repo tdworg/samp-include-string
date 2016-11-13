@@ -447,3 +447,52 @@ stock // This function doesn't support the packed strings.
 		dest[i] = '\0',
 		-1;
 }
+
+
+stock
+	ucfirst(string[])
+{
+	const dist = 'A' - 'a';
+	new i = strlen(string),
+		c;
+	if (string{0} != 0)
+	{
+		if (0xE0 <= (c = string{0}) <= 0xFF)
+			string{0} += dist;
+		else if (c == 0xB8)
+			string{0} = 0xA8;
+		else if ('a' <= c <= 'z')
+			string{0} += dist;
+		do
+		{
+			if (0xC0 <= (c = string{i}) <= 0xDF)
+				c -= dist;
+			else if (c == 0xA8)
+				c = 0xB8;
+			else if ('A' <= c <= 'Z')
+				c -= dist;
+			string{i} = c;
+		}
+		while (--i != 0);
+	}
+	else
+	{
+		if (0xE0 <= (c = string[0]) <= 0xFF)
+			string[0] += dist;
+		else if (c == 0xB8)
+			string[0] = 0xA8;
+		else if ('a' <= c <= 'z')
+			string[0] += dist;
+		do
+		{
+			if (0xC0 <= (c = string[i]) <= 0xDF)
+				c -= dist;
+			else if (c == 0xA8)
+				c = 0xB8;
+			else if ('A' <= c <= 'Z')
+				c -= dist;
+			string[i] = c;
+		}
+		while (--i != 0);
+	}
+}
