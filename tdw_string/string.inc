@@ -452,46 +452,61 @@ stock // This function doesn't support the packed strings.
 stock
 	ucfirst(string[])
 {
-	const dist = 'A' - 'a';
-	new i = strlen(string),
-		c;
+	new i = strlen(string);
 	if (string{0} != 0)
 	{
-		if (0xE0 <= (c = string{0}) <= 0xFF)
-			string{0} += dist;
-		else if (c == 0xB8)
-			string{0} = 0xA8;
-		else if ('a' <= c <= 'z')
-			string{0} += dist;
-		do
+		switch (string{0})
 		{
-			if (0xC0 <= (c = string{i}) <= 0xDF)
-				c -= dist;
-			else if (c == 0xA8)
-				c = 0xB8;
-			else if ('A' <= c <= 'Z')
-				c -= dist;
-			string{i} = c;
+			case 'a'..'z', 192..223:
+			{
+				string{0} -= 32;
+			}
+			case 168:
+			{
+				string{0} -= 16;
+			}
+		}
+		do {
+			switch (string{i})
+			{
+				case 'A'..'Z', 224..255:
+				{
+					string{i} += 32;
+				}
+				case 184:
+				{
+					string{i} += 16;
+				}
+			}
 		}
 		while (--i != 0);
 	}
 	else
 	{
-		if (0xE0 <= (c = string[0]) <= 0xFF)
-			string[0] += dist;
-		else if (c == 0xB8)
-			string[0] = 0xA8;
-		else if ('a' <= c <= 'z')
-			string[0] += dist;
+		switch (string[0])
+		{
+			case 'a'..'z', 192..223:
+			{
+				string[0] -= 32;
+			}
+			case 168:
+			{
+				string[0] -= 16;
+			}
+		}
 		do
 		{
-			if (0xC0 <= (c = string[i]) <= 0xDF)
-				c -= dist;
-			else if (c == 0xA8)
-				c = 0xB8;
-			else if ('A' <= c <= 'Z')
-				c -= dist;
-			string[i] = c;
+			switch (string[i])
+			{
+				case 'A'..'Z', 224..255:
+				{
+					string[i] += 32;
+				}
+				case 184:
+				{
+					string[i] += 16;
+				}
+			}
 		}
 		while (--i != 0);
 	}
