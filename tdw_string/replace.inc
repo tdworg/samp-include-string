@@ -102,17 +102,20 @@ stock
 	return 1;
 }
 
+
 stock
-	replace_symbol(string[], find[2], replace, pos = 0)
+	replace_symbol(string[], const _char, replace, pos = 0)
 {
+	new pos = find_char(string, _char, pos);
+	if (pos == -1)
+		return 0;
 	if(string{0} != 0)
 	{
-		while ((pos = strfind(string, find, false, pos)) != -1)
-			string{pos} = replace;
+		string{pos} = replace;
 	}
 	else
 	{
-		while ((pos = strfind(string, find, false, pos)) != -1)
-			string[pos] = replace;
+		string[pos] = replace;
 	}
+	return 1;
 }
