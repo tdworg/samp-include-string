@@ -106,8 +106,7 @@ stock
 stock
 	replace_symbol(string[], const _char, replace, pos = 0)
 {
-	new pos = find_char(string, _char, pos);
-	if (pos != -1)
+	if ((pos = find_char(string, _char, pos)) != -1)
 	{
 		if(IsPackedString(string))
 		{
