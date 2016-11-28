@@ -83,3 +83,47 @@ stock
 	trim_left(string, delimiter);
 	trim_right(string, delimiter);
 }
+
+// -----------------------------------------------------------------------------
+// Extend
+// -----------------------------------------------------------------------------
+
+stock
+	trim_leftex(string[], const delimiters[] = !" ", start_pos = 0)
+{
+	new
+		len = strlen(string),
+		begin_pos = find_first_not_of(string, delimiters, start_pos, len + 1);
+
+	if (begin_pos != -1)
+		strmid(string, string, begin_pos, len, len + 1);
+
+	return 0;
+}
+
+stock
+	trim_rightex(string[], const delimiters[] = !" ")
+{
+	new
+		len = strlen(string),
+		end_pos = find_last_not_of(string, delimiters);
+
+	if (end_pos != -1)
+		strmid(string, string, len-end_pos, end_pos, len + 1);
+
+	return 0;
+}
+
+stock
+	trim_ex(string[], const delimiters[] = !" ", start_pos = 0)
+{
+	new
+		len = strlen(string),
+		begin_pos = find_first_not_of(string, delimiters, start_pos, len + 1),
+		end_pos = find_last_not_of(string, delimiters);
+
+	if (begin_pos != -1)
+		strmid(string, string, begin_pos, end_pos + 1, len + 1);
+
+	return 0;
+}
