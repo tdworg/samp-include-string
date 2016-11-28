@@ -63,13 +63,14 @@ stock
 	new find_len = strlen(find);
 	if (n == 0)
 		return -1;
+	new i = n;
 	while ((pos = strfind(string, find, ignorecase, pos)) != -1)
 	{
 		strdel(string, pos, pos + find_len);
-		if (--n == 0)
+		if (--i == 0)
 			break;
 	}
-	return pos;
+	return n - i;
 }
 
 
