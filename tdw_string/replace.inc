@@ -69,16 +69,19 @@ stock
 {
 	new find_len = strlen(find), replace_len = strlen(replace),
 		string_len = strlen(string);
-	while ((pos = strfind(string, find, ignorecase, pos)) != -1)
+	if (n > 0)
 	{
-		if ((string_len -= find_len) + replace_len >= string_size)
-			return 0;
-		strdel(string, pos, pos + find_len);
-		strins(string, replace, pos, string_size);
-		pos += replace_len;
-		string_len += replace_len;
-		if (--n == 0)
-			break;
+		while ((pos = strfind(string, find, ignorecase, pos)) != -1)
+		{
+			if ((string_len -= find_len) + replace_len >= string_size)
+				return 0;
+			strdel(string, pos, pos + find_len);
+			strins(string, replace, pos, string_size);
+			pos += replace_len;
+			string_len += replace_len;
+			if (--n == 0)
+				break;
+		}
 	}
 	return 1;
 }
