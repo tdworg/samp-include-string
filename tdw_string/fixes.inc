@@ -1,12 +1,5 @@
 /** ======================================================================== **\
-	String library
-
-| Description:
-This library exports several useful string functions that are not included in
-the PAWN string library. Besides, it adds a new syntax.
-
-| Version:
-1.1.42
+	Fixes
 
 | License:
 Copyright (c) 2016 Double V
@@ -31,22 +24,42 @@ freely, subject to the following restrictions:
 
 // I remove this constant because the compiler automatically generates it.
 // github.com/Zeex/pawn/issues/107
-#if defined _inc_tdw_string
-	#undef _inc_tdw_string
+#if defined _inc_fixes
+	#undef _inc_fixes
 #endif
 
-#if defined _TDW_STCOL__H
+#if defined _TDW_STLIB__FIXES
 	#endinput
 #endif
 
-#define _TDW_STCOL__H
+#define _TDW_STLIB__FIXES
 
-#include "tdw_string\fixes"
-#include "tdw_string\depend_encoding"
-#include "tdw_string\string"
-#include "tdw_string\find"
-#include "tdw_string\replace"
-#include "tdw_string\type"
-#include "tdw_string\erase"
-#include "tdw_string\trim"
-#include "tdw_string\iterator"
+
+// Fix the return value.
+// Example:
+//    strcmp: "" == "1"   =>   returns 0. What?
+stock
+	TDWSH@strcmp(const string1[], const string2[], bool:ignorecase=false,
+		length = cellmax)
+{
+	new
+		is_empty@s1 = IsEmptyString(string1),
+		is_empty@s2 = IsEmptyString(string2);
+
+	return
+		is_empty@s1 != 0
+			? is_empty@s2 != 0
+				? strcmp(string1, string2, ignorecase, length)
+				: 1
+			: is_empty@s2 != 0
+				? -1
+				: 0;
+}
+
+#if defined _ALS_strcmp
+	#undef strcmp
+#else
+	#define _ALS_strcmp
+#endif
+
+#define strcmp TDWSH@strcmp
