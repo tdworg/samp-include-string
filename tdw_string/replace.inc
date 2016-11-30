@@ -143,3 +143,16 @@ stock
 	}
 	return 1;
 }
+
+
+stock
+	replace_ex(string[], const find[], replace[], bool:ignorecase = false,
+		n = cellmax, pos = 0, string_size = sizeof string)
+{
+	return
+		n == cellmax
+		? replace_all(string, find, replace, ignorecase, pos, string_size)
+		: replace_nth(string, find, replace, n, ignorecase, pos,
+			string_size
+		);
+}
