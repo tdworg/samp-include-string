@@ -636,3 +636,30 @@ _init:
 
 	return -1;
 }
+
+
+stock
+	strAfter(string[], const pattern[] = !" = ", bool:ignorecase = false,
+		pos = 0, size_string = sizeof string)
+{
+	new
+		string_len = strlen(string),
+		pattern_len = strlen(pattern);
+	return
+		strmid(string, string,
+			strfind(string, pattern, ignorecase, pos) + pattern_len, string_len,
+			size_string
+		);
+}
+
+
+stock
+	strBefore(string[],  const pattern[] = !" = ", bool:ignorecase = false,
+		pos = 0, size_string = sizeof string)
+{
+	return
+		strmid(string, string,
+			0, strfind(string, pattern, ignorecase, pos) - 1,
+			size_string
+		);
+}

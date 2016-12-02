@@ -39,5 +39,6 @@ freely, subject to the following restrictions:
 {
 	new a[1];
 	strcat(a, !"");
+	strcmp(a, a);
 	return;
 }
