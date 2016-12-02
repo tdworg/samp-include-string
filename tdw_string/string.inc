@@ -564,3 +564,75 @@ stock
 	}
 	return 1;
 }
+
+
+stock
+	strswh(const source[], bool:ignorecase = false, length = cellmax, const ...)
+{
+	new
+		n_args,
+		darg_start,
+		darg_end, tmp;
+
+	#emit load.s.pri 0x8
+	#emit const.alt 12 // 3 * 4 = 12
+	#emit sub
+	#emit stor.s.pri n_args
+
+	#emit lctrl 5
+	#emit const.alt length
+	#emit add
+	#emit stor.s.pri darg_start
+
+	#emit load.s.alt n_args
+	#emit add
+	#emit stor.s.pri darg_end
+
+	goto _init;
+
+_strcmp_return_true:
+	#emit load.s.alt darg_end
+	#emit load.s.pri darg_start
+	#emit sub.alt
+	#emit shr.c.pri 2
+	#emit stack 16
+	#emit retn
+
+_init:
+
+	do
+	{
+		#emit push.s length
+		#emit push.s ignorecase
+
+		#emit load.s.pri darg_end
+		#emit load.i
+		#emit push.pri
+		#emit load.i
+		#emit move.alt
+		#emit const.pri 0xff
+		#emit and
+		#emit stor.s.pri tmp
+
+		if (tmp == '\0')
+		{
+			#emit stack 12
+			goto _next;
+		}
+		{}
+
+		#emit push.s source
+		#emit push.c 16
+		#emit sysreq.c strcmp
+
+		#emit stack 20
+
+		#emit jzer _strcmp_return_true
+
+	_next:
+		darg_end -= 4;
+	}
+	while (darg_end > darg_start);
+
+	return -1;
+}
