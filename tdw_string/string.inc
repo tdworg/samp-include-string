@@ -573,67 +573,71 @@ stock
 		n_args,
 		darg_start,
 		darg_end, tmp;
-
+	// Get the number of arguments.
 	#emit load.s.pri 0x8
 	#emit const.alt 12 // 3 * 4 = 12
 	#emit sub
 	#emit stor.s.pri n_args
-
+	// Get the address of first parameter.
 	#emit lctrl 5
 	#emit const.alt length
 	#emit add
 	#emit stor.s.pri darg_start
-
+	// Get the adress of the last parameter.
 	#emit load.s.alt n_args
 	#emit add
 	#emit stor.s.pri darg_end
 
 	goto _init;
-
 _strcmp_return_true:
+	// return the argument.
 	#emit load.s.alt darg_end
 	#emit load.s.pri darg_start
 	#emit sub.alt
 	#emit shr.c.pri 2
 	#emit stack 16
 	#emit retn
-
 _init:
-
+	// At each iteration we are compare two strings.
 	do
 	{
+		// Push the other arguments into 'strcmp'.
 		#emit push.s length
 		#emit push.s ignorecase
-
+		// Load the parameter address
 		#emit load.s.pri darg_end
 		#emit load.i
+		// Push it onto stack
 		#emit push.pri
+		// Save the value.
 		#emit load.i
 		#emit move.alt
 		#emit const.pri 0xff
 		#emit and
 		#emit stor.s.pri tmp
-
+		// Workaround strcmp bug with empty strings.
 		if (tmp == '\0')
 		{
+			// Restore the stack.
 			#emit stack 12
+			// Go to the next iteration.
 			goto _next;
 		}
-		{}
-
+		{} // Zero...
 		#emit push.s source
+		// Push the number of arguments (in bytes).
 		#emit push.c 16
+		// Call the function.
 		#emit sysreq.c strcmp
-
+		// Restore the stack.
 		#emit stack 20
-
+		// If the value in PRI is equal to zero.
 		#emit jzer _strcmp_return_true
-
 	_next:
 		darg_end -= 4;
 	}
 	while (darg_end > darg_start);
-
+	// If the argument was not found, return -1.
 	return -1;
 }
 
