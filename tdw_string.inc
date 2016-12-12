@@ -41,7 +41,7 @@ freely, subject to the following restrictions:
 
 #define _TDW_STCOL__H
 
-#include "tdw_string\fixes"
+// #include "tdw_string\fixes"
 #include "tdw_string\depend_encoding"
 #include "tdw_string\string"
 #include "tdw_string\find"
