@@ -42,18 +42,20 @@ stock
 	TDWSH@strcmp(const string1[], const string2[], bool:ignorecase=false,
 		length = cellmax)
 {
-	new
-		is_empty@s1 = IsEmptyString(string1),
-		is_empty@s2 = IsEmptyString(string2);
-
-	return
-		is_empty@s1 != 0
-			? is_empty@s2 != 0
-				? strcmp(string1, string2, ignorecase, length)
-				: 1
-			: is_empty@s2 != 0
-				? -1
-				: 0;
+	static
+		is_empty@s1,
+		is_empty@s2;
+	is_empty@s1 = IsEmptyString(string1);
+	is_empty@s2 = IsEmptyString(string2);
+	if (is_empty@s1 != 0) {
+		return (is_empty@s2 != 0)
+			? strcmp(string1, string2, ignorecase, length)
+			: 1;
+	} else {
+		return (is_empty@s2 != 0)
+			? -1
+			: 0;
+	}
 }
 
 #if defined _ALS_strcmp
