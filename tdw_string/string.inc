@@ -421,31 +421,53 @@ stock
 }
 
 
-stock // This function doesn't support the packed strings.
+stock
 	strsplit(dest[], const string[], &index, const seperator = ' ')
 {
 	new chr, i;
-	if (index)
+	if (IsPackedString(string))
 	{
-		if (string[index] != '\0')
-			index++;
-	}
-	while ((chr = string[index]) != '\0' && chr != seperator)
-	{
-		switch (chr)
+		if (index)
 		{
-			case '\0', '\n', '\r':
-				break;
-			default:
+			if (string{index} != '\0')
+				++index;
+		}
+		while ((chr = string{index}) != '\0' && chr != seperator)
+		{
+			switch (chr)
 			{
-				dest[i++] = chr;
-				index++;
+				case '\0', '\n', '\r':
+					break;
+				default:
+				{
+					dest{i++} = chr;
+					++index;
+				}
 			}
 		}
 	}
-	return
-		dest[i] = '\0',
-		-1;
+	else
+	{
+		if (index)
+		{
+			if (string[index] != '\0')
+				++index;
+		}
+		while ((chr = string[index]) != '\0' && chr != seperator)
+		{
+			switch (chr)
+			{
+				case '\0', '\n', '\r':
+					break;
+				default:
+				{
+					dest[i++] = chr;
+					++index;
+				}
+			}
+		}
+	}
+	return dest[i] = '\0';
 }
 
 
