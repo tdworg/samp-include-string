@@ -412,11 +412,14 @@ stock
 
 
 stock
-	GenerateString(dest[], const charlist[] = !TDW_STRING_DEFAULT_CHARLIST,
+	GenerateString(dest[], const charlist[] = TDW_STRING_DEFAULT_CHARLIST,
 		charlist_size = sizeof charlist, dest_size = sizeof dest)
 {
 	new i;
-	do { dest[i] = charlist[random(charlist_size)]; } while (++i < dest_size);
+	--charlist_size;
+	do {
+		dest[i] = charlist[random(charlist_size) % dest_size];
+	} while (++i < dest_size);
 	return;
 }
 
