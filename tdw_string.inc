@@ -41,12 +41,14 @@ freely, subject to the following restrictions:
 
 #define _TDW_STCOL__H
 
-#include "tdw_string\fixes"
-#include "tdw_string\depend_encoding"
-#include "tdw_string\string"
-#include "tdw_string\find"
-#include "tdw_string\replace"
-#include "tdw_string\type"
-#include "tdw_string\erase"
-#include "tdw_string\trim"
-#include "tdw_string\iterator"
+#include <string>
+
+#include "tdw_string/fixes"
+#include "tdw_string/depend_encoding"
+#include "tdw_string/string"
+#include "tdw_string/find"
+#include "tdw_string/replace"
+#include "tdw_string/type"
+#include "tdw_string/erase"
+#include "tdw_string/trim"
+#include "tdw_string/iterator"
