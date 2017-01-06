@@ -692,3 +692,64 @@ stock
 			size_string
 		);
 }
+
+stock
+	formatnum(dest[], number, const delimiter = ' ', bool:packed = false,
+		size = sizeof dest)
+{
+	dest[0] = '0';
+	new i;
+	if (number) {
+		new
+			tnum = number,
+			part_size,
+			mod,
+			end;
+
+		if (packed)
+			size <<= 2;
+
+		do {
+			tnum /= 10;
+			++i;
+		} while (tnum);
+
+		end = i;
+
+		if (number > 999) {
+			end += (end % 3) + 2;
+		}
+
+		while (number) {
+			if (part_size < 3) {
+				++part_size;
+			} else {
+				part_size = 0;
+				if (packed) {
+					dest{--end} = delimiter;
+				} else {
+					dest[--end] = delimiter;
+				}
+				continue;
+			}
+			{}
+
+			#emit load.s.pri number
+			#emit const.alt 10
+
+			#emit sdiv
+
+			#emit stor.s.pri number
+			#emit stor.s.alt mod
+
+			if (--end < size) {
+				if (packed) {
+					dest{end} = '0' + mod;
+				} else {
+					dest[end] = '0' + mod;
+				}
+			}
+		}
+	}
+	return i;
+}
