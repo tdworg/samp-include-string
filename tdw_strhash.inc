@@ -1,5 +1,5 @@
 /* ========================================================================== *\
-	String
+	Hash functions
 
 | Description:
 
@@ -25,7 +25,8 @@
 | Metadata:
 	[Functions]:
 		Stock:
-			-
+			- fnv1_str
+			- MurmurHash2
 		Static:
 			-
 		Public:
@@ -55,25 +56,86 @@
 	-
 \* ========================================================================== */
 
-#if defined _inc_tdw_string
+#if defined _inc_tdw_strhash
 	// I remove this constant because the compiler automatically generates it.
 	//   github.com/Zeex/pawn/issues/107
-	#undef _inc_tdw_string
+	#undef _inc_tdw_strhash
 #endif
 
-#if defined _TDW_STR_CORE
+#if defined _TDW_STR_HASH
 	#endinput
 #endif
 
-#define _TDW_STR_CORE
+#define _TDW_STR_HASH
 
-// Checks if a string is packed.
-// Other information: //www.compuphase.com/pawn/String_Manipulation.pdf
-// Author: Untonyst.
-#if !defined IsPackedString
-	#define IsPackedString(%0) (%0{0} != 0)
-#endif
+#include "tdw_string"
 
-#if !defined _string_included
-	#tryinclude <string>
-#endif
+// -----------------------------------------------------------------------------
+// FNV-1
+
+stock fnv1_str(const string[], hash_val)
+{
+	new
+		len = strlen(string);
+
+	while (len-- != 0) {
+		hash_val += (hash_val << 1) + (hash_val << 4) + (hash_val << 7) +
+			(hash_val << 8) + (hash_val << 24);
+
+		hash_val ^= string[len];
+	}
+
+	return hash_val;
+}
+
+// -----------------------------------------------------------------------------
+// MurmurHash2
+
+stock MurmurHash2(key[], len)
+{
+	const
+		m = 0x5bd1e995,
+		seed = 0,
+		r = 24;
+
+	new
+		h = seed ^ len,
+		k;
+
+	while (len >= 4) {
+		k  = key[0];
+		k |= key[1] << 8;
+		k |= key[2] << 16;
+		k |= key[3] << 24;
+
+		k *= m;
+		k ^= k >> r;
+		k *= m;
+
+		h *= m;
+		h ^= k;
+
+		// key += key (not value in the first cell)
+		#emit load.s.pri key
+		#emit add.c 4
+		#emit stor.s.pri key
+
+		len -= 4;
+	}
+
+	switch (len) {
+		case 3:
+			h ^= key[2] << 16;
+		case 2:
+			h ^= key[1] << 8;
+		case 1:
+			h ^= key[0],
+			h *= m;
+	}
+
+	h ^= h >> 13;
+	h *= m;
+	h ^= h >> 15;
+
+	return h;
+}

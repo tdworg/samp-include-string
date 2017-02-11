@@ -1,5 +1,5 @@
 /* ========================================================================== *\
-	String
+	Erase
 
 | Description:
 
@@ -25,7 +25,10 @@
 | Metadata:
 	[Functions]:
 		Stock:
-			-
+			- erase_first
+			- erase_last
+			- erase_nth
+			- erase
 		Static:
 			-
 		Public:
@@ -55,25 +58,69 @@
 	-
 \* ========================================================================== */
 
-#if defined _inc_tdw_string
+#if defined _inc_tdw_strerase
 	// I remove this constant because the compiler automatically generates it.
 	//   github.com/Zeex/pawn/issues/107
-	#undef _inc_tdw_string
+	#undef _inc_tdw_strerase
 #endif
 
-#if defined _TDW_STR_CORE
+#if defined _TDW_STR_ERASE
 	#endinput
 #endif
 
-#define _TDW_STR_CORE
+#define _TDW_STR_ERASE
 
-// Checks if a string is packed.
-// Other information: //www.compuphase.com/pawn/String_Manipulation.pdf
-// Author: Untonyst.
-#if !defined IsPackedString
-	#define IsPackedString(%0) (%0{0} != 0)
-#endif
+#include "tdw_string"
 
-#if !defined _string_included
-	#tryinclude <string>
-#endif
+// -----------------------------------------------------------------------------
+// Functions
+
+stock erase_first(str[], const substr[], bool:ignorecase = false, pos = 0)
+{
+	new
+		substr_len = strlen(substr);
+
+	if ((pos = strfind(str, substr, ignorecase, pos)) < 0)
+		return -1;
+
+	strdel(str, pos, pos + substr_len);
+
+	return pos;
+}
+
+stock erase_last(str[], const substr[], bool:ignorecase = false, end_offset = 0)
+{
+	new
+		substr_len = strlen(substr),
+		pos;
+
+	if ((pos = find_last(str, substr, ignorecase, end_offset)) < 0)
+		return -1;
+
+	strdel(str, pos, pos + substr_len);
+
+	return pos;
+}
+
+stock erase_nth(str[], const substr[], n, bool:ignorecase = false, pos = 0)
+{
+	if (n > 0) {
+		new
+			substr_len = strlen(substr);
+
+		while ((pos = strfind(str, substr, ignorecase, pos)) >= 0) {
+			strdel(str, pos, pos + substr_len);
+
+			if (--n == 0)
+				break;
+		}
+	}
+
+	return n;
+}
+
+stock erase(str[], start, end = cellmax)
+{
+	strdel(str, start, end);
+	return 0;
+}
