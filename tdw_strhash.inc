@@ -139,3 +139,39 @@ stock MurmurHash2(key[], len)
 
 	return h;
 }
+
+#define TDW_STRING_DEFAULT_CHARLIST\
+	"AaBb0CcDd1EeFf2GgHh3IiJj4KkLl5MmNn6OoPp7QqRr8SsTt9UuVvWwXxYyZz"
+
+stock GenerateString(dest[], const charlist[] = TDW_STRING_DEFAULT_CHARLIST,
+	bool:is_packed = false, charlist_size = sizeof charlist,
+	dest_size = sizeof dest)
+{
+	new
+		i;
+
+	--charlist_size;
+
+	if (is_packed) {
+		if (IsPackedString(charlist)) {
+			do {
+				dest{i} = charlist{random(charlist_size) % dest_size};
+			} while (++i < dest_size);
+		} else {
+			do {
+				dest{i} = charlist[random(charlist_size) % dest_size];
+			} while (++i < dest_size);
+		}
+	} else {
+		if (IsPackedString(charlist)) {
+			do {
+				dest[i] = charlist{random(charlist_size) % dest_size};
+			} while (++i < dest_size);
+		} else {
+			do {
+				dest[i] = charlist[random(charlist_size) % dest_size];
+			} while (++i < dest_size);
+		}
+	}
+	return 0;
+}
