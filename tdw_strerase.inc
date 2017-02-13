@@ -79,12 +79,9 @@ stock erase_first(str[], const substr[], bool:ignorecase = false, pos = 0)
 {
 	new
 		substr_len = strlen(substr);
-
 	if ((pos = strfind(str, substr, ignorecase, pos)) < 0)
 		return -1;
-
 	strdel(str, pos, pos + substr_len);
-
 	return pos;
 }
 
@@ -93,12 +90,9 @@ stock erase_last(str[], const substr[], bool:ignorecase = false, end_offset = 0)
 	new
 		substr_len = strlen(substr),
 		pos;
-
 	if ((pos = find_last(str, substr, ignorecase, end_offset)) < 0)
 		return -1;
-
 	strdel(str, pos, pos + substr_len);
-
 	return pos;
 }
 
@@ -107,15 +101,12 @@ stock erase_nth(str[], const substr[], n, bool:ignorecase = false, pos = 0)
 	if (n > 0) {
 		new
 			substr_len = strlen(substr);
-
 		while ((pos = strfind(str, substr, ignorecase, pos)) >= 0) {
 			strdel(str, pos, pos + substr_len);
-
 			if (--n == 0)
 				break;
 		}
 	}
-
 	return n;
 }
 

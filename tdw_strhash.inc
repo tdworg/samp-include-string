@@ -153,7 +153,9 @@ stock GenerateString(dest[], const charlist[] = TDW_STRING_DEFAULT_CHARLIST,
 	--charlist_size;
 
 	if (is_packed) {
+		dest_size *= 4;
 		if (IsPackedString(charlist)) {
+			charlist_size *= 4;
 			do {
 				dest{i} = charlist{random(charlist_size) % dest_size};
 			} while (++i < dest_size);
@@ -164,6 +166,7 @@ stock GenerateString(dest[], const charlist[] = TDW_STRING_DEFAULT_CHARLIST,
 		}
 	} else {
 		if (IsPackedString(charlist)) {
+			charlist_size *= 4;
 			do {
 				dest[i] = charlist{random(charlist_size) % dest_size};
 			} while (++i < dest_size);

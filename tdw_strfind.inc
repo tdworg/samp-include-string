@@ -90,16 +90,13 @@ stock find_first_char(const str[], const chr, pos = 0)
 {
 	if (pos < 0)
 		return -1;
-
 	new
 		cur_char;
-
 	if (IsPackedString(str)) {
 		while ((cur_char = str{pos}) != '\0' && cur_char != chr) pos++;
 	} else {
 		while ((cur_char = str[pos]) != '\0' && cur_char != chr) pos++;
 	}
-
 	return pos;
 }
 
@@ -121,16 +118,12 @@ stock find_last(const str[], const substr[], bool:ignorecase = false,
 		substr_len = strlen(substr),
 		pos,
 		limit_pos = str_len - end_offset;
-
 	for (; str_len >= 0; str_len -= substr_len + 1) {
 		pos = strfind(str, substr, ignorecase, str_len);
-
 		if (pos < 0)
 			continue;
-
 		if (pos + substr_len <= limit_pos)
 			break;
-
 		pos = -1;
 	}
 
@@ -141,13 +134,11 @@ stock find_last_char(const str[], const chr, end_offset = 0)
 {
 	new
 		pos = strlen(str) - end_offset;
-
 	if (IsPackedString(str)) {
 		while (str{pos} != chr && pos > 0) pos--;
 	} else {
 		while (str[pos] != chr && pos > 0) pos--;
 	}
-
 	return pos;
 }
 
@@ -172,8 +163,6 @@ static stock find_last_chrlist(const str[], const chrlist[], bool:is_equal,
 		chrlist_len = strlen(chrlist),
 		cur,
 		pos = strlen(str) - 1 - end_offset;
-
-
 	if (IsPackedString(str)) {
 		if (IsPackedString(chrlist)) {
 			while ((cur = str{pos}) && pos != 0) {
