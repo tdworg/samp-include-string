@@ -77,4 +77,12 @@ main()
 		strgen(buffer6);
 		printf("strgen %s", buffer6);
 	}
+	// levenshtein
+	{
+		new bufferstr[60];
+		static const str1[] = "Hello there";
+		static const str2[] = "Hello tttthere";
+		printf("_levenshtein: %d", _levenshtein(bufferstr, str1, str2));
+		printf("levenshtein: %d", levenshtein(str1, str2));
+	}
 }

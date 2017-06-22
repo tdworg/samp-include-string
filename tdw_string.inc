@@ -398,6 +398,59 @@ stock isnum(const string[])
 	return 1;
 }
 
+#define MIN3(%0,%1,%2) ((%0) < (%1) ? ((%0) < (%2) ? (%0) : (%2)) : ((%1) < (%2) ? (%1) : (%2)))
+stock _levenshtein(buffer[], const str1[], const str2[])
+{
+	new
+		str1Len = strlen(str1),
+		str2Len = strlen(str2),
+		x, y, lastdiag, olddiag;
+	for (y = 1; y <= str1Len; ++y) {
+		buffer[y] = y;
+	}
+	for (x = 1; x <= str2Len; ++x) {
+		buffer[0] = x;
+		for (y = 1, lastdiag = x - 1; y <= str1Len; ++y) {
+			olddiag = buffer[y];
+			buffer[y] = MIN3(buffer[y] + 1, buffer[y - 1] + 1, lastdiag + (str1[y - 1] == str2[x - 1] ? 0 : 1));
+			lastdiag = olddiag;
+		}
+	}
+	return buffer[str1Len];
+}
+
+stock levenshtein(const str1[], const str2[])
+{
+	new
+		str1Len,
+		bytes,
+		ret;
+	str1Len = strlen(str1);
+	bytes = str1Len << 2;
+
+	// allocate memory in the stack
+	#emit lctrl 4
+	#emit load.s.alt bytes
+	#emit sub
+	#emit sctrl 4
+
+	// call _levenshtein
+	#emit push.s str2
+	#emit push.s str1
+	#emit push.pri // push address
+	#emit push.c 12
+	#emit call _levenshtein
+	#emit stor.s.pri ret
+
+	// restore the stack
+	#emit lctrl 4
+	#emit load.s.alt bytes
+	#emit add
+	#emit sctrl 4
+
+	return ret;
+}
+
 // ----------------------------------------------------------------------------
 // Memory functions
 
