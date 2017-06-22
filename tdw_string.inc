@@ -46,9 +46,9 @@
 
 // ----------------------------------------------------------------------------
 
-#if !defined IsPackedString
+#if !defined IS_PACKED_STRING
 	// Author: Untonyst
-	#define IsPackedString(%1) (%1{0} != 0)
+	#define IS_PACKED_STRING(%1) (%1{0} != 0)
 #endif
 
 #if !defined _inc_string && !defined _string_included
@@ -72,7 +72,7 @@
 
 	stock tdwSTR@strins(string[], const substr[], pos, maxlength = sizeof string)
 	{
-		if (IsPackedString(string)) {
+		if (IS_PACKED_STRING(string)) {
 			new
 				str_len = strlen(string),
 				substr_len = strlen(substr),
@@ -87,7 +87,7 @@
 				}
 			}
 			return strins(string, substr, pos, maxlength);
-		} else if (IsPackedString(substr)) {
+		} else if (IS_PACKED_STRING(substr)) {
 			new
 				str_len = strlen(string),
 				substr_len = strlen(substr);
@@ -126,8 +126,8 @@
 		static
 			is_empty_s1,
 			is_empty_s2;
-		is_empty_s1 = IsEmptyString(string1);
-		is_empty_s2 = IsEmptyString(string2);
+		is_empty_s1 = isempty(string1);
+		is_empty_s2 = isempty(string2);
 		if (is_empty_s1 != 0)
 			return (is_empty_s2 != 0)
 				? strcmp(string1, string2, ignorecase, length)
@@ -149,7 +149,7 @@
 
 stock strclear(string[])
 {
-	return (IsPackedString(string) ? (string{0} = '\0') : (string[0] = '\0'));
+	return (IS_PACKED_STRING(string) ? (string{0} = '\0') : (string[0] = '\0'));
 }
 
 stock strcpy(dest[], const string[], dest_size = sizeof dest)
@@ -157,9 +157,9 @@ stock strcpy(dest[], const string[], dest_size = sizeof dest)
 	return strclear(dest), strcat(dest, string, dest_size);
 }
 
-stock IsEmptyString(const string[])
+stock isempty(const string[])
 {
-	return (IsPackedString(string) ? (string{0}) : (string[0])) == '\0';
+	return (IS_PACKED_STRING(string) ? (string{0}) : (string[0])) == '\0';
 }
 
 stock strreverse(string[])
@@ -169,7 +169,7 @@ stock strreverse(string[])
 		len = strlen(string),
 		j = len - 1,
 		chr;
-	if (IsPackedString(string)) {
+	if (IS_PACKED_STRING(string)) {
 		do {
 			chr = string{i};
 			string{i++} = string{j};
@@ -293,14 +293,14 @@ stock strexplode(arrays[][], const string[], const delimiter[] = !" ",
 	return current_index_item;
 }
 
-stock IsEqual(const string1[], const string2[], bool:ignorecase = false)
+stock isequal(const string1[], const string2[], bool:ignorecase = false)
 {
 	return string1[0] == '\0' || string2[0] == '\0'
 		? false
 		: (strcmp(string1, string2, ignorecase) == 0);
 }
 
-stock strAfter(string[], const pattern[] = !" = ", bool:ignorecase = false,
+stock strafter(string[], const pattern[] = !" = ", bool:ignorecase = false,
 	pos = 0, size_string = sizeof string)
 {
 	new
@@ -311,7 +311,7 @@ stock strAfter(string[], const pattern[] = !" = ", bool:ignorecase = false,
 			size_string);
 }
 
-stock strBefore(string[],  const pattern[] = !" = ", bool:ignorecase = false,
+stock strbefore(string[],  const pattern[] = !" = ", bool:ignorecase = false,
 	pos = 0, size_string = sizeof string)
 {
 	return strmid(string, string, 0,
@@ -333,7 +333,7 @@ stock ucfirst(string[])
 		DIFF_EXTRA = EXTRA_UPPER_SYMBOL - EXTRA_LOWER_SYMBOL;
 	new
 		i = strlen(string);
-	if (IsPackedString(string)) {
+	if (IS_PACKED_STRING(string)) {
 		switch (string{0}) {
 			case 'a'..'z', FIRST_LOWER_SYMBOL..LAST_LOWER_SYMBOL:
 				string{0} -= DIFF_SYMBOL;
@@ -367,12 +367,12 @@ stock ucfirst(string[])
 	return 0;
 }
 
-stock isNumeric(const string[])
+stock isnum(const string[])
 {
 	new
 		i,
 		c;
-	if (IsPackedString(string)) {
+	if (IS_PACKED_STRING(string)) {
 		while ((c = string{i++}) != '\0') {
 			switch (c) {
 				case '0'..'9':
@@ -690,7 +690,7 @@ stock find_first_char(const str[], const chr, pos = 0)
 		return -1;
 	new
 		cur_char;
-	if (IsPackedString(str)) {
+	if (IS_PACKED_STRING(str)) {
 		while ((cur_char = str{pos}) != '\0' && cur_char != chr) pos++;
 	} else {
 		while ((cur_char = str[pos]) != '\0' && cur_char != chr) pos++;
@@ -733,7 +733,7 @@ stock find_last_char(const str[], const chr, end_offset = 0)
 {
 	new
 		_pos = strlen(str) - end_offset;
-	if (IsPackedString(str)) {
+	if (IS_PACKED_STRING(str)) {
 		while (str{_pos} != chr && _pos > 0) _pos--;
 	} else {
 		while (str[_pos] != chr && _pos > 0) _pos--;
@@ -759,8 +759,8 @@ TDW_STATIC stock find_last_chrlist(const str[], const chrlist[], bool:is_equal,
 		chrlist_len = strlen(chrlist),
 		cur,
 		_pos = strlen(str) - 1 - end_offset;
-	if (IsPackedString(str)) {
-		if (IsPackedString(chrlist)) {
+	if (IS_PACKED_STRING(str)) {
+		if (IS_PACKED_STRING(chrlist)) {
 			while ((cur = str{_pos}) && _pos != 0) {
 				while (chr_pos <= chrlist_len && cur != chrlist{chr_pos++}) {}
 				if (is_equal != (chr_pos > chrlist_len))
@@ -778,7 +778,7 @@ TDW_STATIC stock find_last_chrlist(const str[], const chrlist[], bool:is_equal,
 			}
 		}
 	} else {
-		if (IsPackedString(chrlist)) {
+		if (IS_PACKED_STRING(chrlist)) {
 			while (_pos > 0 && (cur = str[_pos])) {
 				while (chr_pos <= chrlist_len && cur != chrlist{chr_pos++}) {}
 				if (is_equal != (chr_pos > chrlist_len))
@@ -808,8 +808,8 @@ TDW_STATIC stock find_first_chrlist(const str[], const chrlist[], bool:is_equal,
 		chr_pos,
 		chrlist_len = strlen(chrlist),
 		cur;
-	if (IsPackedString(str)) {
-		if (IsPackedString(chrlist)) {
+	if (IS_PACKED_STRING(str)) {
+		if (IS_PACKED_STRING(chrlist)) {
 			while ((cur = str{pos}) != '\0') {
 				while (chr_pos <= chrlist_len && cur != chrlist{chr_pos++}) {}
 				if (is_equal != (chr_pos > chrlist_len))
@@ -827,7 +827,7 @@ TDW_STATIC stock find_first_chrlist(const str[], const chrlist[], bool:is_equal,
 			}
 		}
 	} else {
-		if (IsPackedString(chrlist)) {
+		if (IS_PACKED_STRING(chrlist)) {
 			while ((cur = str[pos]) != '\0') {
 				while (chr_pos <= chrlist_len && cur != chrlist{chr_pos++}) {}
 				if (is_equal != (chr_pos > chrlist_len))
@@ -901,7 +901,7 @@ stock trim_left(str[], const delim = ' ', pos = 0)
 		return 0;
 	new
 		chr_cur;
-	if (IsPackedString(str)) {
+	if (IS_PACKED_STRING(str)) {
 		while ((chr_cur = str{pos++}) != '\0' && chr_cur == delim) {}
 	} else {
 		while ((chr_cur = str[pos++]) != '\0' && chr_cur == delim) {}
@@ -915,7 +915,7 @@ stock trim_right(str[], const delim = ' ', end_offset = 0)
 	new
 		len = strlen(str) - end_offset,
 		cur_pos = len;
-	if (IsPackedString(str)) {
+	if (IS_PACKED_STRING(str)) {
 		while (cur_pos-- != 0 && str{cur_pos} == delim) {}
 	} else {
 		while (cur_pos-- != 0 && str[cur_pos] == delim) {}
@@ -1031,7 +1031,7 @@ stock replace_all(str[], const substr[], const replace[],
 stock replace_symbol(str[], const chr, const replace, pos = 0)
 {
 	if ((pos = find_first_char(str, chr, pos)) >= 0) {
-		if (IsPackedString(str)) {
+		if (IS_PACKED_STRING(str)) {
 			str{pos} = replace;
 		} else {
 			str[pos] = replace;
@@ -1042,7 +1042,7 @@ stock replace_symbol(str[], const chr, const replace, pos = 0)
 
 stock replace_symbols(str[], const chr, const replace, pos = 0)
 {
-	if (IsPackedString(str)) {
+	if (IS_PACKED_STRING(str)) {
 		while ((pos = find_first_char(str, chr, pos)) >= 0)
 			str{pos} = replace;
 	} else {
@@ -1133,7 +1133,7 @@ stock GenerateString(dest[], const charlist[] = TDW_STRING_DEFAULT_CHARLIST,
 	--charlist_size;
 	if (is_packed) {
 		dest_size *= 4;
-		if (IsPackedString(charlist)) {
+		if (IS_PACKED_STRING(charlist)) {
 			charlist_size *= 4;
 			do {
 				dest{i} = charlist{random(charlist_size) % dest_size};
@@ -1144,7 +1144,7 @@ stock GenerateString(dest[], const charlist[] = TDW_STRING_DEFAULT_CHARLIST,
 			} while (++i < dest_size);
 		}
 	} else {
-		if (IsPackedString(charlist)) {
+		if (IS_PACKED_STRING(charlist)) {
 			charlist_size *= 4;
 			do {
 				dest[i] = charlist{random(charlist_size) % dest_size};
