@@ -429,24 +429,24 @@ stock levenshtein(const str1[], const str2[])
 	bytes = str1Len << 2;
 
 	// allocate memory in the stack
-	#emit lctrl 4
+	#emit lctrl      4
 	#emit load.s.alt bytes
 	#emit sub
-	#emit sctrl 4
+	#emit sctrl      4
 
 	// call _levenshtein
-	#emit push.s str2
-	#emit push.s str1
-	#emit push.pri // push address
-	#emit push.c 12
-	#emit call _levenshtein
+	#emit push.s     str2
+	#emit push.s     str1
+	#emit push.pri   // push address
+	#emit push.c     12
+	#emit call       _levenshtein
 	#emit stor.s.pri ret
 
 	// restore the stack
-	#emit lctrl 4
+	#emit lctrl      4
 	#emit load.s.alt bytes
 	#emit add
-	#emit sctrl 4
+	#emit sctrl      4
 
 	return ret;
 }
