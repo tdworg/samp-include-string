@@ -74,7 +74,7 @@ main()
 		new buffer6[10];
 		printf("fnv1_str %d", fnv1_str("Hello world", 123));
 		printf("MurmurHash2 %d", MurmurHash2("Hello world", 11));
-		GenerateString(buffer6);
-		printf("GenerateString %s", buffer6);
+		strgen(buffer6);
+		printf("strgen %s", buffer6);
 	}
 }
