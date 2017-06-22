@@ -1124,7 +1124,7 @@ stock MurmurHash2(key[], len)
 #define TDW_STRING_DEFAULT_CHARLIST\
 	"AaBb0CcDd1EeFf2GgHh3IiJj4KkLl5MmNn6OoPp7QqRr8SsTt9UuVvWwXxYyZz"
 
-stock GenerateString(dest[], const charlist[] = TDW_STRING_DEFAULT_CHARLIST,
+stock strgen(dest[], const charlist[] = TDW_STRING_DEFAULT_CHARLIST,
 	bool:is_packed = false, charlist_size = sizeof charlist,
 	dest_size = sizeof dest)
 {
