@@ -323,14 +323,14 @@ stock strbefore(string[],  const pattern[] = !" = ", bool:ignorecase = false,
 stock ucfirst(string[])
 {
 	const
-		FIRST_UPPER_SYMBOL = 224,
-		LAST_UPPER_SYMBOL = 255,
-		EXTRA_UPPER_SYMBOL = 184,
-		FIRST_LOWER_SYMBOL = 192,
-		LAST_LOWER_SYMBOL = 223,
-		EXTRA_LOWER_SYMBOL = 168,
-		DIFF_SYMBOL = FIRST_UPPER_SYMBOL - FIRST_LOWER_SYMBOL,
-		DIFF_EXTRA = EXTRA_UPPER_SYMBOL - EXTRA_LOWER_SYMBOL;
+		FIRST_UPPER_SYMBOL = 'А',
+		LAST_UPPER_SYMBOL = 'Я',
+		EXTRA_UPPER_SYMBOL = 'Ё',
+		FIRST_LOWER_SYMBOL = 'а',
+		LAST_LOWER_SYMBOL = 'я',
+		EXTRA_LOWER_SYMBOL = 'ё',
+		DIFF_SYMBOL = FIRST_LOWER_SYMBOL - FIRST_UPPER_SYMBOL,
+		DIFF_EXTRA = EXTRA_LOWER_SYMBOL - EXTRA_UPPER_SYMBOL;
 	new
 		i = strlen(string);
 	if (IS_PACKED_STRING(string)) {
@@ -352,7 +352,7 @@ stock ucfirst(string[])
 		switch (string[0]) {
 			case 'a'..'z', FIRST_LOWER_SYMBOL..LAST_LOWER_SYMBOL:
 				string[0] -= DIFF_SYMBOL;
-			case 168:
+			case EXTRA_LOWER_SYMBOL:
 				string[0] -= DIFF_EXTRA;
 		}
 		do {
