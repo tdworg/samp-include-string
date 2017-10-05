@@ -1,7 +1,8 @@
 #include <a_samp>
 
-#include "string\tdw_string.inc"
-#include "string\tdw_istring.inc"
+#include <string\tdw_string>
+#include <string\tdw_istring>
+#include <string\tdw_tstring>
 
 public OnFilterScriptInit()
 {
